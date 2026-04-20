@@ -1,8 +1,12 @@
 import { betterAuth } from "better-auth";
-import { Pool } from "pg";
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import prisma from "./prisma";
+// If your Prisma file is located elsewhere, you can change the path
+// import { PrismaClient } from "@/generated/prisma/client";
 
+// const prisma = new PrismaClient();
 export const auth = betterAuth({
-    database: new Pool({
-        // connection options
-    }),
-})
+  database: prismaAdapter(prisma, {
+    provider: "postgresql", // or "mysql", "postgresql", ...etc
+  }),
+});
