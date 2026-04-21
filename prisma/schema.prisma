@@ -13,16 +13,17 @@ datasource db {
 }
 
 model User {
-  id            String         @id
-  name          String
-  email         String
-  emailVerified Boolean        @default(false)
-  image         String?
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-  organisations Organisation[]
+  id                  String               @id
+  name                String
+  email               String
+  emailVerified       Boolean              @default(false)
+  image               String?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  sessions            Session[]
+  accounts            Account[]
+  organisations       Organisation[]
+  accountingEquations AccountingEquation[]
 
   @@unique([email])
   @@map("user")
@@ -77,10 +78,24 @@ model Verification {
 }
 
 model Organisation {
-  id        String   @id
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
+  id                  String               @id @default(cuid())
+  name                String
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  userId              String
+  user                User                 @relation(fields: [userId], references: [id])
+  accountingEquations AccountingEquation[]
+}
+
+model AccountingEquation {
+  id             String       @id @default(cuid())
+  assets         Decimal      @db.Decimal(19, 4)
+  liabilities    Decimal      @db.Decimal(19, 4)
+  ownersEquity   Decimal      @db.Decimal(19, 4)
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  userId         String
+  user           User         @relation(fields: [userId], references: [id])
+  organisationId String
+  organisation   Organisation @relation(fields: [organisationId], references: [id])
 }
