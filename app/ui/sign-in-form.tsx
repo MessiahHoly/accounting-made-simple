@@ -29,7 +29,7 @@ export function SignInForm() {
     } else {
       console.log("Magic link sent:", data);
     }
-    // redirect('/auth/email-sent');
+    redirect('/email-sent');
   };
 
   return (
