@@ -1,4 +1,5 @@
 import { getSession } from "@/lib/server/utils";
+import BackButton from "./ui/back-button";
 
 export default async function Page() {
   const session = await getSession();
@@ -10,6 +11,7 @@ export default async function Page() {
       <main className="p-4">
         <h1>Oops...</h1>
         <p>You have reached a wrong place.</p>
+        <BackButton />
       </main>
     )
   }
