@@ -1,4 +1,4 @@
-import { getSession } from "@/lib/server/utils";
+import { getSession } from "@/lib/utils/server/utils";
 import BackButton from "../ui/back-button";
 
 export default async function Page() {

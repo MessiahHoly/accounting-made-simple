@@ -1,6 +1,6 @@
 import { OrganisationForm } from "./ui/organisation-form";
 import { SignInForm } from "@/app/ui/sign-in-form";
-import { getSession } from "@/lib/server/utils";
+import { getSession } from "@/lib/utils/server/utils";
 
 export default async function Page() {
   const session = await getSession();
