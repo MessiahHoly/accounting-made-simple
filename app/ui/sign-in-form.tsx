@@ -12,6 +12,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { authClient } from "@/lib/auth-client";
 import { redirect, usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import BackButton from "./back-button";
 
 export function SignInForm() {
   const [email, setEmail] = useState("");
@@ -73,9 +74,10 @@ export function SignInForm() {
             {/* <Button type="submit" disabled={signingIn}>
               {signingIn ? "Sending..." : "Save"}
             </Button> */}
-            <Button variant="outline" type="button">
+            {/* <Button variant="outline" type="button">
               Cancel
-            </Button>
+            </Button> */}
+            <BackButton text="Cancel" />
           </Field>
         </FieldGroup>
       </form>

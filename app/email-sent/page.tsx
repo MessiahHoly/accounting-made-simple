@@ -1,17 +1,17 @@
 import { getSession } from "@/lib/server/utils";
-import BackButton from "./ui/back-button";
+import BackButton from "../ui/back-button";
 
 export default async function Page() {
   const session = await getSession();
 
-  console.log("Session:", session);
+  // console.log("Session:", session);
 
   if (session) {
     return (
       <main className="p-4">
         <h1>Oops...</h1>
         <p>You have reached a wrong place.</p>
-        <BackButton />
+        <BackButton text="Okay" />
       </main>
     )
   }
