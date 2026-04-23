@@ -25,7 +25,6 @@ export function SignInForm() {
   const handleSignIn = async (e: React.SubmitEvent) => {
     e.preventDefault();
     setSigningIn(true);
-    // Handle sign-in logic here
     const { data, error } = await authClient.signIn.magicLink({
       email, callbackURL
     })
@@ -34,7 +33,6 @@ export function SignInForm() {
     } else {
       console.log("Magic link sent:", data);
     }
-    // setSigningIn(false);
     redirect('/email-sent');
   };
 
@@ -71,12 +69,6 @@ export function SignInForm() {
                 Sign in
               </Button>
             )}
-            {/* <Button type="submit" disabled={signingIn}>
-              {signingIn ? "Sending..." : "Save"}
-            </Button> */}
-            {/* <Button variant="outline" type="button">
-              Cancel
-            </Button> */}
             <BackButton text="Cancel" />
           </Field>
         </FieldGroup>
@@ -84,4 +76,3 @@ export function SignInForm() {
     </div>
   )
 }
-//TODO: change width of /email-sent page to match this form

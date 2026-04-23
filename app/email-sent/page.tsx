@@ -17,7 +17,8 @@ export default async function Page() {
   }
 
   return (
-    <main className="p-4">
+    <main className="w-full max-w-md px-4">
+      {/* <main className="p-4"> */}
       <h1>Email Sent</h1>
       <p>A magic link has been sent to your email address. Please check your inbox and click the link to sign in.</p>
     </main>
