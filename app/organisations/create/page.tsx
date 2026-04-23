@@ -1,10 +1,12 @@
-import { auth } from "@/lib/auth";
+// import { auth } from "@/lib/auth";
 import { OrganisationForm } from "./ui/organisation-form";
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
 import { SignInForm } from "@/app/ui/sign-in-form";
+import { getSession } from "@/lib/server/utils";
 
 export default async function Page() {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await getSession();
+  // const session = await auth.api.getSession({ headers: await headers() });
 
   if (!session) {
     return (
@@ -17,7 +19,6 @@ export default async function Page() {
   return (
     <main>
       <h1>Create Organisation</h1>
-      {/* Form for creating an organisation goes here */}
       <OrganisationForm />
     </main>
   );
