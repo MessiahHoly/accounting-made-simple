@@ -1,5 +1,6 @@
 'use client'
 
+import BackButton from "@/app/ui/back-button"
 import { Button } from "@/components/ui/button"
 import {
   Field,
@@ -9,12 +10,12 @@ import {
   FieldSet,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { Spinner } from "@/components/ui/spinner"
 import { createOrganisation } from "@/lib/actions/organisation"
 import { useActionState } from "react"
 
 export function OrganisationForm() {
   const [state, action, pending] = useActionState(createOrganisation, null);
-  // console.log(state, pending);
 
   return (
     <div className="w-full max-w-md">
@@ -38,17 +39,22 @@ export function OrganisationForm() {
                 )}
               </Field>
             </FieldGroup>
-            {/* {state?.errors?.errors && (
-              <FieldError>
-                {state.errors.errors[0]}
-              </FieldError>
-            )} */}
           </FieldSet>
           <Field orientation="horizontal">
-            <Button type="submit">Save</Button>
-            <Button variant="outline" type="button">
+            {pending ? (
+              <Button disabled>
+                <Spinner data-icon="inline-start" />
+                Saving...
+              </Button>
+            ) : (
+              <Button type="submit">
+                Save
+              </Button>
+            )}
+            {/* <Button variant="outline" type="button">
               Cancel
-            </Button>
+            </Button> */}
+            <BackButton text="Cancel" />
           </Field>
         </FieldGroup>
       </form>
