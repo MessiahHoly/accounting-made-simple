@@ -13,6 +13,7 @@ import { authClient } from "@/lib/auth-client";
 import { redirect, usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import BackButton from "./back-button";
+import SubmitButton from "./submit-button";
 
 export function SignInForm() {
   const [email, setEmail] = useState("");
@@ -59,7 +60,7 @@ export function SignInForm() {
             </FieldGroup>
           </FieldSet>
           <Field orientation="horizontal">
-            {signingIn ? (
+            {/* {signingIn ? (
               <Button disabled>
                 <Spinner data-icon="inline-start" />
                 Signing in...
@@ -68,7 +69,8 @@ export function SignInForm() {
               <Button>
                 Sign in
               </Button>
-            )}
+            )} */}
+            <SubmitButton pending={signingIn} text="Sign in" pendingText="Signing in..." />
             <BackButton text="Cancel" />
           </Field>
         </FieldGroup>

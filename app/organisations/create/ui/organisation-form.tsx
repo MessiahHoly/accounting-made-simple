@@ -1,6 +1,7 @@
 'use client'
 
 import BackButton from "@/app/ui/back-button"
+import SubmitButton from "@/app/ui/submit-button"
 import { Button } from "@/components/ui/button"
 import {
   Field,
@@ -41,7 +42,7 @@ export function OrganisationForm() {
             </FieldGroup>
           </FieldSet>
           <Field orientation="horizontal">
-            {pending ? (
+            {/* {pending ? (
               <Button disabled>
                 <Spinner data-icon="inline-start" />
                 Saving...
@@ -50,10 +51,8 @@ export function OrganisationForm() {
               <Button type="submit">
                 Save
               </Button>
-            )}
-            {/* <Button variant="outline" type="button">
-              Cancel
-            </Button> */}
+            )} */}
+            <SubmitButton pending={pending} text="Create" pendingText="Creating..." />
             <BackButton text="Cancel" />
           </Field>
         </FieldGroup>
