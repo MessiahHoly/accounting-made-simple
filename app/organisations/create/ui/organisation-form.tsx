@@ -1,18 +1,26 @@
+'use client'
+
 import { Button } from "@/components/ui/button"
 import {
   Field,
+  FieldError,
   FieldGroup,
   FieldLabel,
   FieldSet,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { createOrganisation } from "@/lib/actions/organisation"
+import { useActionState } from "react"
 
 export function OrganisationForm() {
+  const [state, action, pending] = useActionState(createOrganisation, null);
+  // console.log(state, pending);
+
   return (
     <div className="w-full max-w-md">
-      <form>
+      <form action={action}>
         <FieldGroup>
-          <FieldSet>        
+          <FieldSet>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="name">
@@ -23,8 +31,18 @@ export function OrganisationForm() {
                   required
                   name="name"
                 />
-              </Field>                            
+                {state?.errors?.name && (
+                  <FieldError>
+                    {state.errors.name.errors[0]}
+                  </FieldError>
+                )}
+              </Field>
             </FieldGroup>
+            {/* {state?.errors?.errors && (
+              <FieldError>
+                {state.errors.errors[0]}
+              </FieldError>
+            )} */}
           </FieldSet>
           <Field orientation="horizontal">
             <Button type="submit">Save</Button>

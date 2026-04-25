@@ -1,0 +1,10 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { AccountingEquationOrderByWithRelationInputObjectSchema as AccountingEquationOrderByWithRelationInputObjectSchema } from './objects/AccountingEquationOrderByWithRelationInput.schema';
+import { AccountingEquationWhereInputObjectSchema as AccountingEquationWhereInputObjectSchema } from './objects/AccountingEquationWhereInput.schema';
+import { AccountingEquationWhereUniqueInputObjectSchema as AccountingEquationWhereUniqueInputObjectSchema } from './objects/AccountingEquationWhereUniqueInput.schema';
+import { AccountingEquationCountAggregateInputObjectSchema as AccountingEquationCountAggregateInputObjectSchema } from './objects/AccountingEquationCountAggregateInput.schema';
+
+export const AccountingEquationCountSchema: z.ZodType<Prisma.AccountingEquationCountArgs> = z.object({ orderBy: z.union([AccountingEquationOrderByWithRelationInputObjectSchema, AccountingEquationOrderByWithRelationInputObjectSchema.array()]).optional(), where: AccountingEquationWhereInputObjectSchema.optional(), cursor: AccountingEquationWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), AccountingEquationCountAggregateInputObjectSchema ]).optional() }).strict() as unknown as z.ZodType<Prisma.AccountingEquationCountArgs>;
+
+export const AccountingEquationCountZodSchema = z.object({ orderBy: z.union([AccountingEquationOrderByWithRelationInputObjectSchema, AccountingEquationOrderByWithRelationInputObjectSchema.array()]).optional(), where: AccountingEquationWhereInputObjectSchema.optional(), cursor: AccountingEquationWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), AccountingEquationCountAggregateInputObjectSchema ]).optional() }).strict();

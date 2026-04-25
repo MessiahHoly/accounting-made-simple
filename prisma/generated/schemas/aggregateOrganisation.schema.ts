@@ -1,0 +1,12 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { OrganisationOrderByWithRelationInputObjectSchema as OrganisationOrderByWithRelationInputObjectSchema } from './objects/OrganisationOrderByWithRelationInput.schema';
+import { OrganisationWhereInputObjectSchema as OrganisationWhereInputObjectSchema } from './objects/OrganisationWhereInput.schema';
+import { OrganisationWhereUniqueInputObjectSchema as OrganisationWhereUniqueInputObjectSchema } from './objects/OrganisationWhereUniqueInput.schema';
+import { OrganisationCountAggregateInputObjectSchema as OrganisationCountAggregateInputObjectSchema } from './objects/OrganisationCountAggregateInput.schema';
+import { OrganisationMinAggregateInputObjectSchema as OrganisationMinAggregateInputObjectSchema } from './objects/OrganisationMinAggregateInput.schema';
+import { OrganisationMaxAggregateInputObjectSchema as OrganisationMaxAggregateInputObjectSchema } from './objects/OrganisationMaxAggregateInput.schema';
+
+export const OrganisationAggregateSchema: z.ZodType<Prisma.OrganisationAggregateArgs> = z.object({ orderBy: z.union([OrganisationOrderByWithRelationInputObjectSchema, OrganisationOrderByWithRelationInputObjectSchema.array()]).optional(), where: OrganisationWhereInputObjectSchema.optional(), cursor: OrganisationWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), OrganisationCountAggregateInputObjectSchema ]).optional(), _min: OrganisationMinAggregateInputObjectSchema.optional(), _max: OrganisationMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.OrganisationAggregateArgs>;
+
+export const OrganisationAggregateZodSchema = z.object({ orderBy: z.union([OrganisationOrderByWithRelationInputObjectSchema, OrganisationOrderByWithRelationInputObjectSchema.array()]).optional(), where: OrganisationWhereInputObjectSchema.optional(), cursor: OrganisationWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), _count: z.union([ z.literal(true), OrganisationCountAggregateInputObjectSchema ]).optional(), _min: OrganisationMinAggregateInputObjectSchema.optional(), _max: OrganisationMaxAggregateInputObjectSchema.optional() }).strict();

@@ -13,6 +13,7 @@ export default async function Page() {
       </main>
     );
   }
+
   return (
     <main className="w-full max-w-md px-4">
       <h1>Create Organisation</h1>

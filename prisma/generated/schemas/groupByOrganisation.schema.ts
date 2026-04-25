@@ -1,0 +1,13 @@
+import type { Prisma } from '../../../generated/prisma/client';
+import * as z from 'zod';
+import { OrganisationWhereInputObjectSchema as OrganisationWhereInputObjectSchema } from './objects/OrganisationWhereInput.schema';
+import { OrganisationOrderByWithAggregationInputObjectSchema as OrganisationOrderByWithAggregationInputObjectSchema } from './objects/OrganisationOrderByWithAggregationInput.schema';
+import { OrganisationScalarWhereWithAggregatesInputObjectSchema as OrganisationScalarWhereWithAggregatesInputObjectSchema } from './objects/OrganisationScalarWhereWithAggregatesInput.schema';
+import { OrganisationScalarFieldEnumSchema } from './enums/OrganisationScalarFieldEnum.schema';
+import { OrganisationCountAggregateInputObjectSchema as OrganisationCountAggregateInputObjectSchema } from './objects/OrganisationCountAggregateInput.schema';
+import { OrganisationMinAggregateInputObjectSchema as OrganisationMinAggregateInputObjectSchema } from './objects/OrganisationMinAggregateInput.schema';
+import { OrganisationMaxAggregateInputObjectSchema as OrganisationMaxAggregateInputObjectSchema } from './objects/OrganisationMaxAggregateInput.schema';
+
+export const OrganisationGroupBySchema: z.ZodType<Prisma.OrganisationGroupByArgs> = z.object({ where: OrganisationWhereInputObjectSchema.optional(), orderBy: z.union([OrganisationOrderByWithAggregationInputObjectSchema, OrganisationOrderByWithAggregationInputObjectSchema.array()]).optional(), having: OrganisationScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(OrganisationScalarFieldEnumSchema), _count: z.union([ z.literal(true), OrganisationCountAggregateInputObjectSchema ]).optional(), _min: OrganisationMinAggregateInputObjectSchema.optional(), _max: OrganisationMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.OrganisationGroupByArgs>;
+
+export const OrganisationGroupByZodSchema = z.object({ where: OrganisationWhereInputObjectSchema.optional(), orderBy: z.union([OrganisationOrderByWithAggregationInputObjectSchema, OrganisationOrderByWithAggregationInputObjectSchema.array()]).optional(), having: OrganisationScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(OrganisationScalarFieldEnumSchema), _count: z.union([ z.literal(true), OrganisationCountAggregateInputObjectSchema ]).optional(), _min: OrganisationMinAggregateInputObjectSchema.optional(), _max: OrganisationMaxAggregateInputObjectSchema.optional() }).strict();

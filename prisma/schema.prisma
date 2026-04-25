@@ -8,6 +8,12 @@ generator client {
   output   = "../generated/prisma"
 }
 
+generator zod {
+  provider = "prisma-zod-generator"
+  // optional output = "./prisma/generated" (JSON config can supply if omitted)
+  // optional config = "./zod-generator.config.json" (relative to schema file)
+}
+
 datasource db {
   provider = "postgresql"
 }
@@ -77,8 +83,15 @@ model Verification {
   @@map("verification")
 }
 
+//TODO: update prisma
+// │  Update available 7.7.0 -> 7.8.0                        │
+// │  Run the following to update                            │
+// │    npm i --save-dev prisma@latest                       │
+// │    npm i @prisma/client@latest  
+
 model Organisation {
   id                  String               @id @default(cuid())
+  /// @zod.min(1, "Organisation name cannot be empty")
   name                String
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
