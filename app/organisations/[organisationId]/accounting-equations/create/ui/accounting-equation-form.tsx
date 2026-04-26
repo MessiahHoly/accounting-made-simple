@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { createAccountingEquation } from "@/lib/actions/accounting-equation"
-// import { createOrganisation } from "@/lib/actions/organisation"
 import { useActionState } from "react"
 
 export function AccountingEquationForm({ organisationId }: { organisationId: string }) {
@@ -25,13 +24,30 @@ export function AccountingEquationForm({ organisationId }: { organisationId: str
           <FieldSet>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="asset">
+                <FieldLabel htmlFor="asOf">
+                  As of
+                </FieldLabel>
+                <Input
+                  id="asOf"
+                  required
+                  name="asOf"
+                  // type="datetime-local"
+                  type="date"
+                />
+                {state?.errors?.asOf && (
+                  <FieldError>
+                    {state.errors.asOf.errors[0]}
+                  </FieldError>
+                )}
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="assets">
                   Asset
                 </FieldLabel>
                 <Input
-                  id="asset"
+                  id="assets"
                   required
-                  name="asset"
+                  name="assets"
                   type="number"
                 />
                 {state?.errors?.assets && (
@@ -41,13 +57,13 @@ export function AccountingEquationForm({ organisationId }: { organisationId: str
                 )}
               </Field>
               <Field>
-                <FieldLabel htmlFor="liability">
+                <FieldLabel htmlFor="liabilities">
                   Liability
                 </FieldLabel>
                 <Input
-                  id="liability"
+                  id="liabilities"
                   required
-                  name="liability"
+                  name="liabilities"
                   type="number"
                 />
                 {state?.errors?.liabilities && (

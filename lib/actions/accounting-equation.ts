@@ -1,6 +1,6 @@
 "use server";
 
-import { OrganisationUncheckedCreateInputObjectSchema } from "@/prisma/generated/schemas/objects/OrganisationUncheckedCreateInput.schema";
+// import { OrganisationUncheckedCreateInputObjectSchema } from "@/prisma/generated/schemas/objects/OrganisationUncheckedCreateInput.schema";
 import { getSession } from "../utils/server/utils";
 import { getCleanFormData } from "../utils/utils";
 import { AccountingEquationUncheckedCreateInputObjectSchema } from "@/prisma/generated/schemas";
@@ -15,9 +15,11 @@ export const createAccountingEquation = async (organisationId: string, prevState
   }
 
   const filteredFormData = getCleanFormData(formData);
+  // console.log("Filtered Form Data:", filteredFormData);
   const validatedData = AccountingEquationUncheckedCreateInputObjectSchema.safeParse({
     ...filteredFormData, userId: session.user.id, organisationId
   });
+  // console.log("Validated Data:", validatedData);
 
   if (!validatedData.success) {
     const tree = z.treeifyError(validatedData.error);
