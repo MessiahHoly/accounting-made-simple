@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { createAccountingEquation } from "@/lib/actions/accounting-equation"
-import { createOrganisation } from "@/lib/actions/organisation"
+// import { createOrganisation } from "@/lib/actions/organisation"
 import { useActionState } from "react"
 
 export function AccountingEquationForm({ organisationId }: { organisationId: string }) {
@@ -37,6 +37,38 @@ export function AccountingEquationForm({ organisationId }: { organisationId: str
                 {state?.errors?.assets && (
                   <FieldError>
                     {state.errors.assets.errors[0]}
+                  </FieldError>
+                )}
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="liability">
+                  Liability
+                </FieldLabel>
+                <Input
+                  id="liability"
+                  required
+                  name="liability"
+                  type="number"
+                />
+                {state?.errors?.liabilities && (
+                  <FieldError>
+                    {state.errors.liabilities.errors[0]}
+                  </FieldError>
+                )}
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="ownersEquity">
+                  Owner's Equity
+                </FieldLabel>
+                <Input
+                  id="ownersEquity"
+                  required
+                  name="ownersEquity"
+                  type="number"
+                />
+                {state?.errors?.ownersEquity && (
+                  <FieldError>
+                    {state.errors.ownersEquity.errors[0]}
                   </FieldError>
                 )}
               </Field>
