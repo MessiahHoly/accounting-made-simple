@@ -99,6 +99,7 @@ model AccountingEquation {
   assets         Decimal      @db.Decimal(19, 4)
   liabilities    Decimal      @db.Decimal(19, 4)
   ownersEquity   Decimal      @db.Decimal(19, 4)
+  asOf           DateTime
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
   userId         String

@@ -9,6 +9,7 @@ const makeSchema = () => z.object({
   assets: SortOrderSchema.optional(),
   liabilities: SortOrderSchema.optional(),
   ownersEquity: SortOrderSchema.optional(),
+  asOf: SortOrderSchema.optional(),
   createdAt: SortOrderSchema.optional(),
   updatedAt: SortOrderSchema.optional(),
   userId: SortOrderSchema.optional(),

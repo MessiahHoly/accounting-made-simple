@@ -7,6 +7,7 @@ const makeSchema = () => z.object({
   assets: z.literal(true).optional(),
   liabilities: z.literal(true).optional(),
   ownersEquity: z.literal(true).optional(),
+  asOf: z.literal(true).optional(),
   createdAt: z.literal(true).optional(),
   updatedAt: z.literal(true).optional(),
   userId: z.literal(true).optional(),

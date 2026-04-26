@@ -29,6 +29,7 @@ const makeSchema = () => z.object({
 ]).refine((v) => isValidDecimalInput(v), {
   message: "Field 'ownersEquity' must be a Decimal",
 }),
+  asOf: z.coerce.date(),
   createdAt: z.coerce.date().optional(),
   userId: z.string(),
   organisationId: z.string()

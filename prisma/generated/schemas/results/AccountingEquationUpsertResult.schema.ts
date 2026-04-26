@@ -4,6 +4,7 @@ export const AccountingEquationUpsertResultSchema = z.object({
   assets: z.number(),
   liabilities: z.number(),
   ownersEquity: z.number(),
+  asOf: z.date(),
   createdAt: z.date(),
   updatedAt: z.date(),
   userId: z.string(),
