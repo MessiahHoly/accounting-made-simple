@@ -2,7 +2,6 @@
 
 import BackButton from "@/app/ui/back-button"
 import SubmitButton from "@/app/ui/submit-button"
-// import { Button } from "@/components/ui/button"
 import {
   Field,
   FieldError,
@@ -11,12 +10,13 @@ import {
   FieldSet,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-// import { Spinner } from "@/components/ui/spinner"
+import { createAccountingEquation } from "@/lib/actions/accounting-equation"
 import { createOrganisation } from "@/lib/actions/organisation"
 import { useActionState } from "react"
 
-export function OrganisationForm() {
-  const [state, action, pending] = useActionState(createOrganisation, null);
+export function AccountingEquationForm({ organisationId }: { organisationId: string }) {
+  const createAccountingEquationWithOrganisationId = createAccountingEquation.bind(null, organisationId);
+  const [state, action, pending] = useActionState(createAccountingEquationWithOrganisationId, null);
 
   return (
     <div className="w-full max-w-md">
@@ -25,17 +25,18 @@ export function OrganisationForm() {
           <FieldSet>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="name">
-                  Name
+                <FieldLabel htmlFor="asset">
+                  Asset
                 </FieldLabel>
                 <Input
-                  id="name"
+                  id="asset"
                   required
-                  name="name"
+                  name="asset"
+                  type="number"
                 />
-                {state?.errors?.name && (
+                {state?.errors?.assets && (
                   <FieldError>
-                    {state.errors.name.errors[0]}
+                    {state.errors.assets.errors[0]}
                   </FieldError>
                 )}
               </Field>
