@@ -32,6 +32,7 @@ export function AccountingEquationForm({ organisationId }: { organisationId: str
                   required
                   name="asOf"
                   type="date"
+                  defaultValue={String(state?.fields?.asOf) || ""}
                 />
                 {state?.errors?.asOf && (
                   <FieldError>
@@ -48,6 +49,7 @@ export function AccountingEquationForm({ organisationId }: { organisationId: str
                   required
                   name="assets"
                   type="number"
+                  defaultValue={String(state?.fields?.assets) || ""}
                 />
                 {state?.errors?.assets && (
                   <FieldError>
@@ -64,6 +66,7 @@ export function AccountingEquationForm({ organisationId }: { organisationId: str
                   required
                   name="liabilities"
                   type="number"
+                  defaultValue={String(state?.fields?.liabilities) || ""}
                 />
                 {state?.errors?.liabilities && (
                   <FieldError>
@@ -80,6 +83,7 @@ export function AccountingEquationForm({ organisationId }: { organisationId: str
                   required
                   name="ownersEquity"
                   type="number"
+                  defaultValue={String(state?.fields?.ownersEquity) || ""}
                 />
                 {state?.errors?.ownersEquity && (
                   <FieldError>

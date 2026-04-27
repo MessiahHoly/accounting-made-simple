@@ -20,14 +20,14 @@ export const createAccountingEquation = async (organisationId: string, prevState
 
   if (!validatedData.success) {
     const tree = z.treeifyError(validatedData.error);
-    return { success: false, message: "Invalid data", errors: tree.properties };
+    return { success: false, message: "Invalid data", errors: tree.properties, fields: filteredFormData };
   }
 
   const { data } = validatedData
 
   const { assets, liabilities, ownersEquity } = data
   if (Number(assets) !== Number(liabilities) + Number(ownersEquity)) {
-    return { success: false, message: "The accounting equation must hold: Assets = Liabilities + Owner's Equity" };
+    return { success: false, message: "The accounting equation must hold: Assets = Liabilities + Owner's Equity", fields: filteredFormData };
   }
 
 
