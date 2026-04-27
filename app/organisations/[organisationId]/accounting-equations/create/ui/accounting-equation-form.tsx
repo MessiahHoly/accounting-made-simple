@@ -11,15 +11,21 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { createAccountingEquation } from "@/lib/actions/accounting-equation"
-// import { Form } from "radix-ui"
 import { useActionState } from "react"
 
 type ActionReturnType = Awaited<ReturnType<typeof createAccountingEquation>>
 
+const initialState: ActionReturnType = {
+  success: false,
+  message: "",
+  fields: undefined,
+  errors: undefined,
+}
+
 export function AccountingEquationForm({ organisationId }: { organisationId: string }) {
   const createAccountingEquationWithOrganisationId = createAccountingEquation.bind(null, organisationId);
-  const [state, action, pending] = useActionState<ActionReturnType, FormData>(createAccountingEquationWithOrganisationId, null as any);
-  // const [state, action, pending] = useActionState(createAccountingEquationWithOrganisationId, null);
+  const [state, action, pending] = useActionState<ActionReturnType, FormData>(createAccountingEquationWithOrganisationId, initialState);
+  // const [state, action, pending] = useActionState<ActionReturnType, FormData>(createAccountingEquationWithOrganisationId, null as any);
 
   return (
     <div className="w-full max-w-md">
