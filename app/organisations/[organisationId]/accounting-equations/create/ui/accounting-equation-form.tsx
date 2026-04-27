@@ -31,7 +31,6 @@ export function AccountingEquationForm({ organisationId }: { organisationId: str
                   id="asOf"
                   required
                   name="asOf"
-                  // type="datetime-local"
                   type="date"
                 />
                 {state?.errors?.asOf && (
@@ -88,6 +87,11 @@ export function AccountingEquationForm({ organisationId }: { organisationId: str
                   </FieldError>
                 )}
               </Field>
+              {!state?.success && state?.message && (
+                <FieldError>
+                  {state.message}
+                </FieldError>
+              )}
             </FieldGroup>
           </FieldSet>
           <Field orientation="horizontal">

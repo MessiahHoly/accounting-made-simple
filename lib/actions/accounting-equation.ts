@@ -14,7 +14,6 @@ export const createAccountingEquation = async (organisationId: string, prevState
   }
 
   const filteredFormData = getCleanFormData(formData);
-  // console.log("Filtered Form Data:", filteredFormData);
   const validatedData = AccountingEquationUncheckedCreateInputObjectSchema.safeParse({
     ...filteredFormData, userId: session.user.id, organisationId
   });
@@ -25,10 +24,17 @@ export const createAccountingEquation = async (organisationId: string, prevState
   }
 
   const { data } = validatedData
-  const { id } = await prisma.accountingEquation.create({
+
+  const { assets, liabilities, ownersEquity } = data
+  if (Number(assets) !== Number(liabilities) + Number(ownersEquity)) {
+    return { success: false, message: "The accounting equation must hold: Assets = Liabilities + Owner's Equity" };
+  }
+
+
+  await prisma.accountingEquation.create({
+    // const { id } = await prisma.accountingEquation.create({
     data
   });
 
   redirect(`/organisations/${organisationId}`);
-  // redirect(`/organisations/${organisationId}/accounting-equations/${id}`);
 }
