@@ -15,9 +15,17 @@ export const createAccountingEquation = async (organisationId: string, prevState
     return { success: false, message: "Unauthorized" };
   }
 
+  const AccountingEquationSchema = AccountingEquationUncheckedCreateInputObjectSchema.refine((data) => {
+    const { assets, liabilities, ownersEquity } = data;
+    return Number(assets) === Number(liabilities) + Number(ownersEquity);
+  }, {
+    message: "The accounting equation must hold: Assets = Liabilities + Owner's Equity",
+    path: ["assets", "liabilities", "ownersEquity"],
+  });
+
   const filteredFormData = getCleanFormData(formData);
   // const fields = filteredFormData as FormInput;
-  const validatedData = AccountingEquationUncheckedCreateInputObjectSchema.safeParse({
+  const validatedData = AccountingEquationSchema.safeParse({
     ...filteredFormData, userId: session.user.id, organisationId
   });
 
@@ -29,15 +37,14 @@ export const createAccountingEquation = async (organisationId: string, prevState
 
   const { data } = validatedData
 
-  const { assets, liabilities, ownersEquity } = data
-  if (Number(assets) !== Number(liabilities) + Number(ownersEquity)) {
-    return {
-      success: false, message: "The accounting equation must hold: Assets = Liabilities + Owner's Equity",
-      fields: data
-      // fields
-    };
-  }
-
+  // const { assets, liabilities, ownersEquity } = data
+  // if (Number(assets) !== Number(liabilities) + Number(ownersEquity)) {
+  //   return {
+  //     success: false, message: "The accounting equation must hold: Assets = Liabilities + Owner's Equity",
+  //     fields: data
+  //     // fields
+  //   };
+  // }
 
   await prisma.accountingEquation.create({
     data
