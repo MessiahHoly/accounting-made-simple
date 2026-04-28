@@ -7,7 +7,7 @@ import { z } from "zod";
 import prisma from "../prisma";
 import { redirect } from "next/navigation";
 
-type FormInput = z.infer<typeof AccountingEquationUncheckedCreateInputObjectSchema>;
+// type FormInput = z.infer<typeof AccountingEquationUncheckedCreateInputObjectSchema>;
 
 export const createAccountingEquation = async (organisationId: string, prevState: unknown, formData: FormData) => {
   const session = await getSession();
@@ -15,17 +15,16 @@ export const createAccountingEquation = async (organisationId: string, prevState
     return { success: false, message: "Unauthorized" };
   }
 
-  // const fields = Object.fromEntries(formData.entries());
   const filteredFormData = getCleanFormData(formData);
-  const fields = filteredFormData as FormInput;
+  // const fields = filteredFormData as FormInput;
   const validatedData = AccountingEquationUncheckedCreateInputObjectSchema.safeParse({
     ...filteredFormData, userId: session.user.id, organisationId
   });
 
   if (!validatedData.success) {
     const tree = z.treeifyError(validatedData.error);
-    return { success: false, message: "Invalid data", errors: tree.properties, fields };
-    // return { success: false, message: "Invalid data", errors: tree.properties, fields: filteredFormData };
+    return { success: false, message: "Invalid data", errors: tree.properties, fields: filteredFormData };
+    // return { success: false, message: "Invalid data", errors: tree.properties, fields };
   }
 
   const { data } = validatedData
@@ -34,14 +33,13 @@ export const createAccountingEquation = async (organisationId: string, prevState
   if (Number(assets) !== Number(liabilities) + Number(ownersEquity)) {
     return {
       success: false, message: "The accounting equation must hold: Assets = Liabilities + Owner's Equity",
-      fields
+      fields: data
+      // fields
     };
-    // return { success: false, message: "The accounting equation must hold: Assets = Liabilities + Owner's Equity", fields: filteredFormData };
   }
 
 
   await prisma.accountingEquation.create({
-    // const { id } = await prisma.accountingEquation.create({
     data
   });
 

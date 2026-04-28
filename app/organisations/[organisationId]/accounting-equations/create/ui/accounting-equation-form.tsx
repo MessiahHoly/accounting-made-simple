@@ -25,7 +25,6 @@ const initialState: ActionReturnType = {
 export function AccountingEquationForm({ organisationId }: { organisationId: string }) {
   const createAccountingEquationWithOrganisationId = createAccountingEquation.bind(null, organisationId);
   const [state, action, pending] = useActionState<ActionReturnType, FormData>(createAccountingEquationWithOrganisationId, initialState);
-  // const [state, action, pending] = useActionState<ActionReturnType, FormData>(createAccountingEquationWithOrganisationId, null as any);
 
   return (
     <div className="w-full max-w-md">
@@ -43,6 +42,7 @@ export function AccountingEquationForm({ organisationId }: { organisationId: str
                   name="asOf"
                   type="date"
                   defaultValue={String(state?.fields?.asOf) || ""}
+                  // defaultValue={String(state?.fields?.asOf) || ""}
                 />
                 {state?.errors?.asOf && (
                   <FieldError>
