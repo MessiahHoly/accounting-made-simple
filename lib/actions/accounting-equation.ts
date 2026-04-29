@@ -7,9 +7,15 @@ import { z } from "zod";
 import prisma from "../prisma";
 import { redirect } from "next/navigation";
 
-// type FormInput = z.infer<typeof AccountingEquationUncheckedCreateInputObjectSchema>;
+type FormInput = z.infer<typeof AccountingEquationUncheckedCreateInputObjectSchema>;
+type FormErrors = {
+  [K in keyof FormInput]?: {
+    errors: string[];
+  };
+};
+type ActionResponse = { success: boolean, message: string, fields?: Partial<FormInput>, errors?: FormErrors };
 
-export const createAccountingEquation = async (organisationId: string, prevState: unknown, formData: FormData) => {
+export const createAccountingEquation = async (organisationId: string, prevState: unknown, formData: FormData): Promise<ActionResponse> => {
   const session = await getSession();
   if (!session) {
     return { success: false, message: "Unauthorized" };
@@ -20,32 +26,25 @@ export const createAccountingEquation = async (organisationId: string, prevState
     return Number(assets) === Number(liabilities) + Number(ownersEquity);
   }, {
     message: "The accounting equation must hold: Assets = Liabilities + Owner's Equity",
-    path: ["assets", "liabilities", "ownersEquity"],
+    path: ["assets"],
+    // path: ["assets", "liabilities", "ownersEquity"],
   });
 
-  const filteredFormData = getCleanFormData(formData);
-  // const fields = filteredFormData as FormInput;
+  const fields = getCleanFormData(formData);
+  // const filteredFormData = getCleanFormData(formData);
   const validatedData = AccountingEquationSchema.safeParse({
-    ...filteredFormData, userId: session.user.id, organisationId
+    ...fields, userId: session.user.id, organisationId
+    // ...filteredFormData, userId: session.user.id, organisationId
   });
 
   if (!validatedData.success) {
     const tree = z.treeifyError(validatedData.error);
-    return { success: false, message: "Invalid data", errors: tree.properties, fields: filteredFormData };
-    // return { success: false, message: "Invalid data", errors: tree.properties, fields };
+    return { success: false, message: "Invalid data", errors: tree.properties, fields };
+    // return { success: false, message: "Invalid data", errors: tree.properties, fields: filteredFormData };
   }
-
-  const { data } = validatedData
-
-  // const { assets, liabilities, ownersEquity } = data
-  // if (Number(assets) !== Number(liabilities) + Number(ownersEquity)) {
-  //   return {
-  //     success: false, message: "The accounting equation must hold: Assets = Liabilities + Owner's Equity",
-  //     fields: data
-  //     // fields
-  //   };
   // }
 
+  const { data } = validatedData
   await prisma.accountingEquation.create({
     data
   });
