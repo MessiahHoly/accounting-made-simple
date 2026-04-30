@@ -1,4 +1,6 @@
 import { fetchOrganisation } from "@/lib/data/organisation"
+import { formatCurrency } from "@/lib/utils/utils"
+// import { Decimal } from "@prisma/client/runtime/client"
 import { notFound } from "next/navigation"
 
 export default async function Page({ params }: { params: Promise<{ organisationId: string }> }) {
@@ -9,6 +11,8 @@ export default async function Page({ params }: { params: Promise<{ organisationI
 
   const { accountingEquations } = organisation
 
+  // const toCurrency = (value: Decimal) => new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(Number(value))
+
   return (
     <main>
       <h1>{organisation?.name || organisationId}</h1>
@@ -17,9 +21,9 @@ export default async function Page({ params }: { params: Promise<{ organisationI
         {accountingEquations.map(({ id, asOf, assets, liabilities, ownersEquity }) => (
           <li key={id}>
             <strong>{asOf.toLocaleDateString()}</strong>
-            <p>Assets: {assets.toString()}</p>
-            <p>Liabilities: {liabilities.toString()}</p>
-            <p>Owners' Equity: {ownersEquity.toString()}</p>
+            <p>Assets: {formatCurrency(assets)}</p>
+            <p>Liabilities: {formatCurrency(liabilities)}</p>
+            <p>Owners' Equity: {formatCurrency(ownersEquity)}</p>
           </li>
         ))}
       </ul>
