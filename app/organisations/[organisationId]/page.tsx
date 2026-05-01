@@ -12,7 +12,7 @@ export default async function Page({ params }: { params: Promise<{ organisationI
   const { accountingEquations } = organisation
 
   return (
-    <main>
+    <main className="p-4">
       <h1>{organisation?.name || organisationId}</h1>
       <h2>Accounting Equations</h2>
       <ul>
