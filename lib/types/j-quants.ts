@@ -1,15 +1,11 @@
 import { z } from 'zod'
 
-export type JQuantsFinancialSummary = {
-  Code: string; // Stock code
-  // Name: string; // Company name
-  CurPerEn: string; // Current period end date
-  TA: string; // Total assets
-  Eq: string; // Equity
-  // Sales: string; // Sales
-  // OP: string; // Operating profit
-  // NP: string; // Net profit
-};
+// export type JQuantsFinancialSummary = {
+//   Code: string; // Stock code
+//   CurPerEn: string; // Current period end date
+//   TA: string; // Total assets
+//   Eq: string; // Equity
+// };
 
 export const JQuantsFinancialSummarySchema = z.object({
   TA:z.string(),
@@ -26,11 +22,13 @@ export const JQuantsFinancialSummaryApiResponseSchema = z.object({
 
 export type JQuantsApiResponse = z.infer<typeof JQuantsFinancialSummaryApiResponseSchema>;
 
-export type JQuantsFinancialSummaryApiResponse = {
-  data: JQuantsFinancialSummary[];
-  message: string;
-  status: number;
-};
+export type JQuantsFinancialSummary = z.infer<typeof JQuantsFinancialSummarySchema>;
+
+// export type JQuantsFinancialSummaryApiResponse = {
+//   data: JQuantsFinancialSummary[];
+//   message: string;
+//   status: number;
+// };
 
 // export type AccountingEquationData = {
 //   assets: number;
