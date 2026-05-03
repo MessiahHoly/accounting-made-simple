@@ -1,8 +1,13 @@
 'use server'
 
-import { JQuantsFinancialSummaryApiResponse, JQuantsFinancialSummaryApiResponseSchema } from "../types/j-quants";
+import {
+  JQuantsApiResponse,
+  // JQuantsFinancialSummaryApiResponse,
+  JQuantsFinancialSummaryApiResponseSchema
+} from "../types/j-quants";
 
-export const fetchJQuantsData = async (code: string): Promise<JQuantsFinancialSummaryApiResponse> => {
+export const fetchJQuantsData = async (code: string): Promise<JQuantsApiResponse> => {
+// export const fetchJQuantsData = async (code: string): Promise<JQuantsFinancialSummaryApiResponse> => {
   const API_KEY = process.env.J_QUANTS_API_KEY;
 
   if (!API_KEY) {

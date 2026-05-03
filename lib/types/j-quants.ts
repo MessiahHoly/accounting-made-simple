@@ -7,6 +7,10 @@ import { z } from 'zod'
 //   Eq: string; // Equity
 // };
 
+//TODO: use zod data transformation to convert TA and Eq to numbers, and CurPerEn to Date. This way, you can work with the data more easily in your calculations.
+// 3. Data TransformationNotice your TA (Total Assets) and Eq (Equity) are strings in the API, but you likely want them as numbers for calculations. Zod allows you to transform data during the validation step:typescript// You can turn that string into a number automatically
+// TA: z.string().transform((val) => parseFloat(val))
+
 export const JQuantsFinancialSummarySchema = z.object({
   TA:z.string(),
   Eq:z.string(),
