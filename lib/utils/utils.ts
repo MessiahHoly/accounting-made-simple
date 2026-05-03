@@ -1,5 +1,5 @@
 import { Decimal } from "@prisma/client/runtime/client";
-import { Code } from "lucide-react";
+import { JQuantsFinancialSummary } from "../types/j-quants";
 
 export const getCleanFormData = (formData: FormData) => {
   const raw = Object.fromEntries(formData.entries());
@@ -10,10 +10,12 @@ export const formatCurrency = (value: Decimal) => {
   return new Intl.NumberFormat("ja-JP", { style: "currency", currency: "JPY" }).format(Number(value))
 }
 
-export const getAccountingEquation = (jQuantsData: {
-  TA: string, Eq: string, CurPerEn: string, Code: string
-}[]) => {
+export const getAccountingEquation = (jQuantsData: JQuantsFinancialSummary[]) => {
+// export const getAccountingEquation = (jQuantsData: {
+//   TA: string, Eq: string, CurPerEn: string, Code: string
+// }[]) => {
   console.log("Raw J-Quants data:", jQuantsData);
+  
   return jQuantsData.map(({ TA, Eq, CurPerEn, Code }) => {
     const assets = Number(TA);
     const equity = Number(Eq);
