@@ -11,22 +11,35 @@ import { z } from 'zod'
 // 3. Data TransformationNotice your TA (Total Assets) and Eq (Equity) are strings in the API, but you likely want them as numbers for calculations. Zod allows you to transform data during the validation step:typescript// You can turn that string into a number automatically
 // TA: z.string().transform((val) => parseFloat(val))
 
-export const JQuantsFinancialSummarySchema = z.object({
-  TA:z.string(),
-  Eq:z.string(),
-  CurPerEn:z.string(),
-  Code:z.string(),
+export const FinancialSummarySchema = z.object({
+  TA: z.string(),
+  Eq: z.string(),
+  CurPerEn: z.string(),
+  Code: z.string(),
 })
+// export const JQuantsFinancialSummarySchema = z.object({
+//   TA:z.string(),
+//   Eq:z.string(),
+//   CurPerEn:z.string(),
+//   Code:z.string(),
+// })
 
-export const JQuantsFinancialSummaryApiResponseSchema = z.object({
-  data: z.array(JQuantsFinancialSummarySchema),
+export const ApiResponseSchema = z.object({
+  data: z.array(FinancialSummarySchema),
   message: z.string(),
   status: z.number(),
 })
+// export const JQuantsFinancialSummaryApiResponseSchema = z.object({
+//   data: z.array(JQuantsFinancialSummarySchema),
+//   message: z.string(),
+//   status: z.number(),
+// })
 
-export type JQuantsApiResponse = z.infer<typeof JQuantsFinancialSummaryApiResponseSchema>;
+export type FinancialSummary = z.infer<typeof FinancialSummarySchema>;
 
-export type JQuantsFinancialSummary = z.infer<typeof JQuantsFinancialSummarySchema>;
+export type JQuantsApiResponse = z.infer<typeof ApiResponseSchema>;
+
+// export type JQuantsFinancialSummary = z.infer<typeof JQuantsFinancialSummarySchema>;
 
 // export type JQuantsFinancialSummaryApiResponse = {
 //   data: JQuantsFinancialSummary[];
