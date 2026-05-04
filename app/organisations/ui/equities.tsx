@@ -12,11 +12,16 @@ export default async function Equities({ query }: { query: string }) {
     );
   }
 
-  const filteredEquities = response.data.filter((eq) =>
-    eq.CoName.toLowerCase().includes(query.toLowerCase()) ||
-    eq.Code.toLowerCase().includes(query.toLowerCase()) ||
-    eq.CoNameEn.toLowerCase().includes(query.toLowerCase())
+  const filteredEquities = response.data.filter(({ CoName, CoNameEn, Code }) =>
+    CoName.toLowerCase().includes(query.toLowerCase())
+    || Code.toLowerCase().includes(query.toLowerCase())
+    || CoNameEn.toLowerCase().includes(query.toLowerCase())
   );
+  // const filteredEquities = response.data.filter((eq) =>
+  //   eq.CoName.toLowerCase().includes(query.toLowerCase()) ||
+  //   eq.Code.toLowerCase().includes(query.toLowerCase()) ||
+  //   eq.CoNameEn.toLowerCase().includes(query.toLowerCase())
+  // );
 
   return (
     <div>
