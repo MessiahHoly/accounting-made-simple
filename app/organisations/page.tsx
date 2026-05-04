@@ -1,7 +1,8 @@
 import { fetchEquities } from "@/lib/data/j-quants";
 
 export default async function Page() {
-  await fetchEquities();
+  const equities = await fetchEquities();
+  console.log("Equities data:", equities);
 
   return (
     <div>
