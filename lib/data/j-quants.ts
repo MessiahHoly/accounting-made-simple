@@ -34,26 +34,19 @@ export const fetchEquities = async () => {
 
   if (!API_KEY) {
     return { error: "J-Quants API key is not set in environment variables" };
-    // return { message: "J-Quants API key is not set in environment variables", data: [], status: 500 };
   }
 
   const url = `https://api.jquants.com/v2/equities/master`;
-
   const res = await fetch(url, { next: { revalidate: 3600 }, headers: { 'x-api-key': API_KEY } });
 
   if (!res.ok) return { error: "Failed to fetch data" };
-  // if (!res.ok) return { message: "Failed to fetch data", data: [], status: res.status };
 
   const rawData = await res.json();
-
-  // console.log("Raw data from J-Quants API (Equities):", rawData);
-
   const result = EquityListResponseSchema.safeParse(rawData);
 
   if (!result.success) {
     console.error("Zod validation error:", result.error);
     return { error: "Failed to parse API response" };
-    // return { message: "Failed to parse API response", data: [], status: 500 };
   }
 
   return result.data;
