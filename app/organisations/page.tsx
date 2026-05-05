@@ -5,12 +5,9 @@ import SearchSkeleton from "./ui/searchSkelton";
 import Equities from "./ui/equities";
 
 export default async function Page(props: { searchParams?: Promise<{ query?: string }> }) {
-  // export default async function Page({ props }: { props: { searchParams?: Promise<{ query?: string }> } }) {
-  console.log("Page component received props:", props);
+  // console.log("Page component received props:", props);
   const searchParams = await props?.searchParams;
-  // console.log("Received searchParams:", searchParams);
   const query = searchParams?.query || "";
-  // console.log("Page received query:", query);
 
   return (
     <main className="p-4 w-full max-w-md mx-auto">
