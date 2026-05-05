@@ -19,14 +19,6 @@ export default async function Page({ params }: { params: Promise<{ organisationI
         {accountingEquations.map((eq) => (
           <AccountingEquationRow key={eq.id} accountingEquation={eq} />
         ))}
-        {/* {accountingEquations.map(({ id, asOf, assets, liabilities, ownersEquity }) => (
-          <li key={id}>
-            <strong>{asOf.toLocaleDateString()}</strong>
-            <p>Assets: {formatCurrency(assets)}</p>
-            <p>Liabilities: {formatCurrency(liabilities)}</p>
-            <p>Owners' Equity: {formatCurrency(ownersEquity)}</p>
-          </li>
-        ))} */}
       </ul>
     </main>
   )
