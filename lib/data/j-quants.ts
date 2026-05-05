@@ -55,3 +55,19 @@ export const fetchEquities = async () => {
 
   return result.data;
 };
+
+export const fetchEquity = async (code: string) => {
+  const equitiesResponse = await fetchEquities();
+
+  if ("error" in equitiesResponse) {
+    return { error: equitiesResponse.error };
+  }
+
+  const equity = equitiesResponse.data.find((eq) => eq.Code === code);
+
+  if (!equity) {
+    return { error: "Equity not found" };
+  }
+
+  return { data: equity };
+};
