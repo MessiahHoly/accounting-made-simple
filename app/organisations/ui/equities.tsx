@@ -1,7 +1,7 @@
 import { fetchEquities } from "@/lib/data/j-quants";
+import { Organisation } from "./organisation";
 
 export default async function Equities({ query }: { query: string }) {
-  // console.log("Fetching equities with query:", query);
 
   const response = await fetchEquities();
 
@@ -20,19 +20,20 @@ export default async function Equities({ query }: { query: string }) {
     || CoNameEn.toLowerCase().includes(query.toLowerCase())
   );
 
-  // console.log("Filtered equities:", filteredEquities);
-
   return (
-    <div>
-      <h2>Equities</h2>
-      <p>This is the equities component.</p>
-      <ul className="mt-4 space-y-2">
+    <div className="flex flex-col gap-4">
+      {/* <h2>Equities</h2>
+      <p>This is the equities component.</p> */}
+      {/* <ul className="mt-4 space-y-2">
         {filteredEquities.map((eq) => (
           <li key={eq.Code} className="p-2 border rounded">
             <strong>{eq.CoName}</strong> ({eq.Code})
           </li>
         ))}
-      </ul>
+      </ul> */}
+      {filteredEquities.map((eq) => (
+        <Organisation key={eq.Code} equity={eq} />
+      ))}
     </div>
   );
 }
