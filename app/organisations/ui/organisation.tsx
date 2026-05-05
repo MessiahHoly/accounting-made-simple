@@ -1,4 +1,4 @@
-import { BadgeCheckIcon, ChevronRightIcon } from "lucide-react"
+// import { BadgeCheckIcon, ChevronRightIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -6,10 +6,11 @@ import {
   ItemActions,
   ItemContent,
   ItemDescription,
-  ItemMedia,
+  // ItemMedia,
   ItemTitle,
 } from "@/components/ui/item"
 import { Equity } from "@/lib/types/j-quants"
+import Link from "next/link"
 
 export function Organisation({ equity }: { equity: Equity }) {
   return (
@@ -22,24 +23,13 @@ export function Organisation({ equity }: { equity: Equity }) {
           </ItemDescription>
         </ItemContent>
         <ItemActions>
-          <Button variant="outline" size="sm">
-            Action
+          <Button variant="outline" size="sm" asChild>
+            <Link href={`/organisations/${equity.Code}`} className="no-underline">
+              Open
+            </Link>
           </Button>
         </ItemActions>
       </Item>
-      {/* <Item variant="outline" size="sm" asChild>
-        <a href="#">
-          <ItemMedia>
-            <BadgeCheckIcon className="size-5" />
-          </ItemMedia>
-          <ItemContent>
-            <ItemTitle>Your profile has been verified.</ItemTitle>
-          </ItemContent>
-          <ItemActions>
-            <ChevronRightIcon className="size-4" />
-          </ItemActions>
-        </a>
-      </Item> */}
     </div>
   )
 }

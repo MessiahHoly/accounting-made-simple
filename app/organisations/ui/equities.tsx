@@ -3,7 +3,6 @@ import { Organisation } from "./organisation";
 
 export default async function Equities({ query }: { query: string }) {
   const response = query.length > 0 ? await fetchEquities() : { data: [] };
-  // const response = await fetchEquities();
 
   if ("error" in response) {
     return (
