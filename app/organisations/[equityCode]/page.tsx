@@ -24,11 +24,14 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   return (
     <main className="p-4">
       <h1>{equity.CoName}</h1>
+      {/* <p>{equity.Code}</p>
+      <p>{equity.CoNameEn}</p> */}
       <p>{equity.Code} - {equity.CoNameEn}</p>
       <h2>Accounting Equations</h2>
       <ul>
         {financeSummaries.map(({ Code, CurPerEn, TA, Eq }) => (
           <AccountingEquationRow
+            key={`${Code}-${CurPerEn}`}
             // key={Code}
             accountingEquation={{ asOf: CurPerEn, assets: Number(TA), liabilities: Number(TA) - Number(Eq), ownersEquity: Number(Eq) }}
           />
