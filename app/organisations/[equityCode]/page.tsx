@@ -1,6 +1,8 @@
 import { fetchEquity, fetchFinanceSummary } from "@/lib/data/j-quants"
 import { notFound } from "next/navigation"
 import AccountingEquationRow from "./ui/AccountingEquation"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
@@ -23,6 +25,11 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
 
   return (
     <main className="p-4">
+      <Button asChild variant="outline" className="mb-8">
+        <Link href="/organisations" className="no-underline">
+          Back to Search
+        </Link>
+      </Button>
       <h1>{equity.CoName}</h1>
       <p>{equity.Code} - {equity.CoNameEn}</p>
       <h2>Accounting Equations</h2>
