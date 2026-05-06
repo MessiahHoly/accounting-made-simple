@@ -1,4 +1,7 @@
-import { fetchEquity, fetchFinanceSummary } from "@/lib/data/j-quants"
+import {
+  fetchEquity, fetchFinanceSummary,
+  // fetchFinancialStatements
+} from "@/lib/data/j-quants"
 import { notFound } from "next/navigation"
 import AccountingEquationRow from "./ui/AccountingEquation"
 import { Button } from "@/components/ui/button"
@@ -6,7 +9,13 @@ import Link from "next/link"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
-  const [financeResponse, equityResponse] = await Promise.all([fetchFinanceSummary(equityCode), fetchEquity(equityCode)])
+  const [financeResponse, equityResponse,
+    // financialStatementsResponse
+  ] = await Promise.all([
+    fetchFinanceSummary(equityCode),
+    fetchEquity(equityCode),
+    // fetchFinancialStatements(equityCode)
+  ])
 
   if ("error" in financeResponse) {
     console.error("Error fetching finance summary:", financeResponse.error)
