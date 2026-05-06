@@ -1,21 +1,23 @@
 import {
   fetchEquity, fetchFinanceSummary,
-  // fetchFinancialStatements
 } from "@/lib/data/j-quants"
 import { notFound } from "next/navigation"
 import AccountingEquationRow from "./ui/AccountingEquation"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
+import { fetchBalanceSheet } from "@/lib/data/edinet-db"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
-  const [financeResponse, equityResponse,
-    // financialStatementsResponse
+  // console.log("Fetching data for equity code:", equityCode)
+  const [financeResponse, equityResponse, balanceSheetResponse
   ] = await Promise.all([
     fetchFinanceSummary(equityCode),
     fetchEquity(equityCode),
-    // fetchFinancialStatements(equityCode)
+    fetchBalanceSheet("E02144")
   ])
+
+  console.log(balanceSheetResponse)
 
   if ("error" in financeResponse) {
     console.error("Error fetching finance summary:", financeResponse.error)
