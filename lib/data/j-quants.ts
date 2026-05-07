@@ -22,8 +22,6 @@ export const fetchFinanceSummary = async (code: string) => {
     return { error: "Failed to parse API response" };
   }
 
-  // console.log("Parsed finance summary data:", result.data);
-
   const data = result.data.data.sort((a, b) => new Date(b.CurPerEn).getTime() - new Date(a.CurPerEn).getTime());
 
   return { data };
@@ -67,30 +65,3 @@ export const fetchEquity = async (code: string) => {
 
   return { data: equity };
 };
-
-// export const fetchFinancialStatements = async (code: string) => {
-//   const API_KEY = process.env.J_QUANTS_API_KEY;
-
-//   if (!API_KEY) {
-//     return { error: "J-Quants API key is not set in environment variables" };
-//   }
-
-//   const url = `https://api.jquants.com/v2/fins/details?code=${code}`;
-//   const res = await fetch(url, { next: { revalidate: 3600 }, headers: { 'x-api-key': API_KEY } });
-//   console.log(res);
-
-//   if (!res.ok) return { error: "Failed to fetch data" };
-
-//   const rawData = await res.json();
-//   console.log("Raw financial statements data:", rawData);
-//   const result = FinancialSummaryListResponseSchema.safeParse(rawData);
-
-//   if (!result.success) {
-//     console.error("Zod validation error:", result.error);
-//     return { error: "Failed to parse API response" };
-//   }
-
-//   const data = result.data.data.sort((a, b) => new Date(b.CurPerEn).getTime() - new Date(a.CurPerEn).getTime());
-
-//   return { data };
-// };
