@@ -6,22 +6,18 @@ import AccountingEquationRow from "./ui/AccountingEquation"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import {
-  // fetchBalanceSheet,
+  fetchBalanceSheet,
   searchCompany
 } from "@/lib/data/edinet-db"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
-  // console.log("Fetching data for equity code:", equityCode)
   const [financeResponse, equityResponse, searchResponse
   ] = await Promise.all([
     fetchFinanceSummary(equityCode),
     fetchEquity(equityCode),
-    // fetchBalanceSheet("E02144")
     searchCompany(equityCode)
   ])
-
-  // console.log(searchResponse)
 
   if ("error" in financeResponse) {
     console.error("Error fetching finance summary:", financeResponse.error)
@@ -43,10 +39,9 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   const { data: searchResults } = searchResponse
 
   if (!financeSummaries || financeSummaries.length === 0 || searchResults.length === 0) return notFound()
-  // if (!financeSummaries || financeSummaries.length === 0) return notFound()
   
   const { edinet_code } = searchResults[0]
-  // console.log("EDINET code for the company:", edinet_code)
+  await fetchBalanceSheet(edinet_code)
 
   return (
     <main className="p-4">
