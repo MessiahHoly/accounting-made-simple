@@ -10,7 +10,9 @@ import {
   // fetchBalanceSheet,
   searchCompany
 } from "@/lib/data/edinet-db"
-import { BalanceSheet } from "./ui/BalanceSheet"
+import FinancialTable from "./ui/BalanceSheet"
+// import BalanceSheet from "./ui/BalanceSheet"
+// import { BalanceSheet } from "./ui/BalanceSheet"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
@@ -75,7 +77,7 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
           />
         ))}
       </ul>
-      <BalanceSheet data={balanceSheets} />
+      <FinancialTable data={balanceSheets} />
     </main>
   )
 }
