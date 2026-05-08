@@ -1,6 +1,6 @@
 'use server';
 
-import { SearchResponseSchema } from "../types/edinet-db";
+import { FinancialsApiResponseSchema, SearchResponseSchema } from "../types/edinet-db";
 
 export const searchCompany = async (query: string) => {
   const apiKey = process.env.EDINET_DB_API_KEY;
@@ -32,7 +32,7 @@ export const searchCompany = async (query: string) => {
   return { data: result.data.data };
 };
 
-export const fetchBalanceSheet = async (edinetCode: string) => {
+export const fetchBalanceSheets = async (edinetCode: string) => {
   const apiKey = process.env.EDINET_DB_API_KEY;
   if (!apiKey) {
     return { error: 'EDINET_DB_API_KEY is not set in environment variables' };
@@ -46,12 +46,22 @@ export const fetchBalanceSheet = async (edinetCode: string) => {
       },
     }
   );
+  // console.log(response);
 
   if (!response.ok) {
     return { error: `Failed to fetch balance sheet: ${response.statusText}` };
   }
 
-  const data = await response.json();
-  console.log(data)
-  return data;
+  const rawData = await response.json();
+  // console.log(rawData.data);
+  const result = FinancialsApiResponseSchema.safeParse(rawData);
+  // console.log(result);
+
+  if (!result.success) {
+    // console.error("Zod validation error:", result.error);
+    return { error: "Failed to parse API response" };
+  }
+
+  return { data: result.data.data };
+  // return { data: result.data.data };
 };

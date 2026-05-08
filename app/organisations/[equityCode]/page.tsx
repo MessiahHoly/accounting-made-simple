@@ -6,7 +6,8 @@ import AccountingEquationRow from "./ui/AccountingEquation"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import {
-  fetchBalanceSheet,
+  fetchBalanceSheets,
+  // fetchBalanceSheet,
   searchCompany
 } from "@/lib/data/edinet-db"
 
@@ -41,7 +42,19 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   if (!financeSummaries || financeSummaries.length === 0 || searchResults.length === 0) return notFound()
   
   const { edinet_code } = searchResults[0]
-  await fetchBalanceSheet(edinet_code)
+  // console.log("EDINET Code:", edinet_code)
+  const balanceSheetResponse = await fetchBalanceSheets(edinet_code)
+  // console.log("Balance Sheet Response:", balanceSheetResponse)
+
+  //TODO: update next.js
+
+  if ("error" in balanceSheetResponse) {
+    console.error("Error fetching balance sheet:", balanceSheetResponse.error)
+    return <div>Error: {balanceSheetResponse.error}</div>
+  }
+
+  const { data: balanceSheets } = balanceSheetResponse
+  console.log("Balance Sheet Data:", balanceSheets)
 
   return (
     <main className="p-4">
