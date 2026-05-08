@@ -10,6 +10,7 @@ import {
   // fetchBalanceSheet,
   searchCompany
 } from "@/lib/data/edinet-db"
+import { BalanceSheet } from "./ui/BalanceSheet"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
@@ -54,7 +55,7 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   }
 
   const { data: balanceSheets } = balanceSheetResponse
-  console.log("Balance Sheet Data:", balanceSheets)
+  // console.log("Balance Sheet Data:", balanceSheets)
 
   return (
     <main className="p-4">
@@ -74,6 +75,7 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
           />
         ))}
       </ul>
+      <BalanceSheet data={balanceSheets} />
     </main>
   )
 }
