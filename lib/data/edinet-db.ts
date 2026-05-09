@@ -46,22 +46,17 @@ export const fetchBalanceSheets = async (edinetCode: string) => {
       },
     }
   );
-  // console.log(response);
 
   if (!response.ok) {
     return { error: `Failed to fetch balance sheet: ${response.statusText}` };
   }
 
   const rawData = await response.json();
-  // console.log(rawData.data);
   const result = FinancialsApiResponseSchema.safeParse(rawData);
-  // console.log(result);
 
   if (!result.success) {
-    // console.error("Zod validation error:", result.error);
     return { error: "Failed to parse API response" };
   }
 
   return { data: result.data.data };
-  // return { data: result.data.data };
 };

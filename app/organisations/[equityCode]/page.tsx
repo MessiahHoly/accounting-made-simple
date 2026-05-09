@@ -53,29 +53,6 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
 
   const { data: balanceSheets } = balanceSheetResponse
 
-  // return (
-  //   <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
-  //   {/* <main className="p-4"> */}
-  //     <Button asChild variant="outline" className="mb-8">
-  //       <Link href="/organisations" className="no-underline">
-  //         Back to Search
-  //       </Link>
-  //     </Button>
-  //     <h1>{equity.CoName}</h1>
-  //     <p>{equity.Code} - {equity.CoNameEn}</p>
-  //     <h2>Accounting Equations</h2>
-  //     <ul>
-  //       {financeSummaries.map(({ Code, CurPerEn, TA, Eq }) => (
-  //         <AccountingEquationRow
-  //           key={`${Code}-${CurPerEn}`}
-  //           accountingEquation={{ asOf: CurPerEn, assets: Number(TA), liabilities: Number(TA) - Number(Eq), ownersEquity: Number(Eq) }}
-  //         />
-  //       ))}
-  //     </ul>
-  //     <FinancialTable data={balanceSheets} />
-  //   </main>
-  // )
-
   return (
     /* Add max-w-screen-xl (or 7xl) and overflow-hidden to keep the page contained */
     <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
