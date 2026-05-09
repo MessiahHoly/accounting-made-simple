@@ -7,12 +7,9 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import {
   fetchBalanceSheets,
-  // fetchBalanceSheet,
   searchCompany
 } from "@/lib/data/edinet-db"
 import FinancialTable from "./ui/BalanceSheet"
-// import BalanceSheet from "./ui/BalanceSheet"
-// import { BalanceSheet } from "./ui/BalanceSheet"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
@@ -43,11 +40,9 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   const { data: searchResults } = searchResponse
 
   if (!financeSummaries || financeSummaries.length === 0 || searchResults.length === 0) return notFound()
-  
+
   const { edinet_code } = searchResults[0]
-  // console.log("EDINET Code:", edinet_code)
   const balanceSheetResponse = await fetchBalanceSheets(edinet_code)
-  // console.log("Balance Sheet Response:", balanceSheetResponse)
 
   //TODO: update next.js
 
@@ -57,26 +52,62 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   }
 
   const { data: balanceSheets } = balanceSheetResponse
-  // console.log("Balance Sheet Data:", balanceSheets)
+
+  // return (
+  //   <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
+  //   {/* <main className="p-4"> */}
+  //     <Button asChild variant="outline" className="mb-8">
+  //       <Link href="/organisations" className="no-underline">
+  //         Back to Search
+  //       </Link>
+  //     </Button>
+  //     <h1>{equity.CoName}</h1>
+  //     <p>{equity.Code} - {equity.CoNameEn}</p>
+  //     <h2>Accounting Equations</h2>
+  //     <ul>
+  //       {financeSummaries.map(({ Code, CurPerEn, TA, Eq }) => (
+  //         <AccountingEquationRow
+  //           key={`${Code}-${CurPerEn}`}
+  //           accountingEquation={{ asOf: CurPerEn, assets: Number(TA), liabilities: Number(TA) - Number(Eq), ownersEquity: Number(Eq) }}
+  //         />
+  //       ))}
+  //     </ul>
+  //     <FinancialTable data={balanceSheets} />
+  //   </main>
+  // )
 
   return (
-    <main className="p-4">
+    /* Add max-w-screen-xl (or 7xl) and overflow-hidden to keep the page contained */
+    <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
       <Button asChild variant="outline" className="mb-8">
         <Link href="/organisations" className="no-underline">
           Back to Search
         </Link>
       </Button>
-      <h1>{equity.CoName}</h1>
-      <p>{equity.Code} - {equity.CoNameEn}</p>
-      <h2>Accounting Equations</h2>
-      <ul>
-        {financeSummaries.map(({ Code, CurPerEn, TA, Eq }) => (
-          <AccountingEquationRow
-            key={`${Code}-${CurPerEn}`}
-            accountingEquation={{ asOf: CurPerEn, assets: Number(TA), liabilities: Number(TA) - Number(Eq), ownersEquity: Number(Eq) }}
-          />
-        ))}
-      </ul>
+
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold">{equity.CoName}</h1>
+        <p className="text-muted-foreground">{equity.Code} - {equity.CoNameEn}</p>
+      </div>
+
+      <section className="mb-12">
+        <h2 className="text-xl font-semibold mb-4">Accounting Equations</h2>
+        <ul className="space-y-2">
+          {financeSummaries.map(({ Code, CurPerEn, TA, Eq }) => (
+            <AccountingEquationRow
+              key={`${Code}-${CurPerEn}`}
+              accountingEquation={{
+                asOf: CurPerEn,
+                assets: Number(TA),
+                liabilities: Number(TA) - Number(Eq),
+                ownersEquity: Number(Eq)
+              }}
+            />
+          ))}
+        </ul>
+      </section>
+
+      {/* The table component below will now handle its own internal scrolling */}
       <FinancialTable data={balanceSheets} />
     </main>
   )
