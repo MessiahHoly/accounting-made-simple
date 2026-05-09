@@ -33,46 +33,39 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
 
   return (
     <Card className="w-full overflow-hidden border md:shadow-sm">
-      <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b bg-slate-50/50">
+
+      <CardHeader className="flex flex-col gap-4 pb-4 border-b bg-slate-50/50 sm:flex-row sm:items-center sm:justify-between">
+        {/* Title Area */}
         <div>
           <CardTitle className="text-base font-bold">Annual Balance Sheet Comparison</CardTitle>
           <p className="text-xs text-muted-foreground mt-1">Export available for current view</p>
         </div>
-        {/* <div className="flex items-center gap-2 w-full sm:w-auto">
-          <Button variant="outline" size="sm" onClick={() => downloadCsv(filteredData)} className="hidden sm:flex gap-2">
-            <Download className="h-4 w-4" />
-            CSV
-          </Button>
-          <Tabs defaultValue="5" onValueChange={setRange} className="w-full sm:w-[240px]">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="3">3Y</TabsTrigger>
-              <TabsTrigger value="5">5Y</TabsTrigger>
-              <TabsTrigger value="all">All</TabsTrigger>
-            </TabsList>
-          </Tabs>
-        </div> */}
-        <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
-          {/* Modified Button: Always visible, text only on larger screens */}
+
+        {/* Actions Area (Button and Tabs) */}
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          {/* Download Button: Now uses flex-1 to occupy space on mobile */}
           <Button
             variant="outline"
             size="sm"
             onClick={() => downloadCsv(filteredData)}
-            className="flex items-center gap-2"
+            className="flex-1 sm:flex-none gap-2 h-9"
           >
             <Download className="h-4 w-4" />
-            <span className="hidden xs:inline sm:inline">CSV</span>
+            <span>CSV</span>
           </Button>
 
-          <Tabs defaultValue="5" onValueChange={setRange} className="w-[180px] xs:w-[240px]">
-            <TabsList className="grid w-full grid-cols-3">
+          {/* Range Selection Tabs */}
+          <Tabs defaultValue="5" onValueChange={setRange} className="flex-[2] sm:w-[200px]">
+            <TabsList className="grid w-full grid-cols-3 h-9">
               <TabsTrigger value="3">3Y</TabsTrigger>
               <TabsTrigger value="5">5Y</TabsTrigger>
               <TabsTrigger value="all">All</TabsTrigger>
             </TabsList>
           </Tabs>
         </div>
-
       </CardHeader>
+
+
       <CardContent className="p-0">
         <div className="relative w-full overflow-auto max-h-[70vh]">
           <Table className="min-w-[1000px] border-separate border-spacing-0 text-sm">
