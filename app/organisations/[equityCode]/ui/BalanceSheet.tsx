@@ -68,14 +68,21 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
 
       <CardContent className="p-0">
         <div className="relative w-full overflow-auto max-h-[70vh]">
-          <Table className="min-w-[1000px] border-separate border-spacing-0 text-sm">
+          <Table className="w-full table-fixed border-separate border-spacing-0 text-sm">
             <TableHeader className="sticky top-0 z-40">
               <TableRow className="hover:bg-transparent">
-                <TableHead className="sticky left-0 top-0 z-50 w-[200px] bg-slate-100 border-r border-b font-bold text-slate-900">
+                {/* Category Column: Keep a fixed width */}
+                <TableHead className="sticky left-0 top-0 z-50 w-[180px] md:w-[220px] bg-slate-100 border-r border-b font-bold text-slate-900">
                   Category
                 </TableHead>
+
                 {filteredData.map((year) => (
-                  <TableHead key={year.fiscal_year} className="text-right font-bold min-w-[110px] bg-slate-100 border-b">
+                  // Year Columns: Use min-w to prevent squishing on mobile, 
+                  // but don't force a huge width on desktop.
+                  <TableHead
+                    key={year.fiscal_year}
+                    className="text-right font-bold w-[120px] md:w-[150px] bg-slate-100 border-b"
+                  >
                     FY {year.fiscal_year}
                   </TableHead>
                 ))}
