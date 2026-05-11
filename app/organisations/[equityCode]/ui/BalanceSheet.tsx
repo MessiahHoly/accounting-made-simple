@@ -64,8 +64,6 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
           </Tabs>
         </div>
       </CardHeader>
-
-
       <CardContent className="p-0">
         <div className="relative w-full overflow-auto max-h-[70vh]">
           <Table className="w-full table-fixed border-separate border-spacing-0 text-sm">
@@ -75,7 +73,6 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
                 <TableHead className="sticky left-0 top-0 z-50 w-[180px] md:w-[220px] bg-slate-100 border-r border-b font-bold text-slate-900">
                   Category
                 </TableHead>
-
                 {filteredData.map((year) => (
                   // Year Columns: Use min-w to prevent squishing on mobile, 
                   // but don't force a huge width on desktop.
