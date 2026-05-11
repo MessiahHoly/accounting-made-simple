@@ -33,14 +33,12 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
 
   return (
     <Card className="w-full overflow-hidden border md:shadow-sm">
-
       <CardHeader className="flex flex-col gap-4 pb-4 border-b bg-slate-50/50 sm:flex-row sm:items-center sm:justify-between">
         {/* Title Area */}
         <div>
           <CardTitle className="text-base font-bold">Annual Balance Sheet Comparison</CardTitle>
           <p className="text-xs text-muted-foreground mt-1">Export available for current view</p>
         </div>
-
         {/* Actions Area (Button and Tabs) */}
         <div className="flex items-center gap-2 w-full sm:w-auto">
           {/* Download Button: Now uses flex-1 to occupy space on mobile */}
@@ -53,9 +51,9 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
             <Download className="h-4 w-4" />
             <span>CSV</span>
           </Button>
-
           {/* Range Selection Tabs */}
-          <Tabs defaultValue="5" onValueChange={setRange} className="flex-[2] sm:w-[200px]">
+          <Tabs defaultValue="5" onValueChange={setRange} className="flex-2 sm:w-50">
+          {/* <Tabs defaultValue="5" onValueChange={setRange} className="flex-2 sm:w-[200px]"> */}
             <TabsList className="grid w-full grid-cols-3 h-9">
               <TabsTrigger value="3">3Y</TabsTrigger>
               <TabsTrigger value="5">5Y</TabsTrigger>
@@ -70,7 +68,8 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
             <TableHeader className="sticky top-0 z-40">
               <TableRow className="hover:bg-transparent">
                 {/* Category Column: Keep a fixed width */}
-                <TableHead className="sticky left-0 top-0 z-50 w-[180px] md:w-[220px] bg-slate-100 border-r border-b font-bold text-slate-900">
+                <TableHead className="sticky left-0 top-0 z-50 w-45 md:w-55 bg-slate-100 border-r border-b font-bold text-slate-900">
+                {/* <TableHead className="sticky left-0 top-0 z-50 w-[180px] md:w-[220px] bg-slate-100 border-r border-b font-bold text-slate-900"> */}
                   Category
                 </TableHead>
                 {filteredData.map((year) => (
@@ -78,7 +77,8 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
                   // but don't force a huge width on desktop.
                   <TableHead
                     key={year.fiscal_year}
-                    className="text-right font-bold w-[120px] md:w-[150px] bg-slate-100 border-b"
+                    className="text-right font-bold w-30 md:w-37.5 bg-slate-100 border-b"
+                    // className="text-right font-bold w-[120px] md:w-[150px] bg-slate-100 border-b"
                   >
                     FY {year.fiscal_year}
                   </TableHead>
