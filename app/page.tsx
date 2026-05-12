@@ -1,11 +1,7 @@
-// import { getAccountingEquation } from "@/lib/utils/utils";
-
 import { Suspense } from "react";
 import Search from "./ui/search";
 import SearchSkeleton from "./ui/searchSkelton";
 import Equities from "./ui/equities";
-
-//TODO: move search, search skelton and equities component 
 
 export default async function Home(props: { searchParams?: Promise<{ query?: string }> }) {
   const searchParams = await props?.searchParams;
