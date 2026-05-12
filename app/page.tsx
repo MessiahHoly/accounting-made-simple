@@ -1,17 +1,25 @@
-// import Image from "next/image";
+// import { getAccountingEquation } from "@/lib/utils/utils";
 
-// import { fetchJQuantsData } from "@/lib/data/j-quants";
-import { getAccountingEquation } from "@/lib/utils/utils";
+import { Suspense } from "react";
+import Search from "./organisations/ui/search";
+import SearchSkeleton from "./organisations/ui/searchSkelton";
+import Equities from "./organisations/ui/equities";
 
-export default async function Home() {
-  // const data = await fetchJQuantsData("7203"); // Example: Fetch data for Toyota Motor Corporation (7203)
-  // console.log("Raw data from J-Quants API:", data);
-  // const accountingData = getAccountingEquation(data.data);
-  // console.log(accountingData);
+//TODO: move search, search skelton and equities component 
+
+export default async function Home(props: { searchParams?: Promise<{ query?: string }> }) {
+  const searchParams = await props?.searchParams;
+  const query = searchParams?.query || "";
 
   return (
-    <main>
+    <main className="p-4 w-full max-w-md mx-auto">
       <p>Assets = Liabilities + Owner's Equity</p>
+      <div className="flex flex-col gap-10">
+        <Search placeholder="Search organisations..." />
+        <Suspense key={query} fallback={<SearchSkeleton />}>
+          <Equities query={query} />
+        </Suspense>
+      </div>
     </main>
   );
 }
