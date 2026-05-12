@@ -1,12 +1,9 @@
-// import { BadgeCheckIcon, ChevronRightIcon } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 import {
   Item,
   ItemActions,
   ItemContent,
   ItemDescription,
-  // ItemMedia,
   ItemTitle,
 } from "@/components/ui/item"
 import { Equity } from "@/lib/types/j-quants"

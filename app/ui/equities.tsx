@@ -1,5 +1,5 @@
 import { fetchEquities } from "@/lib/data/j-quants";
-import { Organisation } from "../organisations/ui/organisation";
+import { Organisation } from "./organisation";
 
 export default async function Equities({ query }: { query: string }) {
   const response = query.length > 0 ? await fetchEquities() : { data: [] };
