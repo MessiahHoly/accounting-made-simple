@@ -1,9 +1,9 @@
 // import { getAccountingEquation } from "@/lib/utils/utils";
 
 import { Suspense } from "react";
-import Search from "./organisations/ui/search";
-import SearchSkeleton from "./organisations/ui/searchSkelton";
-import Equities from "./organisations/ui/equities";
+import Search from "./ui/search";
+import SearchSkeleton from "./ui/searchSkelton";
+import Equities from "./ui/equities";
 
 //TODO: move search, search skelton and equities component 
 

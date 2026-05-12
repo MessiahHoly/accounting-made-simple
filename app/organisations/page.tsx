@@ -1,7 +1,7 @@
-import Search from "./ui/search";
+import Search from "../ui/search";
 import { Suspense } from "react";
-import SearchSkeleton from "./ui/searchSkelton";
-import Equities from "./ui/equities";
+import SearchSkeleton from "../ui/searchSkelton";
+import Equities from "../ui/equities";
 
 export default async function Page(props: { searchParams?: Promise<{ query?: string }> }) {
   const searchParams = await props?.searchParams;
