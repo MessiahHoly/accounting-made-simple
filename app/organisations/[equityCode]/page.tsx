@@ -44,8 +44,6 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   const { edinet_code } = searchResults[0]
   const balanceSheetResponse = await fetchBalanceSheets(edinet_code)
 
-  //TODO: update next.js
-
   if ("error" in balanceSheetResponse) {
     console.error("Error fetching balance sheet:", balanceSheetResponse.error)
     return <div>Error: {balanceSheetResponse.error}</div>
@@ -54,11 +52,10 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   const { data: balanceSheets } = balanceSheetResponse
 
   return (
-    /* Add max-w-screen-xl (or 7xl) and overflow-hidden to keep the page contained */
     <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
       <Button asChild variant="outline" className="mb-8">
-        <Link href="/organisations" className="no-underline">
-          Back to Search
+        <Link href="/" className="no-underline">
+          Home
         </Link>
       </Button>
 
@@ -84,7 +81,6 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
         </ul>
       </section>
 
-      {/* The table component below will now handle its own internal scrolling */}
       <FinancialTable data={balanceSheets} />
     </main>
   )
