@@ -43,7 +43,7 @@ export const FinancialsResponseSchema = z.object({
   revenue: z.number(),
   ordinary_income: z.number(),
   net_income: z.number(),
-  comprehensive_income: z.number(),
+  comprehensive_income: z.number().optional(),
   roe_official: z.number(),
   payout_ratio: z.number().nullable().optional(), // Nullable based on your meta data notes
   per: z.number().nullable().optional(),
