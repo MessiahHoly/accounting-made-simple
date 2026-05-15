@@ -14,7 +14,7 @@ export const formatCurrency = (value: Decimal | number) => {
 
 export const getAccountingEquation = (jQuantsData: FinancialSummary[]) => {
 // export const getAccountingEquation = (jQuantsData: JQuantsFinancialSummary[]) => {
-  console.log("Raw J-Quants data:", jQuantsData);
+  // console.log("Raw J-Quants data:", jQuantsData);
 
   return jQuantsData.map(({ TA, Eq, CurPerEn, Code }) => {
     const assets = Number(TA);

@@ -8,7 +8,7 @@ export const fetchJapaneseAccountingData = async (symbol: string) => {
 
   if (!res.ok) throw new Error("Failed to fetch data");
 
-  console.log("Fetched data from Alpha Vantage:", await res.clone().json());
+  // console.log("Fetched data from Alpha Vantage:", await res.clone().json());
 
   return res.json();
 

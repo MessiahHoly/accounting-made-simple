@@ -1,4 +1,4 @@
-import { AccountingEquation } from "@/generated/prisma/client";
+// import { AccountingEquation } from "@/generated/prisma/client";
 import { formatCurrency } from "@/lib/utils/utils";
 
 export default function AccountingEquationRow({ accountingEquation }: {

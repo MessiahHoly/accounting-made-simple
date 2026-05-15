@@ -39,6 +39,8 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   const { data: equity } = equityResponse
   const { data: searchResults } = searchResponse
 
+  // console.log(financeSummaries)
+
   if (!financeSummaries || financeSummaries.length === 0 || searchResults.length === 0) return notFound()
 
   const { edinet_code } = searchResults[0]
@@ -72,6 +74,7 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
               key={`${Code}-${CurPerEn}`}
               accountingEquation={{
                 asOf: CurPerEn,
+                //TODO: remove Number as not required
                 assets: Number(TA),
                 liabilities: Number(TA) - Number(Eq),
                 ownersEquity: Number(Eq)

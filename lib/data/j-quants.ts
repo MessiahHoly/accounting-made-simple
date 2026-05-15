@@ -1,6 +1,5 @@
 'use server'
 
-// import { error } from "console";
 import { EquityListResponseSchema, FinancialSummaryListResponseSchema } from "../types/j-quants";
 
 export const fetchFinanceSummary = async (code: string) => {
@@ -15,6 +14,7 @@ export const fetchFinanceSummary = async (code: string) => {
   if (!res.ok) return { error: "Failed to fetch data" };
 
   const rawData = await res.json();
+  // console.log(rawData)
   const result = FinancialSummaryListResponseSchema.safeParse(rawData);
 
   if (!result.success) {
@@ -22,7 +22,10 @@ export const fetchFinanceSummary = async (code: string) => {
     return { error: "Failed to parse API response" };
   }
 
-  const data = result.data.data.sort((a, b) => new Date(b.CurPerEn).getTime() - new Date(a.CurPerEn).getTime());
+  const data = result.data.data
+    .filter(({ TA, Eq }) => !isNaN(TA) && !isNaN(Eq))
+    .sort((a, b) => new Date(b.CurPerEn).getTime() - new Date(a.CurPerEn).getTime());
+  // const data = result.data.data.sort((a, b) => new Date(b.CurPerEn).getTime() - new Date(a.CurPerEn).getTime());
 
   return { data };
 };
