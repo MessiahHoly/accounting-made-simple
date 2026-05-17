@@ -8,7 +8,7 @@ import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, X
 
 const chartConfig = {
   roe: {
-    label: "Retrn on Equity (ROE)",
+    label: "Return on Equity (ROE)",
     color: "hsl(var(--chart-1))"
   },
   assetTurnover: {
@@ -22,7 +22,8 @@ export default function FinancialChart({ data }: { data: FinancialSummary[] }) {
   const chartData = useMemo(() => {
     return [...data]
       .map((item) => ({
-        date: item.CurPerEn,
+        date: item.CurPerEn.toISOString().split('T')[0],
+        // date: item.CurPerEn,
         roe: parseFloat(item.metric.roe.toFixed(2)),
         assetTurnover: parseFloat(item.metric.assetTurnover.toFixed(4)),
       }))
