@@ -10,6 +10,7 @@ import {
   searchCompany
 } from "@/lib/data/edinet-db"
 import FinancialTable from "./ui/BalanceSheet"
+import FinancialChart from "./ui/FinancialChart"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
@@ -39,8 +40,6 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   const { data: equity } = equityResponse
   const { data: searchResults } = searchResponse
 
-  // console.log(financeSummaries)
-
   if (!financeSummaries || financeSummaries.length === 0 || searchResults.length === 0) return notFound()
 
   const { edinet_code } = searchResults[0]
@@ -64,6 +63,10 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
       <div className="mb-8">
         <h1 className="text-3xl font-bold">{equity.CoName}</h1>
         <p className="text-muted-foreground">{equity.Code} - {equity.CoNameEn}</p>
+      </div>
+
+      <div className="mb-12">
+        <FinancialChart data={financeSummaries} />
       </div>
 
       <section className="mb-12">
