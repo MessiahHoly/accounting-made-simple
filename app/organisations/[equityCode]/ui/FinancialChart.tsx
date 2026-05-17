@@ -9,11 +9,13 @@ import { CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, X
 const chartConfig = {
   roe: {
     label: "Return on Equity (ROE)",
-    color: "hsl(var(--chart-1))"
+    color: "var(--chart-1)"
+    // color: "hsl(var(--chart-1))"
   },
   assetTurnover: {
     label: "Asset Turnover Ratio",
-    color: "hsl(var(--chart-2))"
+    color: "var(--chart-2)"
+    // color: "hsl(var(--chart-2))"
   }
 }
 
@@ -53,10 +55,20 @@ export default function FinancialChart({ data }: { data: FinancialSummary[] }) {
                 tickFormatter={value => `${value}x`} />
               <Tooltip content={<ChartTooltipContent />} />
               <Legend verticalAlign="top" height={36} iconType="circle" />
-              <Line yAxisId="left" type="monotone" dataKey="roe" name={chartConfig.roe.label} stroke={chartConfig.roe.color}
-                strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+              <Line yAxisId="left" type="monotone" dataKey="roe" name={chartConfig.roe.label}
+                // stroke="var(--color-roe)"
+                stroke={chartConfig.roe.color}
+                strokeWidth={2}
+                dot={{ r: 4, fill: chartConfig.roe.color }}
+                // dot={{ r: 4, fill: "var(--color-roe)" }}
+                activeDot={{ r: 6 }} />
               <Line yAxisId="right" type="monotone" dataKey="assetTurnover" name={chartConfig.assetTurnover.label}
-                stroke={chartConfig.assetTurnover.color} strokeWidth={2} dot={{ r: 4 }} activeDot={{ r: 6 }} />
+                // stroke="var(--color-assetTurnover)"
+                stroke={chartConfig.assetTurnover.color}
+                strokeWidth={2}
+                dot={{ r: 4, fill: chartConfig.assetTurnover.color }}
+                // dot={{ r: 4, fill: "var(--color-assetTurnover)" }}
+                activeDot={{ r: 6 }} />
             </LineChart>
           </ResponsiveContainer>
         </ChartContainer>
