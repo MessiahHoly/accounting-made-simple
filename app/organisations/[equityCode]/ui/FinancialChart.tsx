@@ -76,11 +76,3 @@ export default function FinancialChart({ data }: { data: FinancialSummary[] }) {
     </Card>
   )
 }
-
-//TODO: Fix bug
-// 💡 A Quick Bug Warning for Your Current CodeIn your current code, new Date(b.CurPerEn) will fail or behave unexpectedly.Inside your Zod schema, CurPerEn is already transformed into a JavaScript Date object.In your .sort() method, you should call .getTime() directly on the object without wrapping it in new Date() again:typescript// Change this:
-// .sort((a, b) => new Date(b.CurPerEn).getTime() - new Date(a.CurPerEn).getTime())
-
-// // To this:
-// .sort((a, b) => b.CurPerEn.getTime() - a.CurPerEn.getTime())
-// Use code with caution.If you want to implement one of these changes, let me know:Do you plan to use this processed data in multiple UI components?Do you need to handle cases where Eq or TA are zero to avoid Infinity or NaN math errors?
