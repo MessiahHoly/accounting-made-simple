@@ -10,12 +10,10 @@ const chartConfig = {
   roe: {
     label: "Return on Equity (ROE)",
     color: "var(--chart-1)"
-    // color: "hsl(var(--chart-1))"
   },
   assetTurnover: {
     label: "Asset Turnover Ratio",
     color: "var(--chart-2)"
-    // color: "hsl(var(--chart-2))"
   }
 }
 
@@ -25,7 +23,6 @@ export default function FinancialChart({ data }: { data: FinancialSummary[] }) {
     return [...data]
       .map((item) => ({
         date: item.CurPerEn.toISOString().split('T')[0],
-        // date: item.CurPerEn,
         roe: parseFloat(item.metric.roe.toFixed(2)),
         assetTurnover: parseFloat(item.metric.assetTurnover.toFixed(4)),
       }))
@@ -46,7 +43,8 @@ export default function FinancialChart({ data }: { data: FinancialSummary[] }) {
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData} margin={{ top: 20, right: 20, left: -10, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} className="stroke-muted" />
-              <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} className="text-xs fill-muted-foreground" />
+              <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} className="text-xs fill-muted-foreground"
+                interval="preserveStartEnd" />
               {/* Left Y-Axis for ROE percentage */}
               <YAxis yAxisId="left" tickLine={false} axisLine={false} tickMargin={8} className="text-xs fill-muted-foreground"
                 tickFormatter={value => `${value}%`} />
@@ -56,18 +54,14 @@ export default function FinancialChart({ data }: { data: FinancialSummary[] }) {
               <Tooltip content={<ChartTooltipContent />} />
               <Legend verticalAlign="top" height={36} iconType="circle" />
               <Line yAxisId="left" type="monotone" dataKey="roe" name={chartConfig.roe.label}
-                // stroke="var(--color-roe)"
                 stroke={chartConfig.roe.color}
                 strokeWidth={2}
                 dot={{ r: 4, fill: chartConfig.roe.color }}
-                // dot={{ r: 4, fill: "var(--color-roe)" }}
                 activeDot={{ r: 6 }} />
               <Line yAxisId="right" type="monotone" dataKey="assetTurnover" name={chartConfig.assetTurnover.label}
-                // stroke="var(--color-assetTurnover)"
                 stroke={chartConfig.assetTurnover.color}
                 strokeWidth={2}
                 dot={{ r: 4, fill: chartConfig.assetTurnover.color }}
-                // dot={{ r: 4, fill: "var(--color-assetTurnover)" }}
                 activeDot={{ r: 6 }} />
             </LineChart>
           </ResponsiveContainer>
