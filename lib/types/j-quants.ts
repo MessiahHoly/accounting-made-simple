@@ -1,11 +1,16 @@
 import { z } from 'zod'
 
 export const FinancialSummarySchema = z.object({
-  TA: z.string().transform((value) => parseFloat(value)),
-  Eq: z.string().transform((value) => parseFloat(value)),
-  NP: z.string().transform((value) => parseFloat(value)),
-  Sales: z.string().transform((value) => parseFloat(value)),
-  CurPerEn: z.string().transform((value) => new Date(value)),
+  TA: z.coerce.number(),
+  Eq: z.coerce.number(),
+  NP: z.coerce.number(),
+  Sales: z.coerce.number(),
+  // TA: z.string().transform((value) => parseFloat(value)),
+  // Eq: z.string().transform((value) => parseFloat(value)),
+  // NP: z.string().transform((value) => parseFloat(value)),
+  // Sales: z.string().transform((value) => parseFloat(value)),
+  CurPerEn: z.coerce.date(),
+  // CurPerEn: z.string().transform((value) => new Date(value)),
   Code: z.string(),
 })
 
