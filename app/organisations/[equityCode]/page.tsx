@@ -77,10 +77,12 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
               key={`${Code}-${CurPerEn}`}
               accountingEquation={{
                 asOf: CurPerEn,
-                //TODO: remove Number as not required
-                assets: Number(TA),
-                liabilities: Number(TA) - Number(Eq),
-                ownersEquity: Number(Eq)
+                assets: TA,
+                liabilities: TA - Eq,
+                ownersEquity: Eq
+                // assets: Number(TA),
+                // liabilities: Number(TA) - Number(Eq),
+                // ownersEquity: Number(Eq)
               }}
             />
           ))}
