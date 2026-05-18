@@ -11,6 +11,7 @@ import {
 } from "@/lib/data/edinet-db"
 import FinancialTable from "./ui/BalanceSheet"
 import FinancialChart from "./ui/FinancialChart"
+import AccouningEquations from "./ui/AccountingEquations"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
@@ -69,7 +70,7 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
         <FinancialChart data={financeSummaries} />
       </div>
 
-      <section className="mb-12">
+      {/* <section className="mb-12">
         <h2 className="text-xl font-semibold mb-4">Accounting Equations</h2>
         <ul className="space-y-2">
           {financeSummaries.map(({ Code, CurPerEn, TA, Eq }) => (
@@ -84,9 +85,10 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
             />
           ))}
         </ul>
-      </section>
+      </section> */}
 
       <FinancialTable data={balanceSheets} />
+      <AccouningEquations financeSummaries={financeSummaries} />
     </main>
   )
 }
