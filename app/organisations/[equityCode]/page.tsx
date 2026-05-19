@@ -2,7 +2,7 @@ import {
   fetchEquity, fetchFinanceSummary,
 } from "@/lib/data/j-quants"
 import { notFound } from "next/navigation"
-import AccountingEquationRow from "./ui/AccountingEquation"
+// import AccountingEquationRow from "./ui/AccountingEquation"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import {
@@ -70,24 +70,8 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
         <FinancialChart data={financeSummaries} />
       </div>
 
-      {/* <section className="mb-12">
-        <h2 className="text-xl font-semibold mb-4">Accounting Equations</h2>
-        <ul className="space-y-2">
-          {financeSummaries.map(({ Code, CurPerEn, TA, Eq }) => (
-            <AccountingEquationRow
-              key={`${Code}-${CurPerEn}`}
-              accountingEquation={{
-                asOf: CurPerEn,
-                assets: TA,
-                liabilities: TA - Eq,
-                ownersEquity: Eq
-              }}
-            />
-          ))}
-        </ul>
-      </section> */}
-
       <FinancialTable data={balanceSheets} />
+      
       <AccouningEquations financeSummaries={financeSummaries} />
     </main>
   )

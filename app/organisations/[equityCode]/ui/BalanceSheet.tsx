@@ -28,7 +28,7 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
       style: "currency",
       currency: "JPY",
       notation: "compact",
-      maximumFractionDigits: 1,
+      maximumFractionDigits: 1,      
     }).format(val);
 
   return (
@@ -94,6 +94,12 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
                 <TableCell className="sticky left-0 z-20 bg-white border-r group-hover:bg-slate-50 pl-6">Cash & Equivalents</TableCell>
                 {filteredData.map((y) => (
                   <TableCell key={y.fiscal_year} className="text-right font-mono">{formatCurrency(y.cash)}</TableCell>
+                ))}
+              </TableRow>
+              <TableRow className="group">
+                <TableCell className="sticky left-0 z-20 bg-white border-r group-hover:bg-slate-50 pl-6">Non-Current Asset</TableCell>
+                {filteredData.map((y) => (
+                  <TableCell key={y.fiscal_year} className="text-right font-mono">{formatCurrency(y.other_assets)}</TableCell>
                 ))}
               </TableRow>
               <TableRow className="group font-bold">
