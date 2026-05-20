@@ -12,6 +12,7 @@ import {
 import FinancialTable from "./ui/BalanceSheet"
 import FinancialChart from "./ui/FinancialChart"
 import AccouningEquations from "./ui/AccountingEquations"
+import { fetchOpenRouter } from "@/lib/data/open-router"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
@@ -52,6 +53,8 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   }
 
   const { data: balanceSheets } = balanceSheetResponse
+
+  await fetchOpenRouter()
 
   return (
     <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
