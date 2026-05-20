@@ -55,7 +55,6 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
           </Button>
           {/* Range Selection Tabs */}
           <Tabs defaultValue="5" onValueChange={setRange} className="flex-2 sm:w-50">
-            {/* <Tabs defaultValue="5" onValueChange={setRange} className="flex-2 sm:w-[200px]"> */}
             <TabsList className="grid w-full grid-cols-3 h-9">
               <TabsTrigger value="3">3Y</TabsTrigger>
               <TabsTrigger value="5">5Y</TabsTrigger>
@@ -71,7 +70,6 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
               <TableRow className="hover:bg-transparent">
                 {/* Category Column: Keep a fixed width */}
                 <TableHead className="sticky left-0 top-0 z-50 w-45 md:w-55 bg-slate-100 border-r border-b font-bold text-slate-900">
-                  {/* <TableHead className="sticky left-0 top-0 z-50 w-[180px] md:w-[220px] bg-slate-100 border-r border-b font-bold text-slate-900"> */}
                   Category
                 </TableHead>
                 {filteredData.map((year) => (
@@ -80,7 +78,6 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
                   <TableHead
                     key={year.fiscal_year}
                     className="text-right font-bold w-30 md:w-37.5 bg-slate-100 border-b"
-                  // className="text-right font-bold w-[120px] md:w-[150px] bg-slate-100 border-b"
                   >
                     FY {year.fiscal_year}
                   </TableHead>

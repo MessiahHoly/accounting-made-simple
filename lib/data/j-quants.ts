@@ -24,12 +24,9 @@ export const fetchFinanceSummary = async (code: string) => {
   const data = result.data.data
     .filter(({ TA, Eq }) => !isNaN(TA) && !isNaN(Eq))
     .sort((a, b) => b.CurPerEn.getTime() - a.CurPerEn.getTime())
-    // .sort((a, b) => new Date(b.CurPerEn).getTime() - new Date(a.CurPerEn).getTime())
     .map((item) => {
       const roe = item.Eq !== 0 ? ((item.NP / item.Eq) * 100) : 0
-      // const roe = ((item.NP / item.Eq) * 100)
       const assetTurnover = item.TA !== 0 ? item.Sales / item.TA : 0
-      // const assetTurnover = item.Sales / item.TA
       return { ...item, metric: { roe, assetTurnover } }
     });
 
