@@ -1,4 +1,6 @@
-export const fetchOpenRouter = async () => {
+import { Financials } from "../types/edinet-db";
+
+export const fetchFinancialAnalysis = async (financials: Financials[]) => {
   const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -12,14 +14,22 @@ export const fetchOpenRouter = async () => {
       messages: [
         {
           role: 'user',
-          content: 'What is the meaning of life?',
+          content: `Here is the financial data for a company: ${JSON.stringify(financials)}. Please analyze this data and provide insights on the company's financial health, trends, and any potential red flags.`,
         },
       ],
     }),
     next: { revalidate: 3600 },
   });
+  if (!response.ok) {
+    // console.error(response);
+    const errorText = await response.text();
+    console.log("EXACT ERROR MESSAGE:", errorText);
+
+    return { error: `Failed to fetch OpenRouter response: ${response.statusText}` };
+  }
   const data = await response.json();
   // console.log(data);
   const completionText = data.choices[0].message.content;
   // console.log('OpenRouter response:', completionText);
+  return { data: completionText };
 };
