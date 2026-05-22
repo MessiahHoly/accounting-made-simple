@@ -2,7 +2,6 @@ import {
   fetchEquity, fetchFinanceSummary,
 } from "@/lib/data/j-quants"
 import { notFound } from "next/navigation"
-// import AccountingEquationRow from "./ui/AccountingEquation"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import {
@@ -12,8 +11,8 @@ import {
 import FinancialTable from "./ui/BalanceSheet"
 import FinancialChart from "./ui/FinancialChart"
 import AccouningEquations from "./ui/AccountingEquations"
-import { fetchFinancialAnalysis } from "@/lib/data/open-router"
-// import { fetchOpenRouter } from "@/lib/data/open-router"
+import { fetchFinancialAnalysis } from "@/lib/data/google"
+// import { fetchFinancialAnalysis } from "@/lib/data/open-router"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
@@ -54,18 +53,17 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   }
 
   const { data: balanceSheets } = balanceSheetResponse
-
-  // console.log("Balance Sheets:", balanceSheets)
-
-  const openRouterResponse = await fetchFinancialAnalysis(balanceSheets)
+  // const openRouterResponse = await fetchFinancialAnalysis(balanceSheets)
   
-  if ("error" in openRouterResponse) {
-    console.error("Error fetching OpenRouter analysis:", openRouterResponse.error)
-    return <div>Error: {openRouterResponse.error}</div>
-  }
+  // if ("error" in openRouterResponse) {
+  //   console.error("Error fetching OpenRouter analysis:", openRouterResponse.error)
+  //   return <div>Error: {openRouterResponse.error}</div>
+  // }
 
-  const { data: financialAnalysis } = openRouterResponse
-  console.log("Financial Analysis from OpenRouter:", financialAnalysis)
+  // const { data: financialAnalysis } = openRouterResponse
+  // console.log("Financial Analysis from OpenRouter:", financialAnalysis)
+  
+  await fetchFinancialAnalysis(balanceSheets)
 
   return (
     <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
