@@ -12,7 +12,8 @@ import FinancialTable from "./ui/BalanceSheet"
 import FinancialChart from "./ui/FinancialChart"
 import AccouningEquations from "./ui/AccountingEquations"
 import { fetchFinancialAnalysis } from "@/lib/data/google"
-// import { fetchFinancialAnalysis } from "@/lib/data/open-router"
+import Markdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
@@ -54,7 +55,7 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
 
   const { data: balanceSheets } = balanceSheetResponse
   // const openRouterResponse = await fetchFinancialAnalysis(balanceSheets)
-  
+
   // if ("error" in openRouterResponse) {
   //   console.error("Error fetching OpenRouter analysis:", openRouterResponse.error)
   //   return <div>Error: {openRouterResponse.error}</div>
@@ -62,8 +63,8 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
 
   // const { data: financialAnalysis } = openRouterResponse
   // console.log("Financial Analysis from OpenRouter:", financialAnalysis)
-  
-  await fetchFinancialAnalysis(balanceSheets)
+
+  const { data: financialAnalysis } = await fetchFinancialAnalysis(balanceSheets)
 
   return (
     <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
@@ -83,8 +84,13 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
       </div>
 
       <FinancialTable data={balanceSheets} />
-      
+
       <AccouningEquations financeSummaries={financeSummaries} />
+
+      <div className="mt-12">
+        <h2 className="text-2xl font-bold mb-4">Financial Analysis by Google AI</h2>
+        <Markdown remarkPlugins={[remarkGfm]}>{financialAnalysis}</Markdown>
+      </div>
     </main>
   )
 }
