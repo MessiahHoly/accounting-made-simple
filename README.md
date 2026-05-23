@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Accounting Made Simple
+
+A modern and simple web app for managing organisations and tracking the core accounting equation: **Assets = Liabilities + Owner's Equity**.
+
+Built with:
+- Next.js 16 + React 19
+- Tailwind CSS v4 and shadcn/ui-inspired components
+- Prisma 7 + PostgreSQL
+- Better Auth with magic link login and Resend email delivery
+- EDINET and J-Quants financial data sources for Japanese companies
+- Gemini-powered financial analysis and insights
+- Zod / Prisma Zod generator for typed schema validation
+- Recharts for simple financial charts
+
+## Features
+
+- Search organisations and equity data from EDINET/J-Quants
+- Gemini-based analysis for selected financial data
+- Store organisations, accounting equations, and user sessions in PostgreSQL
+- Email-based magic link authentication via Resend
+- Responsive, utility-first UI with custom components
+- Prisma-generated types and database access layer
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-repo/accounting-made-simple.git
+cd accounting-made-simple
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+The repo runs `prisma generate` after install via `postinstall`.
+
+### 3. Create `.env`
+
+Create a `.env` file at the repo root and add the required variables:
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
+RESEND_API_KEY="your_resend_api_key"
+```
+
+### 4. Prepare the database
+
+If you are using the existing Prisma migrations, run:
+
+```bash
+npx prisma migrate dev
+```
+
+If you only want to sync the schema without migrations, run:
+
+```bash
+npx prisma db push
+```
+
+### 5. Run the app
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000` in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` — start the development server
+- `npm run build` — compile the Next.js production build
+- `npm run start` — run the Next.js production server
+- `npm run lint` — run ESLint checks
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+- `app/` — Next.js App Router pages and API route for auth
+- `components/` — shared UI components
+- `lib/` — auth, Prisma client, utilities, data fetching helpers
+- `prisma/` — schema, migrations, and generated Prisma helpers
+- `public/` — static assets
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Auth
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This app uses `better-auth` with the `magicLink` plugin. Emails are sent through `Resend` using the `RESEND_API_KEY` environment variable.
 
-## Deploy on Vercel
+The auth API route is implemented at `app/api/auth/[...all]/route.ts`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Database Schema
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Key models in `prisma/schema.prisma`:
+- `User` — users and sessions
+- `Organisation` — organisations owned by users
+- `AccountingEquation` — asset/liability/equity records linked to organisations
+- `Account` / `Verification` — auth/session support tables
+
+## Notes
+
+- The UI currently uses a search flow for organisations and equity lookup.
+- Financial data is obtained from EDINET and J-Quants.
+- The project currently targets Japanese companies only.
+- If you change the Prisma schema, run `npx prisma generate` again.
+- The homepage is implemented in `app/page.tsx` and renders search + equities list.
+
+## License
+
+This project is licensed under the MIT License.
