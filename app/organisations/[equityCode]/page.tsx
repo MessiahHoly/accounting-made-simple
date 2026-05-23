@@ -14,6 +14,10 @@ import AccouningEquations from "./ui/AccountingEquations"
 import { fetchFinancialAnalysis } from "@/lib/data/google"
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import GeminiFinancialAnalysis from "./ui/GeminiFinancialAnalysis"
+import { Suspense } from "react"
+import SearchSkeleton from "@/app/ui/searchSkelton"
+import AiIsThinking from "./ui/AiIsThinking"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
   const { equityCode } = await params
@@ -54,17 +58,15 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   }
 
   const { data: balanceSheets } = balanceSheetResponse
-  // const openRouterResponse = await fetchFinancialAnalysis(balanceSheets)
 
-  // if ("error" in openRouterResponse) {
-  //   console.error("Error fetching OpenRouter analysis:", openRouterResponse.error)
-  //   return <div>Error: {openRouterResponse.error}</div>
+  // const financialAnalysisResponse = await fetchFinancialAnalysis(balanceSheets)
+
+  // if ("error" in financialAnalysisResponse) {
+  //   console.error("Error fetching financial analysis:", financialAnalysisResponse.error)
+  //   return <div>Error: {financialAnalysisResponse.error}</div>
   // }
 
-  // const { data: financialAnalysis } = openRouterResponse
-  // console.log("Financial Analysis from OpenRouter:", financialAnalysis)
-
-  const { data: financialAnalysis } = await fetchFinancialAnalysis(balanceSheets)
+  // const { data: financialAnalysis } = financialAnalysisResponse
 
   return (
     <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
@@ -87,10 +89,11 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
 
       <AccouningEquations financeSummaries={financeSummaries} />
 
-      <div className="mt-12">
-        <h2 className="text-2xl font-bold mb-4">Financial Analysis by Google AI</h2>
-        <Markdown remarkPlugins={[remarkGfm]}>{financialAnalysis}</Markdown>
-      </div>
+      {/* <AiIsThinking /> */}
+
+      <Suspense fallback={<AiIsThinking />}>
+        <GeminiFinancialAnalysis balanceSheets={balanceSheets} />
+      </Suspense>
     </main>
   )
 }
