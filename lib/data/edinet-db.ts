@@ -24,6 +24,8 @@ export const searchCompany = async (query: string) => {
   const rawData = await response.json();
   const result = SearchResponseSchema.safeParse(rawData);
 
+  console.log(result)
+
   if (!result.success) {
     console.error("Zod validation error:", result.error);
     return { error: "Failed to parse API response" };
@@ -53,6 +55,8 @@ export const fetchBalanceSheets = async (edinetCode: string) => {
 
   const rawData = await response.json();
   const result = FinancialsApiResponseSchema.safeParse(rawData);
+
+  console.log(result)
 
   if (!result.success) {
     return { error: "Failed to parse API response" };

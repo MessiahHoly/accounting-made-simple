@@ -26,20 +26,14 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   ])
 
   if ("error" in financeResponse) {
-    // console.error("Error fetching finance summary:", financeResponse.error)
-    // return <div>Error: {financeResponse.error}</div>
-    return<Error error={financeResponse.error} />
+    return <Error error={financeResponse.error} />
   }
 
   if ("error" in equityResponse) {
-    // console.error("Error fetching equity data:", equityResponse.error)
-    // return <div>Error: {equityResponse.error}</div>
     return <Error error={equityResponse.error} />
   }
 
   if ("error" in searchResponse) {
-    // console.error("Error searching company:", searchResponse.error)
-    // return <div>Error: {searchResponse.error}</div>
     return <Error error={searchResponse.error} />
   }
 
@@ -47,14 +41,12 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   const { data: equity } = equityResponse
   const { data: searchResults } = searchResponse
 
-  if (!financeSummaries || financeSummaries.length === 0 || !searchResults || searchResults.length === 0) return notFound()
+  if (!financeSummaries || financeSummaries.length === 0 || searchResults.length === 0) return notFound()
 
   const { edinet_code } = searchResults[0]
   const balanceSheetResponse = await fetchBalanceSheets(edinet_code)
 
   if ("error" in balanceSheetResponse) {
-    // console.error("Error fetching balance sheet:", balanceSheetResponse.error)
-    // return <div>Error: {balanceSheetResponse.error}</div>
     return <Error error={balanceSheetResponse.error} />
   }
 

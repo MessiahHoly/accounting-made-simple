@@ -16,6 +16,8 @@ export const fetchFinanceSummary = async (code: string) => {
   const rawData = await res.json();
   const result = FinancialSummaryListResponseSchema.safeParse(rawData);
 
+  // console.log(result)
+
   if (!result.success) {
     console.error("Zod validation error:", result.error);
     return { error: "Failed to parse API response" };
@@ -47,6 +49,8 @@ export const fetchEquities = async () => {
 
   const rawData = await res.json();
   const result = EquityListResponseSchema.safeParse(rawData);
+
+  // console.log(result)
 
   if (!result.success) {
     console.error("Zod validation error:", result.error);

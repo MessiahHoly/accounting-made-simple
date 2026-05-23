@@ -28,7 +28,7 @@ export const FinancialsResponseSchema = z.object({
   bps: z.number(),
   adjusted_bps: z.number(),
   eps: z.number(),
-  adjusted_eps: z.number(),
+  adjusted_eps: z.number().optional(),
   dividend_per_share: z.number().optional(),
   adjusted_dividend_per_share: z.number().optional(),
   
