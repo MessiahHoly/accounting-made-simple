@@ -12,11 +12,11 @@ import FinancialTable from "./ui/BalanceSheet"
 import FinancialChart from "./ui/FinancialChart"
 import AccouningEquations from "./ui/AccountingEquations"
 import { fetchFinancialAnalysis } from "@/lib/data/google"
-import Markdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+// import Markdown from 'react-markdown'
+// import remarkGfm from 'remark-gfm'
 import GeminiFinancialAnalysis from "./ui/GeminiFinancialAnalysis"
 import { Suspense } from "react"
-import SearchSkeleton from "@/app/ui/searchSkelton"
+// import SearchSkeleton from "@/app/ui/searchSkelton"
 import AiIsThinking from "./ui/AiIsThinking"
 
 export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
@@ -81,6 +81,10 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
         <p className="text-muted-foreground">{equity.Code} - {equity.CoNameEn}</p>
       </div>
 
+      <Suspense fallback={<AiIsThinking />}>
+        <GeminiFinancialAnalysis balanceSheets={balanceSheets} />
+      </Suspense>
+
       <div className="mb-12">
         <FinancialChart data={financeSummaries} />
       </div>
@@ -89,11 +93,6 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
 
       <AccouningEquations financeSummaries={financeSummaries} />
 
-      {/* <AiIsThinking /> */}
-
-      <Suspense fallback={<AiIsThinking />}>
-        <GeminiFinancialAnalysis balanceSheets={balanceSheets} />
-      </Suspense>
     </main>
   )
 }
