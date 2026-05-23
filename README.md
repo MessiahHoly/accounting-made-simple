@@ -45,6 +45,9 @@ Create a `.env` file at the repo root and add the required variables:
 ```env
 DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
 RESEND_API_KEY="your_resend_api_key"
+J_QUANTS_API_KEY="your_j_quants_api_key"
+EDINET_DB_API_KEY="your_edinet_db_api_key"
+GEMINI_API_KEY="your_gemini_api_key"
 ```
 
 ### 4. Prepare the database
