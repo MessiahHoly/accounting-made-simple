@@ -1,6 +1,7 @@
 import { Financials } from "../types/edinet-db";
 import { GoogleGenAI } from "@google/genai";
 
+//TODO: fix 15 vulnerabilities (13 moderate, 2 high)
 
 const ai = new GoogleGenAI({})
 
