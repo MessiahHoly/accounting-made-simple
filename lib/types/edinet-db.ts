@@ -27,7 +27,7 @@ export const FinancialsResponseSchema = z.object({
   // Per Share Metrics
   bps: z.number(),
   adjusted_bps: z.number(),
-  eps: z.number(),
+  eps: z.number().optional(),
   adjusted_eps: z.number().optional(),
   dividend_per_share: z.number().optional(),
   adjusted_dividend_per_share: z.number().optional(),
@@ -42,7 +42,7 @@ export const FinancialsResponseSchema = z.object({
   // Income Statement / Performance
   revenue: z.number(),
   ordinary_income: z.number(),
-  net_income: z.number(),
+  net_income: z.number().optional(),
   comprehensive_income: z.number().optional(),
   roe_official: z.number(),
   payout_ratio: z.number().nullable().optional(), // Nullable based on your meta data notes
