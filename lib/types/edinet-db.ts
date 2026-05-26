@@ -25,7 +25,7 @@ export const FinancialsResponseSchema = z.object({
   
   // Per Share Metrics
   bps: z.number(),
-  adjusted_bps: z.number(),
+  adjusted_bps: z.number().optional(),
   eps: z.number().optional(),
   adjusted_eps: z.number().optional(),
   dividend_per_share: z.number().optional(),
@@ -53,7 +53,7 @@ export const FinancialsResponseSchema = z.object({
   cf_financing: z.number().optional(),
   
   // Other
-  shares_issued: z.number(),
+  shares_issued: z.number().optional(),
   split_adjustment_factor: z.number(),
   num_employees: z.number(),
   
