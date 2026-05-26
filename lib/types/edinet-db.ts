@@ -36,7 +36,7 @@ export const FinancialsResponseSchema = z.object({
   total_assets: z.number(),
   net_assets: z.number(),
   total_liabilities: z.number(),
-  cash: z.number(),
+  cash: z.number().optional(),
   equity_ratio_official: z.number(),
   
   // Income Statement / Performance
@@ -44,14 +44,14 @@ export const FinancialsResponseSchema = z.object({
   ordinary_income: z.number(),
   net_income: z.number().optional(),
   comprehensive_income: z.number().optional(),
-  roe_official: z.number(),
+  roe_official: z.number().optional(),
   payout_ratio: z.number().nullable().optional(), // Nullable based on your meta data notes
   per: z.number().nullable().optional(),
   
   // Cash Flow
-  cf_operating: z.number(),
-  cf_investing: z.number(),
-  cf_financing: z.number(),
+  cf_operating: z.number().optional(),
+  cf_investing: z.number().optional(),
+  cf_financing: z.number().optional(),
   
   // Other
   shares_issued: z.number(),
