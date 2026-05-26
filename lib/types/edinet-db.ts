@@ -1,5 +1,4 @@
 import { z } from "zod"
-// import { meta } from "zod/v4/core"
 
 export const SearchResultSchema = z.object({
   credit_rating: z.string(),
@@ -65,7 +64,8 @@ export const FinancialsResponseSchema = z.object({
 }).transform((data) => ({
   ...data,
   // You can keep or update your custom transforms here
-  other_assets: data.total_assets - data.cash,
+  other_assets: data.total_assets - (data.cash ?? 0),
+  // other_assets: data.total_assets - data.cash,
   shareholders_equity: data.net_assets,
   debt_to_equity_ratio: data.total_liabilities / data.net_assets,
   isBalanced: Math.abs(data.total_assets - (data.total_liabilities + data.net_assets)) < 1000,

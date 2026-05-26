@@ -31,9 +31,7 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
       maximumFractionDigits: 1,
     }).format(val);
 
-  // console.log("Filtered Data:", filteredData);
-
-  return (
+    return (
     <Card className="w-full overflow-hidden border md:shadow-sm">
       <CardHeader className="flex flex-col gap-4 pb-4 border-b bg-slate-50/50 sm:flex-row sm:items-center sm:justify-between">
         {/* Title Area */}
@@ -92,7 +90,7 @@ export default function FinancialTable({ data }: { data: Financials[] }) {
               <TableRow className="group">
                 <TableCell className="sticky left-0 z-20 bg-white border-r group-hover:bg-slate-50 pl-6">Cash & Equivalents</TableCell>
                 {filteredData.map((y) => (
-                  <TableCell key={y.fiscal_year} className="text-right font-mono">{formatCurrency(y.cash)}</TableCell>
+                  <TableCell key={y.fiscal_year} className="text-right font-mono">{formatCurrency(y.cash ?? 0)}</TableCell>
                 ))}
               </TableRow>
               <TableRow className="group">
