@@ -21,7 +21,6 @@ export const fetchFinancialAnalysis = async (financials: Financials[]) => {
     next: { revalidate: 3600 },
   });
   if (!response.ok) {
-    // console.error(response);
     const errorText = await response.text();
     console.log("EXACT ERROR MESSAGE:", errorText);
 

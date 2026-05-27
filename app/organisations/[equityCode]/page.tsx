@@ -25,6 +25,8 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
     searchCompany(equityCode)
   ])
 
+  // console.log("Finance Response:", financeResponse)
+
   if ("error" in financeResponse) {
     return <Error error={financeResponse.error} />
   }
@@ -40,6 +42,8 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   const { data: financeSummaries } = financeResponse
   const { data: equity } = equityResponse
   const { data: searchResults } = searchResponse
+
+  // console.log("Finance Summaries:", financeSummaries)
 
   if (!financeSummaries || financeSummaries.length === 0 || searchResults.length === 0) return notFound()
 
