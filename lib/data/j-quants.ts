@@ -14,10 +14,9 @@ export const fetchFinanceSummary = async (code: string) => {
   if (!res.ok) return { error: "Failed to fetch data" };
 
   const rawData = await res.json();
-  // console.log("Raw Finance Summary Data:", rawData)
   const result = FinancialSummaryListResponseSchema.safeParse(rawData);
 
-  console.log(result)
+  // console.log(result)
 
   if (!result.success) {
     console.error("Zod validation error:", result.error);
@@ -25,8 +24,6 @@ export const fetchFinanceSummary = async (code: string) => {
   }
 
   const data = result.data.data
-    // .filter(item => item.Eq && item.TA && item.NP)
-    // .filter(({ TA, Eq }) => !isNaN(TA) && !isNaN(Eq))
     .sort((a, b) => b.CurPerEn.getTime() - a.CurPerEn.getTime())
     .map((item) => {
       const roe = item.Eq !== 0 ? ((item.NP / item.Eq) * 100) : 0

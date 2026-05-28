@@ -27,8 +27,6 @@ export const fetchFinancialAnalysis = async (financials: Financials[]) => {
     return { error: `Failed to fetch OpenRouter response: ${response.statusText}` };
   }
   const data = await response.json();
-  // console.log(data);
   const completionText = data.choices[0].message.content;
-  // console.log('OpenRouter response:', completionText);
   return { data: completionText };
 };
