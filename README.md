@@ -26,7 +26,7 @@ Built with:
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-repo/accounting-made-simple.git
+git clone https://github.com/MessiahHoly/accounting-made-simple
 cd accounting-made-simple
 ```
 
