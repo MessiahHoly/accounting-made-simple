@@ -26,14 +26,13 @@ const ProcessedFinancialSummarySchema = FinancialSummarySchema.extend({
 })
 
 // export const FinancialSummaryListResponseSchema = z.object({
-//   data: z.array(FinancialSummarySchema),
-//   // data: z.array(z.unknown()).transform((arr) => {
-//   //   return arr.filter((item) => {
-//   //     const result = FinancialSummarySchema.safeParse(item); 
-//   //     return result.success;
-//   //   });
-//   // }),
-// })
+//   data: z.array(
+//     FinancialSummarySchema.nullable().catch(null) 
+//   ).transform((items) => {
+//     // TypeScript automatically narrows this to z.infer<typeof FinancialSummarySchema>[]
+//     return items.filter(Boolean); 
+//   }),
+// });
 
 export const FinancialSummaryListResponseSchema = z.object({
   data: z.array(
@@ -46,14 +45,6 @@ export const FinancialSummaryListResponseSchema = z.object({
     });
   }),
 });
-
-
-// export const FinancialSummaryListResponseSchema = z.object({
-//   // 1. Pass the real schema to z.array() so TypeScript types it automatically
-//   data: z.array(FinancialSummarySchema.catch(null as any))
-//     // 2. Filter out the items that caught an error and turned into null
-//     .transform((items) => items.filter((item): item is z.infer<typeof FinancialSummarySchema> => item !== null)),
-// });
 
 export type FinancialSummary = z.infer<typeof ProcessedFinancialSummarySchema>;
 
