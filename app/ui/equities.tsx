@@ -1,7 +1,7 @@
 import { fetchEquities } from "@/lib/data/j-quants";
 import { Organisation } from "./organisation";
 
-export default async function Equities({ query }: { query: string }) {
+export default async function Equities({ query, language }: { query: string, language?: string }) {
   const response = query.length > 0 ? await fetchEquities() : { data: [] };
 
   if ("error" in response) {
@@ -22,7 +22,7 @@ export default async function Equities({ query }: { query: string }) {
   return (
     <div className="flex flex-col gap-4">
       {filteredEquities.map((eq) => (
-        <Organisation key={eq.Code} equity={eq} />
+        <Organisation key={eq.Code} equity={eq} language={language} />
       ))}
     </div>
   );

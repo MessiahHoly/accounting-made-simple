@@ -9,7 +9,7 @@ import {
 import { Equity } from "@/lib/types/j-quants"
 import Link from "next/link"
 
-export function Organisation({ equity }: { equity: Equity }) {
+export function Organisation({ equity, language }: { equity: Equity, language?: string }) {
   return (
     <div className="flex w-full max-w-md flex-col gap-6">
       <Item variant="outline">
@@ -21,7 +21,7 @@ export function Organisation({ equity }: { equity: Equity }) {
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm" asChild>
-            <Link href={`/organisations/${equity.Code}`} className="no-underline">
+            <Link href={`/organisations/${equity.Code}${language ? `?language=${language}` : ''}`} className="no-underline">
               Open
             </Link>
           </Button>
