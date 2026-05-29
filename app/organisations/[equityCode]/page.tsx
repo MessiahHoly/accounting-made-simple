@@ -38,6 +38,7 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   }
 
   const { data: financeSummaries } = financeResponse
+  // console.log("Finance Summaries:", financeSummaries)
   const { data: equity } = equityResponse
   const { data: searchResults } = searchResponse
 
@@ -51,7 +52,7 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   }
 
   const { data: balanceSheets } = balanceSheetResponse
-  console.log("Balance Sheets:", balanceSheets)
+  // console.log("Balance Sheets:", balanceSheets)
 
   return (
     <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
