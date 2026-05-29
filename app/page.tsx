@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Search from "./ui/search";
 import SearchSkeleton from "./ui/searchSkelton";
 import Equities from "./ui/equities";
+import { LanguageCombobox } from "./ui/language-combobox";
 
 export default async function Home(props: { searchParams?: Promise<{ query?: string }> }) {
   const searchParams = await props?.searchParams;
@@ -12,6 +13,7 @@ export default async function Home(props: { searchParams?: Promise<{ query?: str
       <p>Assets = Liabilities + Owner's Equity</p>
       <div className="flex flex-col gap-10">
         <Search placeholder="Search organisations..." />
+        <LanguageCombobox />
         <Suspense key={query} fallback={<SearchSkeleton />}>
           <Equities query={query} />
         </Suspense>
