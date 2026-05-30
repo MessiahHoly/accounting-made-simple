@@ -36,7 +36,7 @@ export function LanguageCombobox() {
 
   return (
     <Combobox items={languages.map(lang => lang.name)} onValueChange={setLanguage}>
-      <ComboboxInput placeholder="Select a language" />
+      <ComboboxInput placeholder="Select a language (optional)" />
       <ComboboxContent>
         <ComboboxEmpty>No items found.</ComboboxEmpty>
         <ComboboxList>

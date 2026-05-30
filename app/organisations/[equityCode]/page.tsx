@@ -45,7 +45,6 @@ export default async function Page({ params, searchParams }: {
   }
 
   const { data: financeSummaries } = financeResponse
-  // console.log("Finance Summaries:", financeSummaries)
   const { data: equity } = equityResponse
   const { data: searchResults } = searchResponse
 
