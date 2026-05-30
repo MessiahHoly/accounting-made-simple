@@ -16,8 +16,15 @@ import { Suspense } from "react"
 import AiIsThinking from "./ui/AiIsThinking"
 import Error from "./ui/Error"
 
-export default async function Page({ params }: { params: Promise<{ equityCode: string }> }) {
-  const { equityCode } = await params
+//TODO: fix sbi shinsei bank
+
+export default async function Page({ params, searchParams }: {
+  params: Promise<{ equityCode: string }>, searchParams: Promise<{ language?: string }>
+}) {
+  // export default async function Page({ params }: { params: Promise<{ equityCode: string, language?: string }> }) {
+  const [{ equityCode }, { language }] = await Promise.all([params, searchParams])
+  // const { equityCode } = await params
+  console.log("Language for analysis:", language)
   const [financeResponse, equityResponse, searchResponse
   ] = await Promise.all([
     fetchFinanceSummary(equityCode),
@@ -52,7 +59,6 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
   }
 
   const { data: balanceSheets } = balanceSheetResponse
-  // console.log("Balance Sheets:", balanceSheets)
 
   return (
     <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
@@ -70,7 +76,7 @@ export default async function Page({ params }: { params: Promise<{ equityCode: s
       )}
 
       <Suspense fallback={<AiIsThinking />}>
-        <GeminiFinancialAnalysis balanceSheets={balanceSheets} />
+        <GeminiFinancialAnalysis balanceSheets={balanceSheets} language={language} />
       </Suspense>
 
       <div className="mb-12">

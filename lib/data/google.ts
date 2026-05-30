@@ -1,17 +1,23 @@
+'use server'
+
 import { Financials } from "../types/edinet-db";
 import { GoogleGenAI } from "@google/genai";
 
 const ai = new GoogleGenAI({})
 
-export const fetchFinancialAnalysis = async (financials: Financials[]) => {
+export const fetchFinancialAnalysis = async (financials: Financials[], language?: string) => {
+  // export const fetchFinancialAnalysis = async (financials: Financials[]) => {
   const financialDataString = JSON.stringify(financials)
   const prompt = `Here is the financial data for a company: ${financialDataString}. Please analyze this data and provide insights on the company's financial health, trends, and any potential red flags.`
+  const systemInstruction = `You are a helpful expert. You must reply entirely in ${language || 'English'}.`
+  console.log(systemInstruction)
 
   try {
     console.log("Attempting analysis with gemma-4-31b-it...");
     const response = await ai.models.generateContent({
       model: 'gemma-4-31b-it',
-      contents: prompt
+      contents: prompt,
+      config: { systemInstruction }
     })
     return { data: response.text }
   } catch (gemma31Error) {
@@ -19,7 +25,8 @@ export const fetchFinancialAnalysis = async (financials: Financials[]) => {
     try {
       const fallbackResponse = await ai.models.generateContent({
         model: 'gemma-4-26b-a4b-it',
-        contents: prompt
+        contents: prompt,
+        config: { systemInstruction }
       })
       return { data: fallbackResponse.text }
     } catch (gemma26Error) {
@@ -27,7 +34,8 @@ export const fetchFinancialAnalysis = async (financials: Financials[]) => {
       try {
         const fallbackResponse = await ai.models.generateContent({
           model: 'gemma-2.5-flash',
-          contents: prompt
+          contents: prompt,
+          config: { systemInstruction }
         })
         return { data: fallbackResponse.text }
       } catch (gemma25Error) {

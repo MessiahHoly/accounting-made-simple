@@ -2,13 +2,13 @@ import { fetchFinancialAnalysis } from "@/lib/data/google";
 import { Financials } from "@/lib/types/edinet-db";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";  
+import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
 import "katex/dist/katex.min.css";
 
-export default async function GeminiFinancialAnalysis({ balanceSheets }: { balanceSheets: Financials[] }) {
-  const financialAnalysisResponse = await fetchFinancialAnalysis(balanceSheets)
+export default async function GeminiFinancialAnalysis({ balanceSheets, language }: { balanceSheets: Financials[], language?: string }) {
+  const financialAnalysisResponse = await fetchFinancialAnalysis(balanceSheets, language)
   if ("error" in financialAnalysisResponse) {
     console.error("Error fetching financial analysis:", financialAnalysisResponse.error)
     return <div>Error: {financialAnalysisResponse.error}</div>
