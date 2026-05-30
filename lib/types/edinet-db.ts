@@ -24,7 +24,7 @@ export const FinancialsResponseSchema = z.object({
   accounting_standard: z.string(),
   
   // Per Share Metrics
-  bps: z.number(),
+  bps: z.number().optional(),
   adjusted_bps: z.number().optional(),
   eps: z.number().optional(),
   adjusted_eps: z.number().optional(),

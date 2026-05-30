@@ -15,32 +15,13 @@ export const fetchFinanceSummary = async (code: string) => {
   // console.log(res)
 
   const rawData = await res.json();
-  // console.log(rawData)
   const result = FinancialSummaryListResponseSchema.safeParse(rawData);
-
   // console.log(result)
 
   if (!result.success) {
     console.error("Zod validation error:", result.error);
     return { error: "Failed to parse API response" };
   }
-
-  // const data = result.data.data
-  //   .sort((a, b) => b.CurPerEn.getTime() - a.CurPerEn.getTime())
-  //   .map((item) => {
-  //     const roe = item.Eq !== 0 ? ((item.NP / item.Eq) * 100) : 0
-  //     const assetTurnover = item.TA !== 0 ? item.Sales / item.TA : 0
-  //     return { ...item, metric: { roe, assetTurnover } }
-  //   });
-
-  // const sortedData = result.data.data.sort((a, b) => b.CurPerEn.getTime() - a.CurPerEn.getTime());
-  // const dedupedData = sortedData.filter((item, index, self) =>
-  //   index === self.findIndex((t) => t.CurPerEn.getTime() === item.CurPerEn.getTime()));
-  // const data = dedupedData.map((item) => {
-  //   const roe = item.Eq !== 0 ? ((item.NP / item.Eq) * 100) : 0
-  //   const assetTurnover = item.TA !== 0 ? item.Sales / item.TA : 0
-  //   return { ...item, metric: { roe, assetTurnover } }
-  // });
 
   const data = result.data.data
     .sort((a, b) => b.CurPerEn.getTime() - a.CurPerEn.getTime())
