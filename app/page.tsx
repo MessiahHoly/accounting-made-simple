@@ -10,11 +10,12 @@ export default async function Home(props: { searchParams?: Promise<{ query?: str
   const language = searchParams?.language;
 
   return (
-    <main className="p-4 w-full max-w-md mx-auto">
-      <p>Assets = Liabilities + Owner's Equity</p>
+    <main className="p-4 w-full max-w-md mx-auto flex flex-col gap-8">
+      <h4>Search Japanese organisations for financial insights</h4>
+      {/* <p>Assets = Liabilities + Owner's Equity</p> */}
       <div className="flex flex-col gap-10">
         <div className="flex flex-col gap-4">
-          <Search placeholder="Search Japanese organisations..." />
+          <Search placeholder="Search for Japanese organisations..." />
           <LanguageCombobox />
         </div>
         <Suspense key={query} fallback={<SearchSkeleton />}>
