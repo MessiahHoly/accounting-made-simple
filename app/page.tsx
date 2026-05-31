@@ -3,7 +3,7 @@ import Search from "./ui/search";
 import SearchSkeleton from "./ui/searchSkelton";
 import Equities from "./ui/equities";
 import { LanguageCombobox } from "./ui/language-combobox";
-// import { searchForCompany } from "@/lib/data/fmp";
+import { searchForCompany } from "@/lib/data/fmp";
 
 export default async function Home(props: { searchParams?: Promise<{ query?: string, language?: string }> }) {
   const searchParams = await props?.searchParams;

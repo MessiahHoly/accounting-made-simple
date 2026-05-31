@@ -10,10 +10,6 @@ export const FinancialSummarySchema = z.object({
   Eq: stringToNumber,
   NP: stringToNumber,
   Sales: stringToNumber,
-  // TA: z.coerce.number(),
-  // Eq: z.coerce.number(),
-  // NP: z.coerce.number(),
-  // Sales: z.coerce.number(),
   CurPerEn: z.coerce.date(),
   Code: z.string(),
 })
@@ -24,15 +20,6 @@ const ProcessedFinancialSummarySchema = FinancialSummarySchema.extend({
     assetTurnover: z.number()
   })
 })
-
-// export const FinancialSummaryListResponseSchema = z.object({
-//   data: z.array(
-//     FinancialSummarySchema.nullable().catch(null) 
-//   ).transform((items) => {
-//     // TypeScript automatically narrows this to z.infer<typeof FinancialSummarySchema>[]
-//     return items.filter(Boolean); 
-//   }),
-// });
 
 export const FinancialSummaryListResponseSchema = z.object({
   data: z.array(
@@ -48,7 +35,8 @@ export const FinancialSummaryListResponseSchema = z.object({
 
 export type FinancialSummary = z.infer<typeof ProcessedFinancialSummarySchema>;
 
-export const EquitySchema = z.object({
+const EquitySchema = z.object({
+// export const EquitySchema = z.object({
   Code: z.string(),
   CoName: z.string(),
   CoNameEn: z.string(),
