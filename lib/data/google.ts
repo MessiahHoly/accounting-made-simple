@@ -10,7 +10,7 @@ export const fetchFinancialAnalysis = async (financials: Financials[], language?
   const financialDataString = JSON.stringify(financials)
   const prompt = `Here is the financial data for a company: ${financialDataString}. Please analyze this data and provide insights on the company's financial health, trends, and any potential red flags.`
   const systemInstruction = `You are a helpful expert. You must reply entirely in ${language || 'English'}.`
-  console.log(systemInstruction)
+  // console.log(systemInstruction)
 
   try {
     console.log("Attempting analysis with gemma-4-31b-it...");

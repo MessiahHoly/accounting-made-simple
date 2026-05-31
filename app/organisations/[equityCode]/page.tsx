@@ -22,7 +22,7 @@ export default async function Page({ params, searchParams }: {
   // export default async function Page({ params }: { params: Promise<{ equityCode: string, language?: string }> }) {
   const [{ equityCode }, { language }] = await Promise.all([params, searchParams])
   // const { equityCode } = await params
-  console.log("Language for analysis:", language)
+  // console.log("Language for analysis:", language)
   const [financeResponse, equityResponse, searchResponse
   ] = await Promise.all([
     fetchFinanceSummary(equityCode),
