@@ -12,11 +12,9 @@ export const fetchFinanceSummary = async (code: string) => {
 
   const res = await fetch(url, { next: { revalidate: 3600 }, headers: { 'x-api-key': API_KEY } });
   if (!res.ok) return { error: "Failed to fetch data" };
-  // console.log(res)
 
   const rawData = await res.json();
   const result = FinancialSummaryListResponseSchema.safeParse(rawData);
-  // console.log(result)
 
   if (!result.success) {
     console.error("Zod validation error:", result.error);
@@ -49,8 +47,6 @@ export const fetchEquities = async () => {
 
   const rawData = await res.json();
   const result = EquityListResponseSchema.safeParse(rawData);
-
-  // console.log(result)
 
   if (!result.success) {
     console.error("Zod validation error:", result.error);

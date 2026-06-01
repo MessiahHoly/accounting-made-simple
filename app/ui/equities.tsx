@@ -14,7 +14,7 @@ export default async function Equities({ query, language }: { query: string, lan
     );
   }
 
-  if("error" in responseFromFmp) {
+  if ("error" in responseFromFmp) {
     return (
       <Error error={responseFromFmp.error} />
     );
@@ -27,21 +27,17 @@ export default async function Equities({ query, language }: { query: string, lan
   );
 
   const companiesFromFmp = responseFromFmp.data.map(company => {
-    return {...transformFmpCompanyToEquityObject(company), exchangeFullName: company.exchangeFullName};
+    return { ...transformFmpCompanyToEquityObject(company), exchangeFullName: company.exchangeFullName };
   });
-  // const companiesFromFmp = responseFromFmp.data.map(transformFmpCompanyToEquityObject);
 
   return (
     <div className="flex flex-col gap-4">
       {filteredEquities.map((eq) => (
-        <Organisation key={eq.Code} equity={eq} language={language} exchangeFullName="Tokyo Stock Exchange" />
+        <Organisation key={eq.Code} equity={eq} language={language} exchangeFullName="Tokyo Stock Exchange" source="j-quants" />
       ))}
       {companiesFromFmp.map((company) => (
-        <Organisation key={company.Code} equity={company} language={language} exchangeFullName={company.exchangeFullName} />
+        <Organisation key={company.Code} equity={company} language={language} exchangeFullName={company.exchangeFullName} source="fmp" />
       ))}
-      {/* {companiesFromFmp.map((company) => (
-        <Organisation key={company.Code} equity={company} language={language} exchangeFullName= />
-      ))} */}
     </div>
   );
 }

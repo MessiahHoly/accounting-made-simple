@@ -17,12 +17,11 @@ import AiIsThinking from "./ui/AiIsThinking"
 import Error from "./ui/Error"
 
 export default async function Page({ params, searchParams }: {
-  params: Promise<{ equityCode: string }>, searchParams: Promise<{ language?: string }>
+  params: Promise<{ equityCode: string }>, searchParams: Promise<{ source: 'j-quants' | 'fmp', language?: string }>
+  // params: Promise<{ equityCode: string }>, searchParams: Promise<{ language?: string }>
 }) {
-  // export default async function Page({ params }: { params: Promise<{ equityCode: string, language?: string }> }) {
-  const [{ equityCode }, { language }] = await Promise.all([params, searchParams])
-  // const { equityCode } = await params
-  // console.log("Language for analysis:", language)
+  const [{ equityCode }, { source, language }] = await Promise.all([params, searchParams])
+  // const [{ equityCode }, { language }] = await Promise.all([params, searchParams])
   const [financeResponse, equityResponse, searchResponse
   ] = await Promise.all([
     fetchFinanceSummary(equityCode),
@@ -56,39 +55,6 @@ export default async function Page({ params, searchParams }: {
   }
 
   const { data: balanceSheets } = balanceSheetResponse
-
-  // return (
-  //   <main className="relative p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
-  //     {/* The container wrapper ensures the background behind the sticky button is solid when scrolling over text */}
-  //     <div className="sticky top-0 z-50 bg-background py-4">
-  //       <Button asChild variant="outline" className="shadow-sm">
-  //         <Link href="/" className="no-underline">
-  //           Home
-  //         </Link>
-  //       </Button>
-  //     </div>
-
-  //     {equity && (
-  //       <div className="mb-8">
-  //         <h1 className="text-3xl font-bold">{equity.CoName}</h1>
-  //         <p className="text-muted-foreground">{equity.Code} - {equity.CoNameEn}</p>
-  //       </div>
-  //     )}
-
-  //     <Suspense fallback={<AiIsThinking />}>
-  //       <GeminiFinancialAnalysis balanceSheets={balanceSheets} language={language} />
-  //     </Suspense>
-
-  //     <div className="mb-12">
-  //       <FinancialChart data={financeSummaries} />
-  //     </div>
-
-  //     <FinancialTable data={balanceSheets} />
-
-  //     <AccouningEquations financeSummaries={financeSummaries} />
-
-  //   </main>
-  // )
 
   return (
     <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
