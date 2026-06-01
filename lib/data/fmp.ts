@@ -1,4 +1,4 @@
-import { CompanyResponseSchema } from "../types/fmp";
+import { CompanyResponseSchema, IncomeStatementListSchema } from "../types/fmp";
 
 export const searchForCompany = async (query: string) => {
   const response = await fetch(
@@ -14,6 +14,25 @@ export const searchForCompany = async (query: string) => {
 
   if (!result.success) {
     return { error: `Failed to parse company data for query: ${query}.  ${result.error.message}` };
+  }
+
+  return { data: result.data };
+};
+
+export const fetchIncomeStatement = async (symbol: string) => {
+  const response = await fetch(
+    `https://financialmodelingprep.com/stable/income-statement?symbol=${symbol}&apikey=${process.env.FMP_API_KEY}`,
+  );
+
+  if (!response.ok) {
+    return { error: `Failed to fetch income statement for symbol: ${symbol}.  ${response.status} ${response.statusText}` };
+  }
+
+  const rawData = await response.json();
+  const result = IncomeStatementListSchema.safeParse(rawData);
+
+  if (!result.success) {
+    return { error: `Failed to parse income statement for symbol: ${symbol}.  ${result.error.message}` };
   }
 
   return { data: result.data };
