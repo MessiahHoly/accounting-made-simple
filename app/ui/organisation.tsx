@@ -4,12 +4,14 @@ import {
   ItemActions,
   ItemContent,
   ItemDescription,
+  ItemFooter,
   ItemTitle,
 } from "@/components/ui/item"
 import { Equity } from "@/lib/types/j-quants"
 import Link from "next/link"
 
-export function Organisation({ equity, language }: { equity: Equity, language?: string }) {
+export function Organisation({ equity, exchangeFullName, language }: { equity: Equity, exchangeFullName: string, language?: string }) {
+  // export function Organisation({ equity, language }: { equity: Equity, language?: string }) {
   return (
     <div className="flex w-full max-w-md flex-col gap-6">
       <Item variant="outline">
@@ -26,6 +28,7 @@ export function Organisation({ equity, language }: { equity: Equity, language?: 
             </Link>
           </Button>
         </ItemActions>
+        <ItemFooter>{exchangeFullName}</ItemFooter>
       </Item>
     </div>
   )

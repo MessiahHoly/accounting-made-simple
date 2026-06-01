@@ -1,6 +1,7 @@
 import { Decimal } from "@prisma/client/runtime/client";
 import { FinancialSummary } from "../types/j-quants";
 import { Financials } from "../types/edinet-db";
+import { Company } from "../types/fmp";
 
 export const getCleanFormData = (formData: FormData) => {
   const raw = Object.fromEntries(formData.entries());
@@ -19,3 +20,11 @@ export const getAccountingEquation = (jQuantsData: FinancialSummary[]) => {
     return { assets, equity, liabilities, code: Code, asOf: CurPerEn };
   });
 }
+
+export const transformFmpCompanyToEquityObject = (company: Company) => {
+  return {
+    Code: company.symbol,
+    CoName: company.name,
+    CoNameEn: company.name,
+  };
+};

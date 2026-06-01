@@ -3,14 +3,12 @@ import Search from "./ui/search";
 import SearchSkeleton from "./ui/searchSkelton";
 import Equities from "./ui/equities";
 import { LanguageCombobox } from "./ui/language-combobox";
-import { searchForCompany } from "@/lib/data/fmp";
+// import { searchForCompany } from "@/lib/data/fmp";
 
 export default async function Home(props: { searchParams?: Promise<{ query?: string, language?: string }> }) {
   const searchParams = await props?.searchParams;
   const query = searchParams?.query || "";
   const language = searchParams?.language;
-  // const companyData = await searchForCompany("Apple");
-  // console.log("Company data from FMP API:", companyData);
 
   return (
     <main className="p-4 w-full max-w-md mx-auto flex flex-col gap-8">

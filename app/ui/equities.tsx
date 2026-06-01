@@ -2,17 +2,14 @@ import { fetchEquities } from "@/lib/data/j-quants";
 import { Organisation } from "./organisation";
 import { searchForCompany } from "@/lib/data/fmp";
 import Error from "../organisations/[equityCode]/ui/Error";
+import { transformFmpCompanyToEquityObject } from "@/lib/utils/utils";
 
 export default async function Equities({ query, language }: { query: string, language?: string }) {
   const response = query.length > 0 ? await fetchEquities() : { data: [] };
-  const responseFromFmp = await searchForCompany(query);
+  const responseFromFmp = query.length > 0 ? await searchForCompany(query) : { data: [] };
 
   if ("error" in response) {
     return (
-      // <div>
-      //   <h2>Error</h2>
-      //   <p>{response.error}</p>
-      // </div>
       <Error error={response.error} />
     );
   }
@@ -29,11 +26,22 @@ export default async function Equities({ query, language }: { query: string, lan
     || CoNameEn.toLowerCase().includes(query.toLowerCase())
   );
 
+  const companiesFromFmp = responseFromFmp.data.map(company => {
+    return {...transformFmpCompanyToEquityObject(company), exchangeFullName: company.exchangeFullName};
+  });
+  // const companiesFromFmp = responseFromFmp.data.map(transformFmpCompanyToEquityObject);
+
   return (
     <div className="flex flex-col gap-4">
       {filteredEquities.map((eq) => (
-        <Organisation key={eq.Code} equity={eq} language={language} />
+        <Organisation key={eq.Code} equity={eq} language={language} exchangeFullName="Tokyo Stock Exchange" />
       ))}
+      {companiesFromFmp.map((company) => (
+        <Organisation key={company.Code} equity={company} language={language} exchangeFullName={company.exchangeFullName} />
+      ))}
+      {/* {companiesFromFmp.map((company) => (
+        <Organisation key={company.Code} equity={company} language={language} exchangeFullName= />
+      ))} */}
     </div>
   );
 }
