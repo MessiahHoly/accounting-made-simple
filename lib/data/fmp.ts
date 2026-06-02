@@ -19,21 +19,25 @@ export const searchForCompany = async (query: string) => {
   return { data: result.data };
 };
 
-export const fetchIncomeStatement = async (symbol: string) => {
-  const response = await fetch(
-    `https://financialmodelingprep.com/stable/income-statement?symbol=${symbol}&apikey=${process.env.FMP_API_KEY}`,
-  );
 
-  if (!response.ok) {
-    return { error: `Failed to fetch income statement for symbol: ${symbol}.  ${response.status} ${response.statusText}` };
-  }
+//TODO: the following end point is not free.
+// export const fetchIncomeStatement = async (symbol: string) => {
+//   const response = await fetch(
+//     `https://financialmodelingprep.com/stable/income-statement?symbol=${symbol}&apikey=${process.env.FMP_API_KEY}`,
+//   );
 
-  const rawData = await response.json();
-  const result = IncomeStatementListSchema.safeParse(rawData);
+//   console.log(response)
 
-  if (!result.success) {
-    return { error: `Failed to parse income statement for symbol: ${symbol}.  ${result.error.message}` };
-  }
+//   if (!response.ok) {
+//     return { error: `Failed to fetch income statement for symbol: ${symbol}.  ${response.status} ${response.statusText}` };
+//   }
 
-  return { data: result.data };
-};
+//   const rawData = await response.json();
+//   const result = IncomeStatementListSchema.safeParse(rawData);
+
+//   if (!result.success) {
+//     return { error: `Failed to parse income statement for symbol: ${symbol}.  ${result.error.message}` };
+//   }
+
+//   return { data: result.data };
+// };

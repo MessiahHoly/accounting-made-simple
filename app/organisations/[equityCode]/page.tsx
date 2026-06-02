@@ -15,13 +15,36 @@ import GeminiFinancialAnalysis from "./ui/GeminiFinancialAnalysis"
 import { Suspense } from "react"
 import AiIsThinking from "./ui/AiIsThinking"
 import Error from "./ui/Error"
+import { fetchIncomeStatement } from "@/lib/data/fmp"
 
 export default async function Page({ params, searchParams }: {
   params: Promise<{ equityCode: string }>, searchParams: Promise<{ source: 'j-quants' | 'fmp', language?: string }>
-  // params: Promise<{ equityCode: string }>, searchParams: Promise<{ language?: string }>
 }) {
   const [{ equityCode }, { source, language }] = await Promise.all([params, searchParams])
-  // const [{ equityCode }, { language }] = await Promise.all([params, searchParams])
+
+  // if (source === "fmp") {
+  //   const incomeStatementResponse = await fetchIncomeStatement(equityCode)
+
+  //   if ("error" in incomeStatementResponse) {
+  //     return <Error error={incomeStatementResponse.error} />
+  //   }
+
+  //   const { data: incomeStatements } = incomeStatementResponse
+
+  //   if (!incomeStatements || incomeStatements.length === 0) return notFound()
+
+  //   return (
+  //     <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
+  //       <div className="mb-8">
+  //         <h1 className="text-3xl font-bold">{equityCode}</h1>
+  //         <p className="text-muted-foreground">Income Statements</p>
+  //       </div>
+
+  //       <FinancialTable data={incomeStatements} />
+  //     </main>
+  //   )
+  // }
+
   const [financeResponse, equityResponse, searchResponse
   ] = await Promise.all([
     fetchFinanceSummary(equityCode),
