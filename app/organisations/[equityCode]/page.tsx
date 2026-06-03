@@ -19,7 +19,7 @@ import { fetchBalanceSheetsFromAlphaVantage } from "@/lib/data/alpha-vantage"
 // import { fetchIncomeStatement } from "@/lib/data/fmp"
 
 export default async function Page({ params, searchParams }: {
-  params: Promise<{ equityCode: string }>, searchParams: Promise<{ source: 'j-quants' | 'fmp', language?: string }>
+  params: Promise<{ equityCode: string }>, searchParams: Promise<{ source: 'j-quants' | 'alpha-vantage', language?: string }>
 }) {
   const [{ equityCode }, { source, language }] = await Promise.all([params, searchParams])
 
@@ -46,7 +46,7 @@ export default async function Page({ params, searchParams }: {
   //   )
   // }
 
-  if (source === "fmp") {
+  if (source === "alpha-vantage") {
     const balanceSheetResponse = await fetchBalanceSheetsFromAlphaVantage(equityCode)
 
     if ("error" in balanceSheetResponse) {

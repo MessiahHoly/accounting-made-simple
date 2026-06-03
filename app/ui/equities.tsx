@@ -1,6 +1,6 @@
 import { fetchEquities } from "@/lib/data/j-quants";
 import { Organisation } from "./organisation";
-import { searchForCompany } from "@/lib/data/fmp";
+// import { searchForCompany } from "@/lib/data/fmp";
 import Error from "../organisations/[equityCode]/ui/Error";
 import { transformFmpCompanyToEquityObject } from "@/lib/utils/utils";
 import { searchSymbols } from "@/lib/data/alpha-vantage";
@@ -9,19 +9,18 @@ export default async function Equities({ query, language }: { query: string, lan
   const response = query.length > 0 ? await fetchEquities() : { data: [] };
   // const responseFromFmp = query.length > 0 ? await searchForCompany(query) : { data: [] };
   const responseFromAlphaVantage = query.length > 0 ? await searchSymbols(query) : { data: [] };
-  // console.log("Response from Alpha Vantage:", responseFromAlphaVantage);
 
   if ("error" in response) {
     return (
       <Error error={response.error} />
-    );
+    ); 
   }
 
-  // if ("error" in responseFromFmp) {
-  //   return (
-  //     <Error error={responseFromFmp.error} />
-  //   );
-  // }
+    // if ("error" in responseFromFmp) {
+    //   return (
+    //     <Error error={responseFromFmp.error} />
+    //   );
+    // }
 
   if ("error" in responseFromAlphaVantage) {
     return (
@@ -36,7 +35,7 @@ export default async function Equities({ query, language }: { query: string, lan
   );
 
   const companiesFromAlphaVantage = responseFromAlphaVantage.data.map((ticker) => {
-    return { ...transformFmpCompanyToEquityObject(ticker), exchangeFullName: ticker.region };
+    return { ...transformFmpCompanyToEquityObject(ticker), region: ticker.region };
   });
 
   return (
@@ -45,7 +44,7 @@ export default async function Equities({ query, language }: { query: string, lan
         <Organisation key={eq.Code} equity={eq} language={language} region="Japan" source="j-quants" />
       ))}
       {companiesFromAlphaVantage.map((company) => (
-        <Organisation key={company.Code} equity={company} language={language} region={company.exchangeFullName} source="alpha-vantage" />
+        <Organisation key={company.Code} equity={company} language={language} region={company.region} source="alpha-vantage" />
       ))}
     </div>
   );
