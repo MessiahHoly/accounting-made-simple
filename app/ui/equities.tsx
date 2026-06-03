@@ -8,8 +8,8 @@ import { searchSymbols } from "@/lib/data/alpha-vantage";
 export default async function Equities({ query, language }: { query: string, language?: string }) {
   const response = query.length > 0 ? await fetchEquities() : { data: [] };
   const responseFromFmp = query.length > 0 ? await searchForCompany(query) : { data: [] };
-  const responseFromAlphaVantage = query.length > 0 ? await searchSymbols(query) : { data: [] };
-  console.log("Response from Alpha Vantage:", responseFromAlphaVantage);
+  // const responseFromAlphaVantage = query.length > 0 ? await searchSymbols(query) : { data: [] };
+  // console.log("Response from Alpha Vantage:", responseFromAlphaVantage);
 
   if ("error" in response) {
     return (

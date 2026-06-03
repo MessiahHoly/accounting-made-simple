@@ -35,3 +35,58 @@ export const AlphaVantageSearchResponseSchema = z.object({
 // Type inference will now automatically reflect the clean, renamed object keys!
 export type TickerMatch = z.infer<typeof TickerMatchSchema>;
 export type AlphaVantageSearchResponse = z.infer<typeof AlphaVantageSearchResponseSchema>;
+
+// Helper to handle numeric strings that might be "None"
+const financialNumber = z
+  .string()
+  .transform((val) => (val === "None" ? null : Number(val)));
+
+export const BalanceSheetSchema = z.object({
+  fiscalDateEnding: z.iso.date(), // Validates YYYY-MM-DD
+  reportedCurrency: z.string().length(3), // e.g., "USD"
+  totalAssets: financialNumber,
+  totalCurrentAssets: financialNumber,
+  cashAndCashEquivalentsAtCarryingValue: financialNumber,
+  cashAndShortTermInvestments: financialNumber,
+  inventory: financialNumber,
+  currentNetReceivables: financialNumber,
+  totalNonCurrentAssets: financialNumber,
+  propertyPlantEquipment: financialNumber,
+  accumulatedDepreciationAmortizationPPE: financialNumber,
+  intangibleAssets: financialNumber,
+  intangibleAssetsExcludingGoodwill: financialNumber,
+  goodwill: financialNumber,
+  investments: financialNumber,
+  longTermInvestments: financialNumber,
+  shortTermInvestments: financialNumber,
+  otherCurrentAssets: financialNumber,
+  otherNonCurrentAssets: financialNumber,
+  totalLiabilities: financialNumber,
+  totalCurrentLiabilities: financialNumber,
+  currentAccountsPayable: financialNumber,
+  deferredRevenue: financialNumber,
+  currentDebt: financialNumber,
+  shortTermDebt: financialNumber,
+  totalNonCurrentLiabilities: financialNumber,
+  capitalLeaseObligations: financialNumber,
+  longTermDebt: financialNumber,
+  currentLongTermDebt: financialNumber,
+  longTermDebtNoncurrent: financialNumber,
+  shortLongTermDebtTotal: financialNumber,
+  otherCurrentLiabilities: financialNumber,
+  otherNonCurrentLiabilities: financialNumber,
+  totalShareholderEquity: financialNumber,
+  treasuryStock: financialNumber,
+  retainedEarnings: financialNumber,
+  commonStock: financialNumber,
+  commonStockSharesOutstanding: financialNumber,
+});
+
+export const StockFinancialsSchema = z.object({
+  symbol: z.string().min(1),
+  annualReports: z.array(BalanceSheetSchema),
+});
+
+// Infer the TypeScript types from the schema
+export type BalanceSheet = z.infer<typeof BalanceSheetSchema>;
+export type StockFinancials = z.infer<typeof StockFinancialsSchema>;
