@@ -90,3 +90,71 @@ export const StockFinancialsSchema = z.object({
 // Infer the TypeScript types from the schema
 export type BalanceSheet = z.infer<typeof BalanceSheetSchema>;
 export type StockFinancials = z.infer<typeof StockFinancialsSchema>;
+
+export const CompanyOverviewSchema = z.object({
+  Symbol: z.string(),
+  AssetType: z.string(),
+  Name: z.string(),
+  Description: z.string(),
+  CIK: z.string(),
+  Exchange: z.string(),
+  Currency: z.string(),
+  Country: z.string(),
+  Sector: z.string(),
+  Industry: z.string(),
+  Address: z.string(),
+  OfficialSite: z.string().url(),
+  FiscalYearEnd: z.string(),
+  LatestQuarter: z.string().pipe(z.coerce.date()),
+  
+  // Financial metrics handled safely as numbers
+  MarketCapitalization: z.string().transform(Number),
+  EBITDA: z.string().transform(Number),
+  PERatio: z.string().transform(Number),
+  PEGRatio: z.string().transform(Number),
+  BookValue: z.string().transform(Number),
+  DividendPerShare: z.string().transform(Number),
+  DividendYield: z.string().transform(Number),
+  EPS: z.string().transform(Number),
+  RevenuePerShareTTM: z.string().transform(Number),
+  ProfitMargin: z.string().transform(Number),
+  OperatingMarginTTM: z.string().transform(Number),
+  ReturnOnAssetsTTM: z.string().transform(Number),
+  ReturnOnEquityTTM: z.string().transform(Number),
+  RevenueTTM: z.string().transform(Number),
+  GrossProfitTTM: z.string().transform(Number),
+  DilutedEPSTTM: z.string().transform(Number),
+  QuarterlyEarningsGrowthYOY: z.string().transform(Number),
+  QuarterlyRevenueGrowthYOY: z.string().transform(Number),
+  AnalystTargetPrice: z.string().transform(Number),
+  
+  // Ratings and breakdowns
+  AnalystRatingStrongBuy: z.string().transform(Number),
+  AnalystRatingBuy: z.string().transform(Number),
+  AnalystRatingHold: z.string().transform(Number),
+  AnalystRatingSell: z.string().transform(Number),
+  AnalystRatingStrongSell: z.string().transform(Number),
+  
+  // Market performance figures
+  TrailingPE: z.string().transform(Number),
+  ForwardPE: z.string().transform(Number),
+  PriceToSalesRatioTTM: z.string().transform(Number),
+  PriceToBookRatio: z.string().transform(Number),
+  EVToRevenue: z.string().transform(Number),
+  EVToEBITDA: z.string().transform(Number),
+  Beta: z.string().transform(Number),
+  "52WeekHigh": z.string().transform(Number),
+  "52WeekLow": z.string().transform(Number),
+  "50DayMovingAverage": z.string().transform(Number),
+  "200DayMovingAverage": z.string().transform(Number),
+  SharesOutstanding: z.string().transform(Number),
+  SharesFloat: z.string().transform(Number),
+  PercentInsiders: z.string().transform(Number),
+  PercentInstitutions: z.string().transform(Number),
+  
+  // Date tracking strings coerced into Date objects
+  DividendDate: z.string().pipe(z.coerce.date()),
+  ExDividendDate: z.string().pipe(z.coerce.date()),
+});
+
+export type CompanyOverview = z.infer<typeof CompanyOverviewSchema>;

@@ -1,6 +1,6 @@
 'use server';
 
-import { AlphaVantageSearchResponseSchema, StockFinancialsSchema } from "../types/alpha-vantage";
+import { AlphaVantageSearchResponseSchema, CompanyOverviewSchema, StockFinancialsSchema } from "../types/alpha-vantage";
 
 export const fetchJapaneseAccountingData = async (symbol: string) => {
   const API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
@@ -55,3 +55,24 @@ export const fetchBalanceSheetsFromAlphaVantage = async (symbol: string) => {
 
   return { data: result.data };
 };
+
+export const fetchCompanyOverview = async (symbol: string) => {
+  const API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
+  const url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`;
+
+  const res = await fetch(url, { next: { revalidate: 3600 } });
+
+  if (!res.ok) {
+    return { error: `Failed to fetch data. Status: ${res.status} ${res.statusText}` };
+  };
+
+  const rawData = await res.json();
+  console.log("Raw Company Overview API Response JSON:", rawData);
+  const result = CompanyOverviewSchema.safeParse(rawData);
+
+  if (!result.success) {
+    return { error: `Failed to parse API response. ${result.error.message}` };
+  }
+
+  return { data: result.data };
+}
