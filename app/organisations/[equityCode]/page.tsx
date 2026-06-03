@@ -15,7 +15,7 @@ import GeminiFinancialAnalysis from "./ui/GeminiFinancialAnalysis"
 import { Suspense } from "react"
 import AiIsThinking from "./ui/AiIsThinking"
 import Error from "./ui/Error"
-import { fetchIncomeStatement } from "@/lib/data/fmp"
+// import { fetchIncomeStatement } from "@/lib/data/fmp"
 
 export default async function Page({ params, searchParams }: {
   params: Promise<{ equityCode: string }>, searchParams: Promise<{ source: 'j-quants' | 'fmp', language?: string }>
