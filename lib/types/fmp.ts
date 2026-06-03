@@ -4,7 +4,7 @@ const CompanySchema = z.object({
   symbol: z.string(),
   name: z.string(),
   currency: z.string(),
-  exchangeFullName: z.string(),
+  region: z.string(),
   exchange: z.string(),
 })
 

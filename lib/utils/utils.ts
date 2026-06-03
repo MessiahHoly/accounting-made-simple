@@ -2,6 +2,7 @@ import { Decimal } from "@prisma/client/runtime/client";
 import { FinancialSummary } from "../types/j-quants";
 import { Financials } from "../types/edinet-db";
 import { Company } from "../types/fmp";
+import { TickerMatch } from "../types/alpha-vantage";
 
 export const getCleanFormData = (formData: FormData) => {
   const raw = Object.fromEntries(formData.entries());
@@ -21,10 +22,17 @@ export const getAccountingEquation = (jQuantsData: FinancialSummary[]) => {
   });
 }
 
-export const transformFmpCompanyToEquityObject = (company: Company) => {
+export const transformFmpCompanyToEquityObject = (ticker: TickerMatch) => {
   return {
-    Code: company.symbol,
-    CoName: company.name,
-    CoNameEn: company.name,
+    Code: ticker.symbol,
+    CoName: ticker.name,
+    CoNameEn: ticker.name,
   };
 };
+// export const transformFmpCompanyToEquityObject = (company: Company) => {
+//   return {
+//     Code: company.symbol,
+//     CoName: company.name,
+//     CoNameEn: company.name,
+//   };
+// };

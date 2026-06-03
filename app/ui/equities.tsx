@@ -7,8 +7,8 @@ import { searchSymbols } from "@/lib/data/alpha-vantage";
 
 export default async function Equities({ query, language }: { query: string, language?: string }) {
   const response = query.length > 0 ? await fetchEquities() : { data: [] };
-  const responseFromFmp = query.length > 0 ? await searchForCompany(query) : { data: [] };
-  // const responseFromAlphaVantage = query.length > 0 ? await searchSymbols(query) : { data: [] };
+  // const responseFromFmp = query.length > 0 ? await searchForCompany(query) : { data: [] };
+  const responseFromAlphaVantage = query.length > 0 ? await searchSymbols(query) : { data: [] };
   // console.log("Response from Alpha Vantage:", responseFromAlphaVantage);
 
   if ("error" in response) {
@@ -17,9 +17,15 @@ export default async function Equities({ query, language }: { query: string, lan
     );
   }
 
-  if ("error" in responseFromFmp) {
+  // if ("error" in responseFromFmp) {
+  //   return (
+  //     <Error error={responseFromFmp.error} />
+  //   );
+  // }
+
+  if ("error" in responseFromAlphaVantage) {
     return (
-      <Error error={responseFromFmp.error} />
+      <Error error={responseFromAlphaVantage.error} />
     );
   }
 
@@ -29,17 +35,17 @@ export default async function Equities({ query, language }: { query: string, lan
     || CoNameEn.toLowerCase().includes(query.toLowerCase())
   );
 
-  const companiesFromFmp = responseFromFmp.data.map(company => {
-    return { ...transformFmpCompanyToEquityObject(company), exchangeFullName: company.exchangeFullName };
+  const companiesFromAlphaVantage = responseFromAlphaVantage.data.map((ticker) => {
+    return { ...transformFmpCompanyToEquityObject(ticker), exchangeFullName: ticker.region };
   });
 
   return (
     <div className="flex flex-col gap-4">
       {filteredEquities.map((eq) => (
-        <Organisation key={eq.Code} equity={eq} language={language} exchangeFullName="Tokyo Stock Exchange" source="j-quants" />
+        <Organisation key={eq.Code} equity={eq} language={language} region="Japan" source="j-quants" />
       ))}
-      {companiesFromFmp.map((company) => (
-        <Organisation key={company.Code} equity={company} language={language} exchangeFullName={company.exchangeFullName} source="fmp" />
+      {companiesFromAlphaVantage.map((company) => (
+        <Organisation key={company.Code} equity={company} language={language} region={company.exchangeFullName} source="alpha-vantage" />
       ))}
     </div>
   );

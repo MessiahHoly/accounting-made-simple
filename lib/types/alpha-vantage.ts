@@ -41,7 +41,7 @@ const financialNumber = z
   .string()
   .transform((val) => (val === "None" ? null : Number(val)));
 
-export const BalanceSheetSchema = z.object({
+const BalanceSheetSchema = z.object({
   fiscalDateEnding: z.iso.date(), // Validates YYYY-MM-DD
   reportedCurrency: z.string().length(3), // e.g., "USD"
   totalAssets: financialNumber,

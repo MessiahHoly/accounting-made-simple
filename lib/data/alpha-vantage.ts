@@ -1,6 +1,6 @@
 'use server';
 
-import { AlphaVantageSearchResponseSchema } from "../types/alpha-vantage";
+import { AlphaVantageSearchResponseSchema, StockFinancialsSchema } from "../types/alpha-vantage";
 
 export const fetchJapaneseAccountingData = async (symbol: string) => {
   const API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
@@ -33,21 +33,25 @@ export const searchSymbols = async (keywords: string) => {
   return { data: result.data.bestMatches };
 };
 
-export const fetchBalanceSheets = async (symbol: string) => {
+export const fetchBalanceSheetsFromAlphaVantage = async (symbol: string) => {
   const API_KEY = process.env.ALPHA_VANTAGE_API_KEY;
   const url = `https://www.alphavantage.co/query?function=BALANCE_SHEET&symbol=${symbol}&apikey=${API_KEY}`;
 
   const res = await fetch(url, { next: { revalidate: 3600 } });
 
+  // console.log("Raw API Response:", res);
+
   if (!res.ok) {
     return { error: `Failed to fetch data. Status: ${res.status} ${res.statusText}` };
   };
 
-  const data = await res.json();
+  const rawData = await res.json();
+  // console.log("Raw API Response JSON:", rawData);
+  const result = StockFinancialsSchema.safeParse(rawData);
 
-  if (data["Error Message"]) {
-    return { error: `API Error: ${data["Error Message"]}` };
+  if (!result.success) {
+    return { error: `Failed to parse API response. ${result.error.message}` };
   }
 
-  return { data };
+  return { data: result.data };
 };

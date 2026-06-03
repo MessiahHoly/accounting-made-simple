@@ -15,6 +15,7 @@ import GeminiFinancialAnalysis from "./ui/GeminiFinancialAnalysis"
 import { Suspense } from "react"
 import AiIsThinking from "./ui/AiIsThinking"
 import Error from "./ui/Error"
+import { fetchBalanceSheetsFromAlphaVantage } from "@/lib/data/alpha-vantage"
 // import { fetchIncomeStatement } from "@/lib/data/fmp"
 
 export default async function Page({ params, searchParams }: {
@@ -44,6 +45,31 @@ export default async function Page({ params, searchParams }: {
   //     </main>
   //   )
   // }
+
+  if (source === "fmp") {
+    const balanceSheetResponse = await fetchBalanceSheetsFromAlphaVantage(equityCode)
+
+    if ("error" in balanceSheetResponse) {
+      return <Error error={balanceSheetResponse.error} />
+    }
+
+    const { annualReports } = balanceSheetResponse.data
+
+    if (!annualReports || annualReports.length === 0) return notFound()
+
+    console.log("Annual Reports:", annualReports)
+
+    return (
+      <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold">{equityCode}</h1>
+          <p className="text-muted-foreground">Balance Sheets</p>
+        </div>
+
+        {/* <FinancialTable data={annualReports} /> */}
+      </main>
+    )
+  }
 
   const [financeResponse, equityResponse, searchResponse
   ] = await Promise.all([
