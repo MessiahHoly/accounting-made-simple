@@ -3,13 +3,13 @@ import { Organisation } from "./organisation";
 // import { searchForCompany } from "@/lib/data/fmp";
 import Error from "../organisations/[equityCode]/ui/Error";
 import { transformFmpCompanyToEquityObject } from "@/lib/utils/utils";
-import { searchSymbols } from "@/lib/data/finhub";
+import { searchSymbols } from "@/lib/data/finnhub";
 // import { searchSymbols } from "@/lib/data/alpha-vantage";
 
 export default async function Equities({ query, language }: { query: string, language?: string }) {
   const response = query.length > 0 ? await fetchEquities() : { data: [] };
   // const responseFromFmp = query.length > 0 ? await searchForCompany(query) : { data: [] };
-  const responseFromFinhub = query.length > 0 ? await searchSymbols(query) : { data: [] };
+  const responseFromFinnhub = query.length > 0 ? await searchSymbols(query) : { data: [] };
 
   if ("error" in response) {
     return (
@@ -23,9 +23,9 @@ export default async function Equities({ query, language }: { query: string, lan
     //   );
     // }
 
-  if ("error" in responseFromFinhub) {
+  if ("error" in responseFromFinnhub) {
     return (
-      <Error error={responseFromFinhub.error} />
+      <Error error={responseFromFinnhub.error} />
     );
   }
 
@@ -35,9 +35,9 @@ export default async function Equities({ query, language }: { query: string, lan
     || CoNameEn.toLowerCase().includes(query.toLowerCase())
   );
 
-  // console.log(responseFromFinhub);
+  // console.log(responseFromFinnhub);
 
-  const companiesFromFinhub = responseFromFinhub.data.map(data => {
+  const companiesFromFinnhub = responseFromFinnhub.data.map(data => {
     // return { ...transformFmpCompanyToEquityObject(ticker), region: ticker.region };
     return {
       Code: data.symbol,
@@ -47,14 +47,14 @@ export default async function Equities({ query, language }: { query: string, lan
     };
   });
 
-  // console.log(companiesFromFinhub);
+  // console.log(companiesFromFinnhub);
 
   return (
     <div className="flex flex-col gap-4">
       {filteredEquities.map((eq) => (
         <Organisation key={eq.Code} equity={eq} language={language} region="Japan" source="j-quants" />
       ))}
-      {companiesFromFinhub.map((company) => (
+      {companiesFromFinnhub.map((company) => (
         <Organisation key={company.Code} equity={company} language={language} region={company.region} source="finhub" />
       ))}
     </div>
