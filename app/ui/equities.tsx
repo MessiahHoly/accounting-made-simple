@@ -3,12 +3,13 @@ import { Organisation } from "./organisation";
 // import { searchForCompany } from "@/lib/data/fmp";
 import Error from "../organisations/[equityCode]/ui/Error";
 import { transformFmpCompanyToEquityObject } from "@/lib/utils/utils";
-import { searchSymbols } from "@/lib/data/alpha-vantage";
+import { searchSymbols } from "@/lib/data/finhub";
+// import { searchSymbols } from "@/lib/data/alpha-vantage";
 
 export default async function Equities({ query, language }: { query: string, language?: string }) {
   const response = query.length > 0 ? await fetchEquities() : { data: [] };
   // const responseFromFmp = query.length > 0 ? await searchForCompany(query) : { data: [] };
-  const responseFromAlphaVantage = query.length > 0 ? await searchSymbols(query) : { data: [] };
+  const responseFromFinhub = query.length > 0 ? await searchSymbols(query) : { data: [] };
 
   if ("error" in response) {
     return (
@@ -22,9 +23,9 @@ export default async function Equities({ query, language }: { query: string, lan
     //   );
     // }
 
-  if ("error" in responseFromAlphaVantage) {
+  if ("error" in responseFromFinhub) {
     return (
-      <Error error={responseFromAlphaVantage.error} />
+      <Error error={responseFromFinhub.error} />
     );
   }
 
@@ -34,17 +35,27 @@ export default async function Equities({ query, language }: { query: string, lan
     || CoNameEn.toLowerCase().includes(query.toLowerCase())
   );
 
-  const companiesFromAlphaVantage = responseFromAlphaVantage.data.map((ticker) => {
-    return { ...transformFmpCompanyToEquityObject(ticker), region: ticker.region };
+  // console.log(responseFromFinhub);
+
+  const companiesFromFinhub = responseFromFinhub.data.map(data => {
+    // return { ...transformFmpCompanyToEquityObject(ticker), region: ticker.region };
+    return {
+      Code: data.symbol,
+      CoName: data.description,
+      CoNameEn: data.description,
+      region: data.type,
+    };
   });
+
+  // console.log(companiesFromFinhub);
 
   return (
     <div className="flex flex-col gap-4">
       {filteredEquities.map((eq) => (
         <Organisation key={eq.Code} equity={eq} language={language} region="Japan" source="j-quants" />
       ))}
-      {companiesFromAlphaVantage.map((company) => (
-        <Organisation key={company.Code} equity={company} language={language} region={company.region} source="alpha-vantage" />
+      {companiesFromFinhub.map((company) => (
+        <Organisation key={company.Code} equity={company} language={language} region={company.region} source="finhub" />
       ))}
     </div>
   );

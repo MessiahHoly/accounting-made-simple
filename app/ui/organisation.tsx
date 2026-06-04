@@ -11,9 +11,8 @@ import { Equity } from "@/lib/types/j-quants"
 import Link from "next/link"
 
 export function Organisation({ equity, region, source, language }: {
-// export function Organisation({ equity, exchangeFullName, source, language }: {
-  equity: Equity, region: string, source: 'j-quants' | 'alpha-vantage', language?: string
-  // equity: Equity, exchangeFullName: string, source: 'j-quants' | 'fmp', language?: string
+  equity: Equity, region: string, source: 'j-quants' | 'finhub', language?: string
+  // equity: Equity, region: string, source: 'j-quants' | 'alpha-vantage', language?: string
 }) {
   return (
     <div className="flex w-full max-w-md flex-col gap-6">
