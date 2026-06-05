@@ -30,8 +30,8 @@ export default async function Page({ params, searchParams }: {
 
     const { data: financials } = financialsResponse
 
-    if (!financials) return notFound()
-    // if (!financials || financials.length === 0) return notFound()
+    // if (!financials) return notFound()
+    if (!financials || financials.length === 0) return notFound()
 
     // console.log("Financials data:", financials)
 
@@ -55,9 +55,9 @@ export default async function Page({ params, searchParams }: {
         {/* Placeholder spacer so your content doesn't jump under the floating button */}
         <div className="h-10 mb-8" />
 
-        {/* <Suspense fallback={<AiIsThinking />}>
+        <Suspense fallback={<AiIsThinking />}>
           <GeminiFinancialAnalysis balanceSheets={financials} language={language} />
-        </Suspense> */}
+        </Suspense>
       </main>
     )
   }

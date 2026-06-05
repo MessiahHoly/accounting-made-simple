@@ -52,5 +52,5 @@ export const fetchFinancialsAsReported = async (symbol: string) => {
     return { error: `Failed to parse financials data from Finnhub. Error: ${result.error.message}` };
   }
 
-  return { data: result.data };
+  return { data: result.data.data };
 }
