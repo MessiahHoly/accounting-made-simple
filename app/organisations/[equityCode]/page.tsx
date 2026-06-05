@@ -15,14 +15,52 @@ import GeminiFinancialAnalysis from "./ui/GeminiFinancialAnalysis"
 import { Suspense } from "react"
 import AiIsThinking from "./ui/AiIsThinking"
 import Error from "./ui/Error"
-// import { fetchBalanceSheetsFromAlphaVantage, fetchCompanyOverview } from "@/lib/data/alpha-vantage"
+import { fetchFinancialsAsReported } from "@/lib/data/finnhub"
 
 export default async function Page({ params, searchParams }: {
-  params: Promise<{ equityCode: string }>, searchParams: Promise<{ source: 'j-quants' | 'finhub', language?: string }>
-  // params: Promise<{ equityCode: string }>, searchParams: Promise<{ source: 'j-quants' | 'alpha-vantage', language?: string }>
+  params: Promise<{ equityCode: string }>, searchParams: Promise<{ source: 'j-quants' | 'finnhub', language?: string }>
 }) {
   const [{ equityCode }, { source, language }] = await Promise.all([params, searchParams])
 
+  if (source === "finnhub") {
+    const financialsResponse = await fetchFinancialsAsReported(equityCode)
+    if ("error" in financialsResponse) {
+      return <Error error={financialsResponse.error} />
+    }
+
+    const { data: financials } = financialsResponse
+
+    if (!financials) return notFound()
+    // if (!financials || financials.length === 0) return notFound()
+
+    // console.log("Financials data:", financials)
+
+    return (
+      <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
+        {/* 1. Global fixed layer that covers the viewport width */}
+        <div className="fixed top-0 left-0 right-0 z-50 pointer-events-none">
+          {/* 2. Centered inner container matching your main layout constraints */}
+          <div className="max-w-screen-2xl mx-auto px-4 md:px-8 w-full pt-4 md:pt-8">
+            {/* 3. The actual interactive button */}
+            <div className="pointer-events-auto inline-block">
+              <Button asChild variant="outline" className="shadow-md bg-background">
+                <Link href="/" className="no-underline">
+                  Home
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Placeholder spacer so your content doesn't jump under the floating button */}
+        <div className="h-10 mb-8" />
+
+        {/* <Suspense fallback={<AiIsThinking />}>
+          <GeminiFinancialAnalysis balanceSheets={financials} language={language} />
+        </Suspense> */}
+      </main>
+    )
+  }
 
   // if (source === "alpha-vantage") {
   //   const balanceSheetResponse = await fetchBalanceSheetsFromAlphaVantage(equityCode)

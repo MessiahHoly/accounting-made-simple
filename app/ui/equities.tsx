@@ -17,12 +17,6 @@ export default async function Equities({ query, language }: { query: string, lan
     ); 
   }
 
-    // if ("error" in responseFromFmp) {
-    //   return (
-    //     <Error error={responseFromFmp.error} />
-    //   );
-    // }
-
   if ("error" in responseFromFinnhub) {
     return (
       <Error error={responseFromFinnhub.error} />
@@ -55,7 +49,7 @@ export default async function Equities({ query, language }: { query: string, lan
         <Organisation key={eq.Code} equity={eq} language={language} region="Japan" source="j-quants" />
       ))}
       {companiesFromFinnhub.map((company) => (
-        <Organisation key={company.Code} equity={company} language={language} region={company.region} source="finhub" />
+        <Organisation key={company.Code} equity={company} language={language} region={company.region} source="finnhub" />
       ))}
     </div>
   );

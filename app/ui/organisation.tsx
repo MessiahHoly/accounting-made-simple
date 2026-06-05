@@ -11,7 +11,7 @@ import { Equity } from "@/lib/types/j-quants"
 import Link from "next/link"
 
 export function Organisation({ equity, region, source, language }: {
-  equity: Equity, region: string, source: 'j-quants' | 'finhub', language?: string
+  equity: Equity, region: string, source: 'j-quants' | 'finnhub', language?: string
   // equity: Equity, region: string, source: 'j-quants' | 'alpha-vantage', language?: string
 }) {
   return (
