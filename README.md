@@ -1,25 +1,24 @@
 # Accounting Made Simple
 
-A modern and simple web app for managing organisations and tracking the core accounting equation: **Assets = Liabilities + Owner's Equity**.
+A modern and simple web app for searching organisations, reviewing equity and filing data, and generating AI-powered financial insights. It combines J-Quants company search for Japanese companies, EDINET/Finnhub financial filings, and Gemini-powered analysis to help you explore financial health and accounting equation context.
 
 Built with:
 - Next.js 16 + React 19
 - Tailwind CSS v4 and shadcn/ui-inspired components
 - Prisma 7 + PostgreSQL
 - Better Auth with magic link login and Resend email delivery
-- EDINET and J-Quants financial data sources for Japanese companies
-- Gemini-powered financial analysis and insights
+- EDINET, J-Quants, and Finnhub financial data sources
+- Gemini / Google GenAI-powered financial analysis and insights
 - Zod / Prisma Zod generator for typed schema validation
 - Recharts for simple financial charts
 
 ## Features
 
-- Search organisations and equity data from EDINET/J-Quants
-- Gemini-based analysis for selected financial data
-- Store organisations, accounting equations, and user sessions in PostgreSQL
-- Email-based magic link authentication via Resend
+- Search Japanese organisations and equity data from J-Quants
+- Optional language selector for search and AI analysis results
+- Company detail pages showing EDINET/Finnhub financial filings, charts, and accounting summaries
+- AI-generated financial analysis from Gemini / Google GenAI
 - Responsive, utility-first UI with custom components
-- Prisma-generated types and database access layer
 
 ## Getting Started
 
@@ -47,21 +46,13 @@ DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
 RESEND_API_KEY="your_resend_api_key"
 J_QUANTS_API_KEY="your_j_quants_api_key"
 EDINET_DB_API_KEY="your_edinet_db_api_key"
-GEMINI_API_KEY="your_gemini_api_key"
+FINNHUB_API_KEY="your_finnhub_api_ke"
 ```
 
 ### 4. Prepare the database
 
-If you are using the existing Prisma migrations, run:
-
 ```bash
 npx prisma migrate dev
-```
-
-If you only want to sync the schema without migrations, run:
-
-```bash
-npx prisma db push
 ```
 
 ### 5. Run the app
@@ -87,12 +78,6 @@ Open `http://localhost:3000` in your browser.
 - `prisma/` — schema, migrations, and generated Prisma helpers
 - `public/` — static assets
 
-## Auth
-
-This app uses `better-auth` with the `magicLink` plugin. Emails are sent through `Resend` using the `RESEND_API_KEY` environment variable.
-
-The auth API route is implemented at `app/api/auth/[...all]/route.ts`.
-
 ## Database Schema
 
 Key models in `prisma/schema.prisma`:
@@ -103,9 +88,9 @@ Key models in `prisma/schema.prisma`:
 
 ## Notes
 
-- The UI currently uses a search flow for organisations and equity lookup.
-- Financial data is obtained from EDINET and J-Quants.
-- The project currently targets Japanese companies only.
+- The UI currently uses a search flow for organisations and equity lookup with optional language selection.
+- Company detail pages are implemented in `app/organisations/[equityCode]/page.tsx` and render Gemini-powered AI financial analysis, balance sheets, charts, and accounting summaries.
+- Financial data is obtained from EDINET, J-Quants, and Finnhub.
 - If you change the Prisma schema, run `npx prisma generate` again.
 - The homepage is implemented in `app/page.tsx` and renders search + equities list.
 
