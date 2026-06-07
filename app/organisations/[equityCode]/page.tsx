@@ -15,7 +15,7 @@ import GeminiFinancialAnalysis from "./ui/GeminiFinancialAnalysis"
 import { Suspense } from "react"
 import AiIsThinking from "./ui/AiIsThinking"
 import Error from "./ui/Error"
-import { fetchFinancialsAsReported } from "@/lib/data/finnhub"
+import { fetchCompanyProfile, fetchFinancialsAsReported } from "@/lib/data/finnhub"
 import FinancialDashboard from "./ui/FinancialDashboard"
 
 export default async function Page({ params, searchParams }: {
@@ -24,18 +24,27 @@ export default async function Page({ params, searchParams }: {
   const [{ equityCode }, { source, language }] = await Promise.all([params, searchParams])
 
   if (source === "finnhub") {
-    const financialsResponse = await fetchFinancialsAsReported(equityCode)
+    const [financialsResponse, companyProfileResponse] = await Promise.all([
+      fetchFinancialsAsReported(equityCode), fetchCompanyProfile(equityCode)])
+    // const financialsResponse = await fetchFinancialsAsReported(equityCode)
     if ("error" in financialsResponse) {
       return <Error error={financialsResponse.error} />
     }
 
+    if ("error" in companyProfileResponse) {
+      return <Error error={companyProfileResponse.error} />
+    }
+
     const { data: financials } = financialsResponse
+    const { data: companyProfile } = companyProfileResponse
+
+    // console.log("Financials from Finnhub:", financials)
 
     if (!financials || financials.length === 0) return notFound()
 
     //TODO: componentse the following
 
-    console.log("Financials from Finnhub:", financials)
+    // console.log("Financials from Finnhub:", financials)
 
     return (
       <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
@@ -56,6 +65,13 @@ export default async function Page({ params, searchParams }: {
 
         {/* Placeholder spacer so your content doesn't jump under the floating button */}
         <div className="h-10 mb-8" />
+
+        {companyProfile && (
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold">{companyProfile.name}</h1>
+            <p className="text-muted-foreground">{companyProfile.ticker} - {companyProfile.exchange}</p>
+          </div>
+        )}
 
         <Suspense fallback={<AiIsThinking />}>
           <GeminiFinancialAnalysis balanceSheets={financials} language={language} />

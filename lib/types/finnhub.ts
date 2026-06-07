@@ -72,3 +72,24 @@ export type HistoricalFiling = z.infer<typeof HistoricalFilingSchema>;
 export type FinnhubServerResponse = z.infer<typeof FinnhubServerResponseSchema>;
 
 //TODO: upate nextjs
+
+
+
+
+export const companyProfileSchema = z.object({
+  country: z.string().length(2),
+  currency: z.string().length(3),
+  estimateCurrency: z.string().length(3),
+  exchange: z.string(),
+  finnhubIndustry: z.string(),
+  ipo: z.string().date(), // Validates YYYY-MM-DD format (introduced in Zod v3.23+)
+  logo: z.string().url(),
+  marketCapitalization: z.number().positive(),
+  name: z.string(),
+  phone: z.string(),
+  shareOutstanding: z.number().positive(),
+  ticker: z.string(),
+  weburl: z.string().url(),
+});
+
+export type CompanyProfile = z.infer<typeof companyProfileSchema>;

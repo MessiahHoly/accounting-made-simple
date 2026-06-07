@@ -1,6 +1,6 @@
 'use server';
 
-import { FinnhubServerResponseSchema, SearchResponseSchema } from "../types/finnhub";
+import { companyProfileSchema, FinnhubServerResponseSchema, SearchResponseSchema } from "../types/finnhub";
 
 export const searchSymbols = async (query: string) => {
   const API_KEY = process.env.FINNHUB_API_KEY;
@@ -39,18 +39,38 @@ export const fetchFinancialsAsReported = async (symbol: string) => {
   }
 
   const rawData = await res.json();
-  // You can add schema validation here similar to the searchSymbols function
-  // console.log("Raw financials data:", JSON.stringify(rawData));
-  // console.log("Raw financials data:", rawData);
-  // console.log(rawData.data[0].report);
-  // console.log(rawData)
 
   const result = FinnhubServerResponseSchema.safeParse(rawData);
-  console.log("Parsed financials data:", result);
+  // console.log("Parsed financials data:", result);
 
   if (!result.success) {
     return { error: `Failed to parse financials data from Finnhub. Error: ${result.error.message}` };
   }
 
   return { data: result.data.data };
+}
+
+export const fetchCompanyProfile = async (symbol: string) => {
+  const API_KEY = process.env.FINNHUB_API_KEY;
+  const headers = {
+    'X-Finnhub-Token': API_KEY || '',
+  };
+  const url = `https://finnhub.io/api/v1/stock/profile2?symbol=${symbol}`;
+
+  const res = await fetch(url, { headers, next: { revalidate: 3600 } });
+
+  if (!res.ok) {
+    return { error: `Failed to fetch company profile from Finnhub. Status: ${res.status} ${res.statusText}` };
+  }
+
+  const rawData = await res.json();
+
+  // You can add a Zod schema for the company profile response if needed
+  const result = companyProfileSchema.safeParse(rawData);
+
+  if (!result.success) {
+    return { error: `Failed to parse company profile data from Finnhub. Error: ${result.error.message}` };
+  }
+
+  return { data: result.data };
 }
