@@ -26,7 +26,7 @@ export default async function Page({ params, searchParams }: {
   if (source === "finnhub") {
     const [financialsResponse, companyProfileResponse] = await Promise.all([
       fetchFinancialsAsReported(equityCode), fetchCompanyProfile(equityCode)])
-    // const financialsResponse = await fetchFinancialsAsReported(equityCode)
+
     if ("error" in financialsResponse) {
       return <Error error={financialsResponse.error} />
     }
@@ -38,13 +38,9 @@ export default async function Page({ params, searchParams }: {
     const { data: financials } = financialsResponse
     const { data: companyProfile } = companyProfileResponse
 
-    // console.log("Financials from Finnhub:", financials)
-
     if (!financials || financials.length === 0) return notFound()
 
     //TODO: componentse the following
-
-    // console.log("Financials from Finnhub:", financials)
 
     return (
       <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">

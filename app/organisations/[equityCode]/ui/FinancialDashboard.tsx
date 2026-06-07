@@ -8,31 +8,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { HistoricalFiling } from "@/lib/types/finnhub";
 
-// Type definitions matching your ibm-data.txt structure
-// interface ReportEntry {
-//   concept: string;
-//   label: string;
-//   unit: string;
-//   value: number;
-// }
-
-// interface FinancialData {
-//   acceptedDate: string;
-//   accessNumber: string;
-//   cik: string;
-//   endDate: string;
-//   filedDate: string;
-//   form: string;
-//   quarter: number;
-//   symbol: string;
-//   year: number;
-//   report: {
-//     bs: ReportEntry[];
-//     cf: ReportEntry[];
-//     ic: ReportEntry[];
-//   };
-// }
-
 //TODO: remove any
 
 interface FinancialDashboardProps {
@@ -65,7 +40,6 @@ const isTotalLine = (label: string) => {
 
 export default function FinancialDashboard({ rawData }: FinancialDashboardProps) {
   const data: HistoricalFiling[] = rawData;
-  // const data: FinancialData[] = rawData;
 
   // Default to the most recent year's data available
   const [selectedYear, setSelectedYear] = useState<string>(data[0]?.year?.toString() || "2025");
@@ -118,11 +92,18 @@ export default function FinancialDashboard({ rawData }: FinancialDashboardProps)
       </div>
 
       {/* Main Tabbed Content Block */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+      {/* <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-3 max-w-md mb-4">
           <TabsTrigger value="bs">Balance Sheet</TabsTrigger>
           <TabsTrigger value="ic">Income Statement</TabsTrigger>
           <TabsTrigger value="cf">Cash Flow</TabsTrigger>
+        </TabsList> */}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        {/* REMOVED 'grid' and 'grid-cols-3'. ADDED horizontal scroll classes */}
+        <TabsList className="flex w-full justify-start overflow-x-auto overflow-y-hidden max-w-md mb-4 scrollbar-none snap-x">
+          <TabsTrigger value="bs" className="snap-mini">Balance Sheet</TabsTrigger>
+          <TabsTrigger value="ic" className="snap-mini">Income Statement</TabsTrigger>
+          <TabsTrigger value="cf" className="snap-mini">Cash Flow</TabsTrigger>
         </TabsList>
 
         {reportSections.map((section) => {
