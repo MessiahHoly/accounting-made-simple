@@ -37,13 +37,18 @@ const isTotalLine = (label: string) => {
 };
 
 export default function FinancialDashboard({ data }: { data: HistoricalFiling[] }) {
-  // export default function FinancialDashboard({ rawData }: FinancialDashboardProps) {
-  // const data: HistoricalFiling[] = rawData;
-
   // Default to the most recent year's data available
-  //TODO: change 2025 to dynamic current year
-  const [selectedYear, setSelectedYear] = useState<string>(data[0]?.year?.toString() || "2025");
-  const [activeTab, setActiveTab] = useState<string>("bs");
+  const [selectedYear, setSelectedYear] = useState(() => {
+    if (!data || data.length === 0) {
+      return new Date().getFullYear().toString(); // Dynamically falls back to current year (e.g., 2026, 3000)
+    }
+
+    const maxYear = Math.max(...data.map(item => item.year || 0));
+    return maxYear > 0 ? maxYear.toString() : new Date().getFullYear().toString();
+  });
+  // const [selectedYear, setSelectedYear] = useState<string>(data[0]?.year?.toString() || "2025");
+  const [activeTab, setActiveTab] = useState("bs");
+  // const [activeTab, setActiveTab] = useState<string>("bs");
 
   const currentYearData = data.find((d) => d.year?.toString() === selectedYear);
 
@@ -59,7 +64,6 @@ export default function FinancialDashboard({ data }: { data: HistoricalFiling[] 
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6">
-    {/* <div className="w-full max-w-6xl mx-auto p-4 space-y-6"> */}
       {/* Dashboard Top Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b gap-4">
         <div>
