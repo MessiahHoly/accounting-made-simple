@@ -73,7 +73,7 @@ export default async function Page({ params, searchParams }: {
           <GeminiFinancialAnalysis balanceSheets={financials} language={language} />
         </Suspense>
 
-        <FinancialDashboard rawData={financials} />
+        <FinancialDashboard data={financials} />
       </main>
     )
   }

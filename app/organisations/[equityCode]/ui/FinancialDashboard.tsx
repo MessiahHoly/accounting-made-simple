@@ -8,11 +8,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { HistoricalFiling } from "@/lib/types/finnhub";
 
-//TODO: remove any
-
-interface FinancialDashboardProps {
-  rawData: any[]; // Pass the parsed JSON array from your text file here
-}
+// interface FinancialDashboardProps {
+//   rawData: any[]; // Pass the parsed JSON array from your text file here
+// }
 
 // Utility to format values nicely
 const formatValue = (value: number, unit: string) => {
@@ -38,8 +36,9 @@ const isTotalLine = (label: string) => {
   return lower.includes("total") || lower.includes("net income") || lower.includes("gross profit");
 };
 
-export default function FinancialDashboard({ rawData }: FinancialDashboardProps) {
-  const data: HistoricalFiling[] = rawData;
+export default function FinancialDashboard({ data }: { data: HistoricalFiling[] }) {
+  // export default function FinancialDashboard({ rawData }: FinancialDashboardProps) {
+  // const data: HistoricalFiling[] = rawData;
 
   // Default to the most recent year's data available
   //TODO: change 2025 to dynamic current year
@@ -59,7 +58,8 @@ export default function FinancialDashboard({ rawData }: FinancialDashboardProps)
   ];
 
   return (
-    <div className="w-full max-w-6xl mx-auto p-4 space-y-6">
+    <div className="w-full max-w-6xl mx-auto space-y-6">
+    {/* <div className="w-full max-w-6xl mx-auto p-4 space-y-6"> */}
       {/* Dashboard Top Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b gap-4">
         <div>
@@ -76,7 +76,6 @@ export default function FinancialDashboard({ rawData }: FinancialDashboardProps)
           <span className="text-sm font-medium text-muted-foreground">Fiscal Year:</span>
           <Select value={selectedYear} onValueChange={setSelectedYear}>
             <SelectTrigger className="w-30">
-              {/* <SelectTrigger className="w-[120px]"> */}
               <SelectValue placeholder="Year" />
             </SelectTrigger>
             <SelectContent>
@@ -111,32 +110,7 @@ export default function FinancialDashboard({ rawData }: FinancialDashboardProps)
                 </CardHeader>
                 <CardContent>
                   <div className="rounded-md border overflow-x-auto">
-                    {/* <div className="rounded-md border overflow-hidden"> */}
                     <Table>
-                      {/* <TableHeader className="bg-slate-50 dark:bg-slate-900">
-                        <TableRow>
-                          <TableHead className="w-[60%]">Line Item</TableHead>
-                          <TableHead className="text-right w-[40%]">Value</TableHead>
-                        </TableRow>
-                      </TableHeader> */}
-                      {/* <TableBody>
-                        {rows.map((row, index) => {
-                          const isTotal = isTotalLine(row.label);
-                          return (
-                            <TableRow
-                              key={`${row.concept}-${index}`}
-                              className={isTotal ? "bg-slate-100/60 dark:bg-slate-800/60 font-semibold border-t border-b border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800" : ""}
-                            >
-                              <TableCell className={`text-sm text-slate-800 dark:text-slate-200 ${isTotal ? "pl-4 text-slate-950 dark:text-white" : "pl-6"}`}>
-                                {row.label}
-                              </TableCell>
-                              <TableCell className={`text-sm text-right font-mono ${isTotal ? "text-slate-950 dark:text-white font-bold" : "text-slate-600 dark:text-slate-400"}`}>
-                                {row.value && formatValue(row.value, row.unit)}
-                              </TableCell>
-                            </TableRow>
-                          );
-                        })}
-                      </TableBody> */}
                       <TableHeader className="bg-slate-50 dark:bg-slate-900">
                         <TableRow>
                           {/* CHANGE: Added min-w and max-w constraints to prevent massive stretching */}
@@ -156,7 +130,6 @@ export default function FinancialDashboard({ rawData }: FinancialDashboardProps)
                             >
                               {/* CHANGE: Added whitespace-normal and break-words to handle long stock strings */}
                               <TableCell className={`text-sm text-slate-800 dark:text-slate-200 whitespace-normal wrap-break-word max-w-100 ${isTotal ? "pl-4 text-slate-950 dark:text-white" : "pl-6"}`}>
-                              {/* <TableCell className={`text-sm text-slate-800 dark:text-slate-200 whitespace-normal break-words max-w-[400px] ${isTotal ? "pl-4 text-slate-950 dark:text-white" : "pl-6"}`}> */}
                                 {row.label}
                               </TableCell>
                               <TableCell className={`text-sm text-right font-mono ${isTotal ? "text-slate-950 dark:text-white font-bold" : "text-slate-600 dark:text-slate-400"}`}>
