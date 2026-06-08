@@ -42,12 +42,11 @@ export default function FinancialDashboard({ rawData }: FinancialDashboardProps)
   const data: HistoricalFiling[] = rawData;
 
   // Default to the most recent year's data available
+  //TODO: change 2025 to dynamic current year
   const [selectedYear, setSelectedYear] = useState<string>(data[0]?.year?.toString() || "2025");
-  // const [selectedYear, setSelectedYear] = useState<string>(data[0]?.year.toString() || "2025");
   const [activeTab, setActiveTab] = useState<string>("bs");
 
   const currentYearData = data.find((d) => d.year?.toString() === selectedYear);
-  // const currentYearData = data.find((d) => d.year.toString() === selectedYear);
 
   if (!currentYearData) {
     return <div className="p-6 text-center text-red-500">No data found for the selected period.</div>;
@@ -76,13 +75,13 @@ export default function FinancialDashboard({ rawData }: FinancialDashboardProps)
         <div className="flex items-center space-x-2">
           <span className="text-sm font-medium text-muted-foreground">Fiscal Year:</span>
           <Select value={selectedYear} onValueChange={setSelectedYear}>
-            <SelectTrigger className="w-[120px]">
+            <SelectTrigger className="w-30">
+              {/* <SelectTrigger className="w-[120px]"> */}
               <SelectValue placeholder="Year" />
             </SelectTrigger>
             <SelectContent>
               {data.map((item) => (
                 <SelectItem key={item.year} value={item.year?.toString() || "unknown"}>
-                  {/* <SelectItem key={item.year} value={item.year.toString()}> */}
                   {item.year}
                 </SelectItem>
               ))}
@@ -91,13 +90,6 @@ export default function FinancialDashboard({ rawData }: FinancialDashboardProps)
         </div>
       </div>
 
-      {/* Main Tabbed Content Block */}
-      {/* <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-3 max-w-md mb-4">
-          <TabsTrigger value="bs">Balance Sheet</TabsTrigger>
-          <TabsTrigger value="ic">Income Statement</TabsTrigger>
-          <TabsTrigger value="cf">Cash Flow</TabsTrigger>
-        </TabsList> */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         {/* REMOVED 'grid' and 'grid-cols-3'. ADDED horizontal scroll classes */}
         <TabsList className="flex w-full justify-start overflow-x-auto overflow-y-hidden max-w-md mb-4 scrollbar-none snap-x">
@@ -118,15 +110,16 @@ export default function FinancialDashboard({ rawData }: FinancialDashboardProps)
                   <CardDescription>{section.description} (Values in Millions USD unless specified)</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="rounded-md border overflow-hidden">
+                  <div className="rounded-md border overflow-x-auto">
+                    {/* <div className="rounded-md border overflow-hidden"> */}
                     <Table>
-                      <TableHeader className="bg-slate-50 dark:bg-slate-900">
+                      {/* <TableHeader className="bg-slate-50 dark:bg-slate-900">
                         <TableRow>
                           <TableHead className="w-[60%]">Line Item</TableHead>
                           <TableHead className="text-right w-[40%]">Value</TableHead>
                         </TableRow>
-                      </TableHeader>
-                      <TableBody>
+                      </TableHeader> */}
+                      {/* <TableBody>
                         {rows.map((row, index) => {
                           const isTotal = isTotalLine(row.label);
                           return (
@@ -139,7 +132,32 @@ export default function FinancialDashboard({ rawData }: FinancialDashboardProps)
                               </TableCell>
                               <TableCell className={`text-sm text-right font-mono ${isTotal ? "text-slate-950 dark:text-white font-bold" : "text-slate-600 dark:text-slate-400"}`}>
                                 {row.value && formatValue(row.value, row.unit)}
-                                {/* {formatValue(row.value, row.unit)} */}
+                              </TableCell>
+                            </TableRow>
+                          );
+                        })}
+                      </TableBody> */}
+                      <TableHeader className="bg-slate-50 dark:bg-slate-900">
+                        <TableRow>
+                          {/* CHANGE: Added min-w and max-w constraints to prevent massive stretching */}
+                          <TableHead className="w-[60%] min-w-[200px] max-w-[400px]">Line Item</TableHead>
+                          <TableHead className="text-right w-[40%] min-w-[100px]">Value</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {rows.map((row, index) => {
+                          const isTotal = isTotalLine(row.label);
+                          return (
+                            <TableRow
+                              key={`${row.concept}-${index}`}
+                              className={isTotal ? "bg-slate-100/60 dark:bg-slate-800/60 font-semibold border-t border-b border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800" : ""}
+                            >
+                              {/* CHANGE: Added whitespace-normal and break-words to handle long stock strings */}
+                              <TableCell className={`text-sm text-slate-800 dark:text-slate-200 whitespace-normal break-words max-w-[400px] ${isTotal ? "pl-4 text-slate-950 dark:text-white" : "pl-6"}`}>
+                                {row.label}
+                              </TableCell>
+                              <TableCell className={`text-sm text-right font-mono ${isTotal ? "text-slate-950 dark:text-white font-bold" : "text-slate-600 dark:text-slate-400"}`}>
+                                {row.value && formatValue(row.value, row.unit)}
                               </TableCell>
                             </TableRow>
                           );
