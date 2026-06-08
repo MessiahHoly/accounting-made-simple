@@ -140,8 +140,10 @@ export default function FinancialDashboard({ rawData }: FinancialDashboardProps)
                       <TableHeader className="bg-slate-50 dark:bg-slate-900">
                         <TableRow>
                           {/* CHANGE: Added min-w and max-w constraints to prevent massive stretching */}
-                          <TableHead className="w-[60%] min-w-[200px] max-w-[400px]">Line Item</TableHead>
-                          <TableHead className="text-right w-[40%] min-w-[100px]">Value</TableHead>
+                          <TableHead className="w-[60%] min-w-50 max-w-100">Line Item</TableHead>
+                          {/* <TableHead className="w-[60%] min-w-[200px] max-w-[400px]">Line Item</TableHead> */}
+                          <TableHead className="text-right w-[40%] min-w-25">Value</TableHead>
+                          {/* <TableHead className="text-right w-[40%] min-w-[100px]">Value</TableHead> */}
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -153,7 +155,8 @@ export default function FinancialDashboard({ rawData }: FinancialDashboardProps)
                               className={isTotal ? "bg-slate-100/60 dark:bg-slate-800/60 font-semibold border-t border-b border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800" : ""}
                             >
                               {/* CHANGE: Added whitespace-normal and break-words to handle long stock strings */}
-                              <TableCell className={`text-sm text-slate-800 dark:text-slate-200 whitespace-normal break-words max-w-[400px] ${isTotal ? "pl-4 text-slate-950 dark:text-white" : "pl-6"}`}>
+                              <TableCell className={`text-sm text-slate-800 dark:text-slate-200 whitespace-normal wrap-break-word max-w-100 ${isTotal ? "pl-4 text-slate-950 dark:text-white" : "pl-6"}`}>
+                              {/* <TableCell className={`text-sm text-slate-800 dark:text-slate-200 whitespace-normal break-words max-w-[400px] ${isTotal ? "pl-4 text-slate-950 dark:text-white" : "pl-6"}`}> */}
                                 {row.label}
                               </TableCell>
                               <TableCell className={`text-sm text-right font-mono ${isTotal ? "text-slate-950 dark:text-white font-bold" : "text-slate-600 dark:text-slate-400"}`}>
