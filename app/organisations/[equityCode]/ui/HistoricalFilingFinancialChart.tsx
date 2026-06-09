@@ -85,7 +85,7 @@ export function HistoricalFilingFinancialChart({ filings }: FinancialChartProps)
     <Card className="w-full">
       <CardHeader>
         <CardTitle>Financial Performance</CardTitle>
-        <CardDescription>Historical Revenue vs Net Income (In Millions)</CardDescription>
+        <CardDescription>Historical Revenue vs Net Income</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig} className="min-h-75 w-full">
