@@ -17,6 +17,7 @@ import AiIsThinking from "./ui/AiIsThinking"
 import Error from "./ui/Error"
 import { fetchCompanyProfile, fetchFinancialsAsReported } from "@/lib/data/finnhub"
 import FinancialDashboard from "./ui/FinancialDashboard"
+import { HistoricalFilingFinancialChart } from "./ui/HistoricalFilingFinancialChart"
 
 export default async function Page({ params, searchParams }: {
   params: Promise<{ equityCode: string }>, searchParams: Promise<{ source: 'j-quants' | 'finnhub', language?: string }>
@@ -73,6 +74,10 @@ export default async function Page({ params, searchParams }: {
           <GeminiFinancialAnalysis balanceSheets={financials} language={language} />
         </Suspense>
 
+        <div className="mb-12">
+          <HistoricalFilingFinancialChart filings={financials} />
+        </div>
+        
         <FinancialDashboard data={financials} />
       </main>
     )
