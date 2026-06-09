@@ -29,10 +29,10 @@ export const transformFmpCompanyToEquityObject = (ticker: TickerMatch) => {
     CoNameEn: ticker.name,
   };
 };
-// export const transformFmpCompanyToEquityObject = (company: Company) => {
-//   return {
-//     Code: company.symbol,
-//     CoName: company.name,
-//     CoNameEn: company.name,
-//   };
-// };
+
+export const formatCurrencyInMillionAndBillion = (value: number) => {
+  if (value >= 1000) {
+    return `$${(value / 1000).toFixed(1)}B` // Formats 150000 into $150.0B
+  }
+  return `$${value}M`
+}

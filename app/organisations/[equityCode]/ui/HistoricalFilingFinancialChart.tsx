@@ -19,6 +19,7 @@ import {
   ChartLegendContent,
 } from "@/components/ui/chart"
 import { HistoricalFiling } from "@/lib/types/finnhub"
+import { formatCurrencyInMillionAndBillion } from "@/lib/utils/utils"
 
 interface FinancialChartProps {
   filings: HistoricalFiling[]
@@ -100,7 +101,8 @@ export function HistoricalFilingFinancialChart({ filings }: FinancialChartProps)
               tickLine={false}
               axisLine={false}
               tickMargin={10}
-              tickFormatter={(value) => `$${value}M`}
+              // tickFormatter={(value) => `$${value}M`}
+              tickFormatter={formatCurrencyInMillionAndBillion}
             />
             <ChartTooltip content={<ChartTooltipContent />} />
             <ChartLegend content={<ChartLegendContent />} />
