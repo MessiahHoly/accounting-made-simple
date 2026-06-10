@@ -46,9 +46,7 @@ export default function FinancialDashboard({ data }: { data: HistoricalFiling[] 
     const maxYear = Math.max(...data.map(item => item.year || 0));
     return maxYear > 0 ? maxYear.toString() : new Date().getFullYear().toString();
   });
-  // const [selectedYear, setSelectedYear] = useState<string>(data[0]?.year?.toString() || "2025");
   const [activeTab, setActiveTab] = useState("bs");
-  // const [activeTab, setActiveTab] = useState<string>("bs");
 
   const currentYearData = data.find((d) => d.year?.toString() === selectedYear);
 
@@ -67,12 +65,18 @@ export default function FinancialDashboard({ data }: { data: HistoricalFiling[] 
       {/* Dashboard Top Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-4 border-b gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
+          <h3 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-50">
+            {currentYearData.symbol ? `${currentYearData.symbol} Financial Statements` : "Financial Statements"}
+          </h3>
+          {/* <h3>
+            Financials
+          </h3> */}
+          {/* <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-slate-50">
             {currentYearData.symbol} Financials
-          </h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          </h1> */}
+          {/* <p className="text-sm text-muted-foreground mt-1">
             Form {currentYearData.form} • Filed: {new Date(currentYearData.filedDate).toLocaleDateString()}
-          </p>
+          </p> */}
         </div>
 
         {/* Year Dropdown Controller */}
