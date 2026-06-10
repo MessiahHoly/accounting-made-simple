@@ -1,14 +1,12 @@
 import { fetchEquities } from "@/lib/data/j-quants";
 import { Organisation } from "./organisation";
-// import { searchForCompany } from "@/lib/data/fmp";
 import Error from "../organisations/[equityCode]/ui/Error";
-import { transformFmpCompanyToEquityObject } from "@/lib/utils/utils";
+// import { transformFmpCompanyToEquityObject } from "@/lib/utils/utils";
 import { searchSymbols } from "@/lib/data/finnhub";
-// import { searchSymbols } from "@/lib/data/alpha-vantage";
+import { filterOutFinnhubUnsupportedSymbols } from "@/lib/utils/utils";
 
 export default async function Equities({ query, language }: { query: string, language?: string }) {
   const response = query.length > 0 ? await fetchEquities() : { data: [] };
-  // const responseFromFmp = query.length > 0 ? await searchForCompany(query) : { data: [] };
   const responseFromFinnhub = query.length > 0 ? await searchSymbols(query) : { data: [] };
 
   if ("error" in response) {
@@ -29,10 +27,10 @@ export default async function Equities({ query, language }: { query: string, lan
     || CoNameEn.toLowerCase().includes(query.toLowerCase())
   );
 
-  // console.log(responseFromFinnhub);
+  const filteredFinnhubEquities = filterOutFinnhubUnsupportedSymbols(responseFromFinnhub.data)
 
-  const companiesFromFinnhub = responseFromFinnhub.data.map(data => {
-    // return { ...transformFmpCompanyToEquityObject(ticker), region: ticker.region };
+  const companiesFromFinnhub = filteredFinnhubEquities.map(data => {
+  // const companiesFromFinnhub = responseFromFinnhub.data.map(data => {
     return {
       Code: data.symbol,
       CoName: data.description,
@@ -40,8 +38,6 @@ export default async function Equities({ query, language }: { query: string, lan
       region: data.type,
     };
   });
-
-  // console.log(companiesFromFinnhub);
 
   return (
     <div className="flex flex-col gap-4">

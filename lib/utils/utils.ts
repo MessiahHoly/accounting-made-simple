@@ -3,6 +3,7 @@ import { FinancialSummary } from "../types/j-quants";
 import { Financials } from "../types/edinet-db";
 import { Company } from "../types/fmp";
 import { TickerMatch } from "../types/alpha-vantage";
+import { SearchItem } from "../types/finnhub";
 
 export const getCleanFormData = (formData: FormData) => {
   const raw = Object.fromEntries(formData.entries());
@@ -36,3 +37,14 @@ export const formatCurrencyInMillionAndBillion = (value: number) => {
   }
   return `$${value}M`
 }
+
+export const filterOutFinnhubUnsupportedSymbols = (companies: SearchItem[]) => companies.filter(({ symbol }) => {
+  // 1. Check if it's a standard US symbol (contains no dot separator)
+  if (!symbol.includes('.')) {
+    return true;
+  }
+
+  // 2. Allow specific allowed suffixes for US/UK markets supported by the endpoint
+  const allowedSuffixes = ['.US', '.L', '.IL'];
+  return allowedSuffixes.some((suffix) => symbol.endsWith(suffix));
+});

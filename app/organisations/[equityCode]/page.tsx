@@ -28,6 +28,8 @@ export default async function Page({ params, searchParams }: {
     const [financialsResponse, companyProfileResponse] = await Promise.all([
       fetchFinancialsAsReported(equityCode), fetchCompanyProfile(equityCode)])
 
+    // console.log("Financials Response:", financialsResponse)
+
     if ("error" in financialsResponse) {
       return <Error error={financialsResponse.error} />
     }
@@ -77,7 +79,7 @@ export default async function Page({ params, searchParams }: {
         <div className="mb-12">
           <HistoricalFilingFinancialChart filings={financials} />
         </div>
-        
+
         <FinancialDashboard data={financials} />
       </main>
     )

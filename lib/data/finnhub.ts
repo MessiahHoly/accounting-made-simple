@@ -34,6 +34,8 @@ export const fetchFinancialsAsReported = async (symbol: string) => {
 
   const res = await fetch(url, { headers, next: { revalidate: 3600 } });
 
+  console.log(res);
+
   if (!res.ok) {
     return { error: `Failed to fetch financials from Finnhub. Status: ${res.status} ${res.statusText}` };
   }

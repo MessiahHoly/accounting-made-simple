@@ -15,11 +15,6 @@ export const SearchResponseSchema = z.object({
 export type SearchItem = z.infer<typeof SearchSchema>;
 export type SearchResponse = z.infer<typeof SearchResponseSchema>;
 
-
-
-
-
-
 /**
  * Helper to safely convert any incoming input (string, null, empty) to a number.
  * If the value results in NaN (like an empty string "" or "N/A"), it defaults to 0.
