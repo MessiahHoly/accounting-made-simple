@@ -1,4 +1,7 @@
-import { CompanyResponseSchema, IncomeStatementListSchema } from "../types/fmp";
+import {
+  CompanyResponseSchema,
+  // IncomeStatementListSchema
+} from "../types/fmp";
 
 export const searchForCompany = async (query: string) => {
   const response = await fetch(
@@ -20,7 +23,7 @@ export const searchForCompany = async (query: string) => {
 };
 
 
-//TODO: the following end point is not free.
+// the following end point is not free.
 // export const fetchIncomeStatement = async (symbol: string) => {
 //   const response = await fetch(
 //     `https://financialmodelingprep.com/stable/income-statement?symbol=${symbol}&apikey=${process.env.FMP_API_KEY}`,
