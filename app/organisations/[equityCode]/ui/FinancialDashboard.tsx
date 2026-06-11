@@ -123,14 +123,13 @@ export default function FinancialDashboard({ data }: { data: HistoricalFiling[] 
                         <TableRow>
                           {/* CHANGE: Added min-w and max-w constraints to prevent massive stretching */}
                           <TableHead className="w-[60%] min-w-50 max-w-100">Line Item</TableHead>
-                          {/* <TableHead className="w-[60%] min-w-[200px] max-w-[400px]">Line Item</TableHead> */}
                           <TableHead className="text-right w-[40%] min-w-25">Value</TableHead>
-                          {/* <TableHead className="text-right w-[40%] min-w-[100px]">Value</TableHead> */}
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {rows.map((row, index) => {
-                          const isTotal = isTotalLine(row.label);
+                          const isTotal = isTotalLine(row.label || '');
+                          // const isTotal = isTotalLine(row.label);
                           return (
                             <TableRow
                               key={`${row.concept}-${index}`}
