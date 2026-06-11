@@ -30,7 +30,8 @@ const safeNullableNumericCoercion = z.preprocess((val) => {
 
 export const FinancialMetricSchema = z.object({
   concept: z.string(),
-  label: z.string(),
+  label: z.string().nullable(), // <-- Made nullable to handle cases where label might be missing or empty
+  // label: z.string(),
   unit: z.string(),
   value: safeNullableNumericCoercion, // <-- Fixes "received NaN" by turning it into 0
 });

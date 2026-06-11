@@ -34,16 +34,18 @@ export const fetchFinancialsAsReported = async (symbol: string) => {
 
   const res = await fetch(url, { headers, next: { revalidate: 3600 } });
 
-  console.log(res);
+  // console.log(res);
 
   if (!res.ok) {
     return { error: `Failed to fetch financials from Finnhub. Status: ${res.status} ${res.statusText}` };
   }
 
   const rawData = await res.json();
+  // console.log("Raw financials data from Finnhub:", rawData); // <-- Log the raw response for debugging
 
   const result = FinnhubServerResponseSchema.safeParse(rawData);
-  // console.log("Parsed financials data:", result);
+
+  console.log("Parsed financials data from Finnhub:", result); // <-- Log the parsed result for debugging
 
   if (!result.success) {
     return { error: `Failed to parse financials data from Finnhub. Error: ${result.error.message}` };
