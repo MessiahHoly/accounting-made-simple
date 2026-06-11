@@ -1,6 +1,6 @@
 import { fetchEquities } from "@/lib/data/j-quants";
 import { Organisation } from "./organisation";
-import Error from "../organisations/[equityCode]/ui/Error";
+import Error from "./Error";
 // import { transformFmpCompanyToEquityObject } from "@/lib/utils/utils";
 import { searchSymbols } from "@/lib/data/finnhub";
 import { filterOutFinnhubUnsupportedSymbols } from "@/lib/utils/utils";
