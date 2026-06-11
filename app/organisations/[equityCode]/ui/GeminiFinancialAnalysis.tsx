@@ -8,13 +8,14 @@ import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 import { HistoricalFiling } from "@/lib/types/finnhub";
 
-//TODO: change the name from balanceSheets to financials or financialFilings or something more generic, since it can handle both edinet-db and finnhub data. Also update the prop name in page.tsx accordingly. --- IGNORE ---
-//TODO: name fethced data type to know the source (edinet-db or finnhub) and handle it accordingly in the GeminiFinancialAnalysis component, since the data structure is different between the two sources. --- IGNORE ---
-
-export default async function GeminiFinancialAnalysis({ balanceSheets, language }: {
-  balanceSheets: Financials[] | HistoricalFiling[], language?: string
+export default async function GeminiFinancialAnalysis({ financials, language }: {
+  financials: Financials[] | HistoricalFiling[], language?: string
 }) {
-  const financialAnalysisResponse = await fetchFinancialAnalysis(balanceSheets, language)
+  const financialAnalysisResponse = await fetchFinancialAnalysis(financials, language)
+  // export default async function GeminiFinancialAnalysis({ balanceSheets, language }: {
+  //   balanceSheets: Financials[] | HistoricalFiling[], language?: string
+  // }) {
+  //   const financialAnalysisResponse = await fetchFinancialAnalysis(balanceSheets, language)
   if ("error" in financialAnalysisResponse) {
     console.error("Error fetching financial analysis:", financialAnalysisResponse.error)
     return <div>Error: {financialAnalysisResponse.error}</div>
