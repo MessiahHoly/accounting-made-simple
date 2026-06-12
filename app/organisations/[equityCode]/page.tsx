@@ -19,6 +19,8 @@ import { fetchCompanyProfile, fetchFinancialsAsReported } from "@/lib/data/finnh
 import FinancialDashboard from "./ui/FinancialDashboard"
 import { HistoricalFilingFinancialChart } from "./ui/HistoricalFilingFinancialChart"
 
+//TODO: fix 404 on http://localhost:3000/organisations/SPCX?source=finnhub
+
 export default async function Page({ params, searchParams }: {
   params: Promise<{ equityCode: string }>, searchParams: Promise<{ source: 'j-quants' | 'finnhub', language?: string }>
 }) {

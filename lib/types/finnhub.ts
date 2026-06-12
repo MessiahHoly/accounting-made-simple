@@ -77,13 +77,15 @@ export const companyProfileSchema = z.object({
   finnhubIndustry: z.string(),
   ipo: z.iso.date(), // Validates YYYY-MM-DD format
   // ipo: z.string().date(), // Validates YYYY-MM-DD format (introduced in Zod v3.23+)
-  logo: z.string().url(),
+  logo: z.url(),
+  // logo: z.string().url(),
   marketCapitalization: z.number().positive(),
   name: z.string(),
   phone: z.string(),
   shareOutstanding: z.number().positive(),
   ticker: z.string(),
-  weburl: z.string().url(),
+  weburl: z.url(),
+  // weburl: z.string().url(),
 });
 
 export type CompanyProfile = z.infer<typeof companyProfileSchema>;
