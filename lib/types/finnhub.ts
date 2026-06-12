@@ -75,8 +75,8 @@ export const companyProfileSchema = z.object({
   estimateCurrency: z.string().length(3),
   exchange: z.string(),
   finnhubIndustry: z.string(),
-  //TODO: fix obsolete date()
-  ipo: z.string().date(), // Validates YYYY-MM-DD format (introduced in Zod v3.23+)
+  ipo: z.iso.date(), // Validates YYYY-MM-DD format
+  // ipo: z.string().date(), // Validates YYYY-MM-DD format (introduced in Zod v3.23+)
   logo: z.string().url(),
   marketCapitalization: z.number().positive(),
   name: z.string(),
