@@ -71,7 +71,8 @@ export default async function Page({ params, searchParams }: {
         )}
 
         <Suspense fallback={<AiIsThinking />}>
-          <GeminiFinancialAnalysis balanceSheets={financials} language={language} />
+          <GeminiFinancialAnalysis financials={financials} language={language} />
+          {/* <GeminiFinancialAnalysis balanceSheets={financials} language={language} /> */}
         </Suspense>
 
         <div className="mb-12">
@@ -145,7 +146,7 @@ export default async function Page({ params, searchParams }: {
       )}
 
       <Suspense fallback={<AiIsThinking />}>
-        <GeminiFinancialAnalysis balanceSheets={balanceSheets} language={language} />
+        <GeminiFinancialAnalysis financials={balanceSheets} language={language} />
       </Suspense>
 
       <div className="mb-12">
