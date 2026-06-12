@@ -67,7 +67,6 @@ export type FinancialReport = z.infer<typeof FinancialReportSchema>;
 export type HistoricalFiling = z.infer<typeof HistoricalFilingSchema>;
 export type FinnhubServerResponse = z.infer<typeof FinnhubServerResponseSchema>;
 
-//TODO: npm audit fix
 //TODO: fix error on http://localhost:3000/organisations/UAL?source=finnhub
 
 export const companyProfileSchema = z.object({
