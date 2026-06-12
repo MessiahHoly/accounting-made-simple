@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "generatorVersion": "0.1.0",
-  "generatedAt": "2026-05-26T22:13:10.533Z",
+  "generatedAt": "2026-06-12T22:58:06.605Z",
   "outputPath": "/home/masaya/accounting-made-simple/prisma/generated",
   "files": [
     "schemas/enums/TransactionIsolationLevel.schema.ts",
