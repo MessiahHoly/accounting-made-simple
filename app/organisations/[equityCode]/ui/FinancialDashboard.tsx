@@ -37,6 +37,7 @@ const isTotalLine = (label: string) => {
 };
 
 export default function FinancialDashboard({ data }: { data: HistoricalFiling[] }) {
+  // console.log(data)
   // Default to the most recent year's data available
   const [selectedYear, setSelectedYear] = useState(() => {
     if (!data || data.length === 0) {
@@ -129,7 +130,6 @@ export default function FinancialDashboard({ data }: { data: HistoricalFiling[] 
                       <TableBody>
                         {rows.map((row, index) => {
                           const isTotal = isTotalLine(row.label || '');
-                          // const isTotal = isTotalLine(row.label);
                           return (
                             <TableRow
                               key={`${row.concept}-${index}`}

@@ -67,8 +67,6 @@ export type FinancialReport = z.infer<typeof FinancialReportSchema>;
 export type HistoricalFiling = z.infer<typeof HistoricalFilingSchema>;
 export type FinnhubServerResponse = z.infer<typeof FinnhubServerResponseSchema>;
 
-//TODO: fix error on http://localhost:3000/organisations/UAL?source=finnhub
-
 export const companyProfileSchema = z.object({
   country: z.string().length(2),
   currency: z.string().length(3),
@@ -76,16 +74,13 @@ export const companyProfileSchema = z.object({
   exchange: z.string(),
   finnhubIndustry: z.string(),
   ipo: z.iso.date(), // Validates YYYY-MM-DD format
-  // ipo: z.string().date(), // Validates YYYY-MM-DD format (introduced in Zod v3.23+)
   logo: z.url(),
-  // logo: z.string().url(),
   marketCapitalization: z.number().positive(),
   name: z.string(),
   phone: z.string(),
   shareOutstanding: z.number().positive(),
   ticker: z.string(),
   weburl: z.url(),
-  // weburl: z.string().url(),
 });
 
 export type CompanyProfile = z.infer<typeof companyProfileSchema>;

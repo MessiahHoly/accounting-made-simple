@@ -34,24 +34,31 @@ export const fetchFinancialsAsReported = async (symbol: string) => {
 
   const res = await fetch(url, { headers, next: { revalidate: 3600 } });
 
-  // console.log(res);
-
   if (!res.ok) {
     return { error: `Failed to fetch financials from Finnhub. Status: ${res.status} ${res.statusText}` };
   }
 
   const rawData = await res.json();
-  // console.log("Raw financials data from Finnhub:", rawData); // <-- Log the raw response for debugging
-
   const result = FinnhubServerResponseSchema.safeParse(rawData);
 
-  console.log("Parsed financials data from Finnhub:", result); // <-- Log the parsed result for debugging
+  // console.log("Parsed financials data from Finnhub:", result); // <-- Log the parsed result for debugging
 
   if (!result.success) {
     return { error: `Failed to parse financials data from Finnhub. Error: ${result.error.message}` };
   }
 
-  return { data: result.data.data };
+  const allFilings = result.data.data;
+  
+  if (!allFilings || allFilings.length === 0) {
+    return { data: [] };
+  }
+
+  const primaryCik = result.data.cik;
+
+  const clearedFilings = allFilings.filter(filing => filing.cik === primaryCik);
+
+  return { data: clearedFilings };
+  // return { data: result.data.data };
 }
 
 export const fetchCompanyProfile = async (symbol: string) => {
