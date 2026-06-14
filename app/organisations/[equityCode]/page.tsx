@@ -41,8 +41,6 @@ export default async function Page({ params, searchParams }: {
 
     if (!financials || financials.length === 0) return notFound()
 
-    //TODO: componentse the following
-
     return (
       <main className="p-4 md:p-8 max-w-screen-2xl mx-auto w-full overflow-hidden">
         {/* 1. Global fixed layer that covers the viewport width */}
