@@ -31,9 +31,10 @@ export default async function Page({ params, searchParams }: {
     const { data: financials } = financialsResponse
     const { data: companyProfile } = companyProfileResponse
 
-    console.log(financials); // <-- Log the financials data for debugging
+    // console.log(financials); // <-- Log the financials data for debugging
 
-    if (!financials || financials.length === 0) return notFound()
+    if (!financials || financials.length === 0) return <Error error="No financial data available for this company." />
+    // if (!financials || financials.length === 0) return notFound()
 
     return (
       <FinnhubDashboard
