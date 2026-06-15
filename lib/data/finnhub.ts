@@ -48,7 +48,7 @@ export const fetchFinancialsAsReported = async (symbol: string) => {
   }
 
   const allFilings = result.data.data;
-  
+
   if (!allFilings || allFilings.length === 0) {
     return { data: [] };
   }
@@ -58,8 +58,7 @@ export const fetchFinancialsAsReported = async (symbol: string) => {
   const clearedFilings = allFilings.filter(filing => filing.cik === primaryCik);
 
   return { data: clearedFilings };
-  // return { data: result.data.data };
-}
+};
 
 export const fetchCompanyProfile = async (symbol: string) => {
   const API_KEY = process.env.FINNHUB_API_KEY;
@@ -75,9 +74,11 @@ export const fetchCompanyProfile = async (symbol: string) => {
   }
 
   const rawData = await res.json();
-
-  // You can add a Zod schema for the company profile response if needed
   const result = companyProfileSchema.safeParse(rawData);
+
+  // console.log("Raw company profile data from Finnhub:", rawData); // <-- Log the raw response for debugging
+
+  // console.log("Parsed company profile data from Finnhub:", result); // <-- Log the parsed result for debugging
 
   if (!result.success) {
     return { error: `Failed to parse company profile data from Finnhub. Error: ${result.error.message}` };

@@ -67,20 +67,55 @@ export type FinancialReport = z.infer<typeof FinancialReportSchema>;
 export type HistoricalFiling = z.infer<typeof HistoricalFilingSchema>;
 export type FinnhubServerResponse = z.infer<typeof FinnhubServerResponseSchema>;
 
+// export const companyProfileSchema = z.object({
+//   country: z.string().length(2),
+//   currency: z.string().length(3),
+//   estimateCurrency: z.string().length(3),
+//   exchange: z.string(),
+//   finnhubIndustry: z.string(),
+//   ipo: z.iso.date(), // Validates YYYY-MM-DD format
+//   logo: z.url(),
+//   marketCapitalization: z.number().positive(),
+//   name: z.string(),
+//   phone: z.string(),
+//   shareOutstanding: z.number().positive(),
+//   ticker: z.string(),
+//   weburl: z.url(),
+// });
+
 export const companyProfileSchema = z.object({
   country: z.string().length(2),
-  currency: z.string().length(3),
-  estimateCurrency: z.string().length(3),
+  
+  // 1. Finnhub returns an empty string "" for these when unassigned.
+  // Use .catch("") to intercept validation failures and fallback safely.
+  currency: z.string().length(3).catch(""),
+  estimateCurrency: z.string().length(3).catch(""),
+  
   exchange: z.string(),
   finnhubIndustry: z.string(),
-  ipo: z.iso.date(), // Validates YYYY-MM-DD format
-  logo: z.url(),
-  marketCapitalization: z.number().positive(),
+  
+  // 2. This works perfectly in Zod v4. Adding .optional() or a fallback 
+  // just in case an OTC stock completely misses an IPO date.
+  ipo: z.iso.date().catch(""), 
+  
+  // 3. Finnhub sometimes serves a text "N/A" or empty string for small caps logos
+  logo: z.string().url().catch(""),
+  
+  // 4. Changed from .positive() to .nonnegative() because OTC/delisted stocks 
+  // can occasionally present 0 or negative values in raw telemetry.
+  marketCapitalization: z.number().nonnegative(),
+  
   name: z.string(),
   phone: z.string(),
-  shareOutstanding: z.number().positive(),
+  shareOutstanding: z.number().nonnegative(),
   ticker: z.string(),
-  weburl: z.url(),
+  
+  // 5. Finnhub passes "" if the company has no web URL. 
+  // z.string().url() strictly fails an empty string, so we .catch("") here too.
+  weburl: z.string().url().catch(""),
+  
+  // 6. Optional: explicitly add floatingShare since it was in your JSON object
+  floatingShare: z.number().nonnegative().optional(),
 });
 
 export type CompanyProfile = z.infer<typeof companyProfileSchema>;
